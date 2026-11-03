@@ -3,6 +3,19 @@
 All notable changes to GeDefense Retail are documented here. The project follows semantic
 versioning; alpha releases may change behavior without notice and are **not production-ready**.
 
+## [0.2.0-alpha.5] — 2026-11-03
+
+### Release engineering
+
+- Release workflow now flattens the downloaded build artefacts and publishes an explicit asset list.
+  This fixes the missing `SHA256SUMS`/`SBOM.spdx.json` validation failure in the publish job.
+- Cosign keyless signatures (`*.sig` + `*.pem`) for all archives, checksums and the SBOM are now
+  produced and published by the tag pipeline.
+
+### Notes
+
+- Windows binaries remain not Authenticode-signed (NOT_SIGNED).
+
 ## [0.2.0-alpha.4] — 2026-11-03
 
 ### Security / release engineering

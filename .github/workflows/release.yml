@@ -99,6 +99,12 @@ jobs:
         with:
           name: release-canonical
           path: release
+      - name: Flatten artefact layout
+        run: |
+          set -euo pipefail
+          find release -mindepth 2 -type f \( -name '*.tar.gz' -o -name '*.zip' -o -name 'SHA256SUMS' -o -name 'SHA256SUMS.archives' -o -name 'SBOM.spdx.json' \) -exec cp -v {} release/ \;
+          ls -l release
+
       - name: Validate tag and release layout
         run: |
           version="$(cat VERSION)"
@@ -130,9 +136,9 @@ jobs:
           version="$(cat VERSION)"
           tag="v${version}"
           if gh release view "$tag" >/dev/null 2>&1; then
-            gh release upload "$tag" release/* --clobber
+            gh release upload "$tag" release/*.tar.gz release/*.zip release/SHA256SUMS release/SHA256SUMS.archives release/SBOM.spdx.json release/*.sig release/*.pem --clobber
           else
-            gh release create "$tag" release/* \
+            gh release create "$tag" release/*.tar.gz release/*.zip release/SHA256SUMS release/SHA256SUMS.archives release/SBOM.spdx.json release/*.sig release/*.pem \
               --title "GeDefense Retail ${version}" \
               --notes "Release ${version} (ALPHA, not production-approved). Verify each asset with SHA256SUMS and cosign: cosign verify-blob --signature <file>.sig --certificate <file>.pem --certificate-identity-regexp 'https://github.com/${GITHUB_REPOSITORY}/.github/workflows/release.yml@refs/tags/v.*' --certificate-oidc-issuer 'https://token.actions.githubusercontent.com' <file>. Windows binaries are NOT Authenticode-signed (documented limitation). SBOM: SBOM.spdx.json (SPDX-2.3)."
           fi

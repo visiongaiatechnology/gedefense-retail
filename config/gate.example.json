@@ -1,0 +1,87 @@
+{
+  "listen": {
+    "api": "127.0.0.1:8540",
+    "tls_cert_file": "",
+    "tls_key_file": "",
+    "client_ca_file": "",
+    "require_client_cert": false
+  },
+  "data_dir": "./var/lib/gedefense-gate",
+  "site_id": "filiale-001",
+  "gateway_asset_id": "asset-edge-gateway",
+  "policy_file": "gate-policy.example.json",
+  "timeouts": {
+    "session_ttl_s": 900,
+    "token_ttl_s": 300,
+    "approval_ttl_s": 86400,
+    "plan_ttl_s": 604800,
+    "write_session_max_uses": 1
+  },
+  "targets": [
+    {
+      "target_id": "aksm-1",
+      "asset_id": "asset-danfoss-aksm800",
+      "protocol": "modbus_tcp",
+      "listen": "127.0.0.1:1502",
+      "upstream": "127.0.0.1:15020",
+      "unit_id": 1,
+      "timeout_s": 5,
+      "read_registers": { "fc": 3, "start": 1, "count": 64 }
+    },
+    {
+      "target_id": "xweb-1",
+      "asset_id": "asset-dixell-xweb",
+      "protocol": "http",
+      "listen": "127.0.0.1:8443",
+      "upstream": "http://127.0.0.1:18080",
+      "ca_file": "",
+      "insecure_skip_verify": false,
+      "url_allowlist": ["/", "/cgi-bin/*", "/login"]
+    }
+  ],
+  "source_cidrs": ["127.0.0.1/32", "::1/128"],
+  "users": [
+    {
+      "user_id": "master-01",
+      "name": "Master-Freigabe",
+      "kind": "admin",
+      "roles": ["master_admin", "approver"],
+      "password_hash": "pbkdf2-sha256$210000$AAAAAAAAAAAAAAAAAAAAAA==$AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+      "totp_secret": "JBSWY3DPEHPK3PXP",
+      "totp_enabled": true,
+      "device_fingerprints": [],
+      "status": "active"
+    },
+    {
+      "user_id": "approver-01",
+      "name": "Filial-Technik",
+      "kind": "operator",
+      "roles": ["approver"],
+      "password_hash": "pbkdf2-sha256$210000$AAAAAAAAAAAAAAAAAAAAAA==$AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+      "totp_secret": "JBSWY3DPEHPK3PXP",
+      "totp_enabled": true,
+      "device_fingerprints": [],
+      "status": "active"
+    },
+    {
+      "user_id": "vendor-acme",
+      "name": "ACME Kältetechnik",
+      "kind": "vendor",
+      "roles": ["vendor_write_requester"],
+      "password_hash": "pbkdf2-sha256$210000$AAAAAAAAAAAAAAAAAAAAAA==$AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+      "totp_secret": "JBSWY3DPEHPK3PXP",
+      "totp_enabled": true,
+      "device_fingerprints": [],
+      "status": "active"
+    }
+  ],
+  "notify": {
+    "webhook_url": "",
+    "hmac_secret": "",
+    "timeout_s": 5,
+    "escalation": [
+      { "after_minutes": 5, "role": "approver" },
+      { "after_minutes": 15, "role": "master_admin" }
+    ]
+  }
+}

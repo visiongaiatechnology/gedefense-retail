@@ -1,0 +1,1667 @@
+{
+  "window": {
+    "since": "2026-11-02T17:12:00Z",
+    "until": "2026-11-03T17:12:00Z"
+  },
+  "items": [
+    {
+      "sensor": {
+        "sensor_id": "sensor-cold-left-01",
+        "site_id": "filiale-001",
+        "asset_id": "asset-verbund-01",
+        "zone_id": "zone-cold-01",
+        "name": "Kühlraum LINKS · Luft",
+        "metric": "air_temperature",
+        "unit": "celsius",
+        "kind": "air",
+        "independent": false,
+        "critical": true,
+        "last_seen_at": "2026-11-03T17:10:00Z"
+      },
+      "series": {
+        "metric": "air_temperature",
+        "unit": "celsius",
+        "points": [
+          {
+            "at": "2026-11-02T17:12:00Z",
+            "value": 4.6,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T17:42:00Z",
+            "value": 4.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T18:12:00Z",
+            "value": 4.7,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T18:42:00Z",
+            "value": 5.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T19:12:00Z",
+            "value": 4.9,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T19:42:00Z",
+            "value": 5.3,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T20:12:00Z",
+            "value": 5.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T20:42:00Z",
+            "value": 5.3,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T21:12:00Z",
+            "value": 5.4,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T21:42:00Z",
+            "value": 5.3,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T22:12:00Z",
+            "value": 5.6,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T22:42:00Z",
+            "value": 5.3,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T23:12:00Z",
+            "value": 5.6,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T23:42:00Z",
+            "value": 5.4,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T00:12:00Z",
+            "value": 5.5,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T00:42:00Z",
+            "value": 5.5,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T01:12:00Z",
+            "value": 5.3,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T01:42:00Z",
+            "value": 5.5,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T02:12:00Z",
+            "value": 5.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T02:42:00Z",
+            "value": 5.4,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T03:12:00Z",
+            "value": 5.0,
+            "quality": "uncertain"
+          },
+          {
+            "at": "2026-11-03T03:42:00Z",
+            "value": 5.1,
+            "quality": "uncertain"
+          },
+          {
+            "at": "2026-11-03T04:12:00Z",
+            "value": 5.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T04:42:00Z",
+            "value": 4.7,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T05:12:00Z",
+            "value": 4.9,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T05:42:00Z",
+            "value": 4.4,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T06:12:00Z",
+            "value": 4.7,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T06:42:00Z",
+            "value": 4.3,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T07:12:00Z",
+            "value": 4.3,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T07:42:00Z",
+            "value": 4.2,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T08:12:00Z",
+            "value": 4.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T08:42:00Z",
+            "value": 4.2,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T09:12:00Z",
+            "value": 3.7,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T09:42:00Z",
+            "value": 4.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T10:12:00Z",
+            "value": 3.7,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T10:42:00Z",
+            "value": 3.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T11:12:00Z",
+            "value": 3.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T11:42:00Z",
+            "value": 3.6,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T12:12:00Z",
+            "value": 7.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T12:42:00Z",
+            "value": 6.6,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T13:12:00Z",
+            "value": 7.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T13:42:00Z",
+            "value": 6.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T14:12:00Z",
+            "value": 7.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T14:42:00Z",
+            "value": 3.9,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T15:12:00Z",
+            "value": 3.9,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T15:42:00Z",
+            "value": 4.2,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T16:12:00Z",
+            "value": 4.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T16:42:00Z",
+            "value": 4.4,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T17:12:00Z",
+            "value": 4.2,
+            "quality": "good"
+          }
+        ]
+      },
+      "limit": {
+        "min_c": 2.0,
+        "max_c": 8.0,
+        "max_rate_c_per_min": 3.0
+      },
+      "last_seen_at": "2026-11-03T17:10:00Z"
+    },
+    {
+      "sensor": {
+        "sensor_id": "sensor-cold-left-02",
+        "site_id": "filiale-001",
+        "asset_id": "asset-verbund-01",
+        "zone_id": "zone-cold-01",
+        "name": "Kühlraum LINKS · Produkt",
+        "metric": "air_temperature",
+        "unit": "celsius",
+        "kind": "product",
+        "independent": true,
+        "critical": true,
+        "last_seen_at": "2026-11-03T17:09:00Z"
+      },
+      "series": {
+        "metric": "air_temperature",
+        "unit": "celsius",
+        "points": [
+          {
+            "at": "2026-11-02T17:12:00Z",
+            "value": 4.3,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T17:42:00Z",
+            "value": 4.5,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T18:12:00Z",
+            "value": 4.3,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T18:42:00Z",
+            "value": 4.7,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T19:12:00Z",
+            "value": 4.5,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T19:42:00Z",
+            "value": 4.9,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T20:12:00Z",
+            "value": 4.7,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T20:42:00Z",
+            "value": 4.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T21:12:00Z",
+            "value": 5.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T21:42:00Z",
+            "value": 4.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T22:12:00Z",
+            "value": 5.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T22:42:00Z",
+            "value": 4.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T23:12:00Z",
+            "value": 5.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T23:42:00Z",
+            "value": 4.9,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T00:12:00Z",
+            "value": 5.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T00:42:00Z",
+            "value": 5.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T01:12:00Z",
+            "value": 4.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T01:42:00Z",
+            "value": 5.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T02:12:00Z",
+            "value": 4.7,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T02:42:00Z",
+            "value": 4.9,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T03:12:00Z",
+            "value": 4.6,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T03:42:00Z",
+            "value": 4.7,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T04:12:00Z",
+            "value": 4.6,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T04:42:00Z",
+            "value": 4.4,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T05:12:00Z",
+            "value": 4.6,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T05:42:00Z",
+            "value": 4.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T06:12:00Z",
+            "value": 4.4,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T06:42:00Z",
+            "value": 4.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T07:12:00Z",
+            "value": 4.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T07:42:00Z",
+            "value": 4.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T08:12:00Z",
+            "value": 3.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T08:42:00Z",
+            "value": 4.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T09:12:00Z",
+            "value": 3.6,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T09:42:00Z",
+            "value": 3.9,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T10:12:00Z",
+            "value": 3.6,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T10:42:00Z",
+            "value": 3.7,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T11:12:00Z",
+            "value": 3.6,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T11:42:00Z",
+            "value": 3.5,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T12:12:00Z",
+            "value": 3.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T12:42:00Z",
+            "value": 3.4,
+            "quality": "clock_uncertain"
+          },
+          {
+            "at": "2026-11-03T13:12:00Z",
+            "value": 3.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T13:42:00Z",
+            "value": 3.5,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T14:12:00Z",
+            "value": 3.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T14:42:00Z",
+            "value": 3.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T15:12:00Z",
+            "value": 3.7,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T15:42:00Z",
+            "value": 4.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T16:12:00Z",
+            "value": 3.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T16:42:00Z",
+            "value": 4.2,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T17:12:00Z",
+            "value": 4.0,
+            "quality": "good"
+          }
+        ]
+      },
+      "limit": {
+        "min_c": 2.0,
+        "max_c": 8.0,
+        "max_rate_c_per_min": 3.0
+      },
+      "last_seen_at": "2026-11-03T17:09:00Z"
+    },
+    {
+      "sensor": {
+        "sensor_id": "sensor-cold-right-01",
+        "site_id": "filiale-001",
+        "asset_id": "asset-verbund-02",
+        "zone_id": "zone-cold-02",
+        "name": "Kühlraum RECHTS · Luft",
+        "metric": "air_temperature",
+        "unit": "celsius",
+        "kind": "air",
+        "independent": false,
+        "critical": true,
+        "last_seen_at": "2026-11-03T17:11:00Z"
+      },
+      "series": {
+        "metric": "air_temperature",
+        "unit": "celsius",
+        "points": [
+          {
+            "at": "2026-11-02T17:12:00Z",
+            "value": 4.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T17:42:00Z",
+            "value": 4.3,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T18:12:00Z",
+            "value": 4.3,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T18:42:00Z",
+            "value": 4.7,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T19:12:00Z",
+            "value": 4.5,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T19:42:00Z",
+            "value": 4.9,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T20:12:00Z",
+            "value": 4.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T20:42:00Z",
+            "value": 5.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T21:12:00Z",
+            "value": 5.2,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T21:42:00Z",
+            "value": 5.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T22:12:00Z",
+            "value": 5.4,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T22:42:00Z",
+            "value": 5.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T23:12:00Z",
+            "value": 5.4,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T23:42:00Z",
+            "value": 5.2,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T00:12:00Z",
+            "value": 5.3,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T00:42:00Z",
+            "value": 5.3,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T01:12:00Z",
+            "value": 5.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T01:42:00Z",
+            "value": 5.3,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T02:12:00Z",
+            "value": 4.9,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T02:42:00Z",
+            "value": 5.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T03:12:00Z",
+            "value": 4.7,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T03:42:00Z",
+            "value": 4.7,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T04:12:00Z",
+            "value": 6.2,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T04:42:00Z",
+            "value": 5.9,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T05:12:00Z",
+            "value": 6.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T05:42:00Z",
+            "value": 3.9,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T06:12:00Z",
+            "value": 4.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T06:42:00Z",
+            "value": 3.7,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T07:12:00Z",
+            "value": 3.7,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T07:42:00Z",
+            "value": 3.6,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T08:12:00Z",
+            "value": 3.3,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T08:42:00Z",
+            "value": 3.5,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T09:12:00Z",
+            "value": 3.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T09:42:00Z",
+            "value": 3.3,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T10:12:00Z",
+            "value": 2.9,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T10:42:00Z",
+            "value": 3.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T11:12:00Z",
+            "value": 3.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T11:42:00Z",
+            "value": 2.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T12:12:00Z",
+            "value": 3.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T12:42:00Z",
+            "value": 2.7,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T13:12:00Z",
+            "value": 3.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T13:42:00Z",
+            "value": 2.9,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T14:12:00Z",
+            "value": 3.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T14:42:00Z",
+            "value": 3.2,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T15:12:00Z",
+            "value": 3.2,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T15:42:00Z",
+            "value": 3.5,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T16:12:00Z",
+            "value": 3.3,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T16:42:00Z",
+            "value": 3.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T17:12:00Z",
+            "value": 3.6,
+            "quality": "good"
+          }
+        ]
+      },
+      "limit": {
+        "min_c": 2.0,
+        "max_c": 8.0,
+        "max_rate_c_per_min": 3.0
+      },
+      "last_seen_at": "2026-11-03T17:11:00Z"
+    },
+    {
+      "sensor": {
+        "sensor_id": "sensor-molkerei-01",
+        "site_id": "filiale-001",
+        "asset_id": "asset-ksr-molkerei",
+        "zone_id": "zone-cold-02",
+        "name": "Molkerei · Luft",
+        "metric": "air_temperature",
+        "unit": "celsius",
+        "kind": "air",
+        "independent": false,
+        "critical": true,
+        "last_seen_at": "2026-11-03T17:03:00Z"
+      },
+      "series": {
+        "metric": "air_temperature",
+        "unit": "celsius",
+        "points": [
+          {
+            "at": "2026-11-02T17:12:00Z",
+            "value": 3.4,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T17:42:00Z",
+            "value": 3.6,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T18:12:00Z",
+            "value": 3.5,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T18:42:00Z",
+            "value": 3.9,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T19:12:00Z",
+            "value": 3.6,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T19:42:00Z",
+            "value": 4.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T20:12:00Z",
+            "value": 3.9,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T20:42:00Z",
+            "value": 4.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T21:12:00Z",
+            "value": 4.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T21:42:00Z",
+            "value": 4.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T22:12:00Z",
+            "value": 4.3,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T22:42:00Z",
+            "value": 4.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T00:42:00Z",
+            "value": 4.2,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T01:12:00Z",
+            "value": 4.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T01:42:00Z",
+            "value": 4.2,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T02:12:00Z",
+            "value": 3.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T02:42:00Z",
+            "value": 4.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T03:12:00Z",
+            "value": 3.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T03:42:00Z",
+            "value": 3.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T04:12:00Z",
+            "value": 3.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T04:42:00Z",
+            "value": 3.5,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T05:12:00Z",
+            "value": 3.7,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T05:42:00Z",
+            "value": 3.2,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T06:12:00Z",
+            "value": 3.5,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T06:42:00Z",
+            "value": 3.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T07:12:00Z",
+            "value": 3.2,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T07:42:00Z",
+            "value": 3.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T08:12:00Z",
+            "value": 2.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T08:42:00Z",
+            "value": 3.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T09:12:00Z",
+            "value": 2.6,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T09:42:00Z",
+            "value": 2.9,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T10:12:00Z",
+            "value": 2.6,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T10:42:00Z",
+            "value": 2.7,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T11:12:00Z",
+            "value": 2.7,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T11:42:00Z",
+            "value": 2.5,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T12:12:00Z",
+            "value": 2.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T12:42:00Z",
+            "value": 2.4,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T13:12:00Z",
+            "value": 2.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T13:42:00Z",
+            "value": 2.5,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T14:12:00Z",
+            "value": 2.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T14:42:00Z",
+            "value": 2.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T15:12:00Z",
+            "value": 2.7,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T15:42:00Z",
+            "value": 3.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T16:12:00Z",
+            "value": 2.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T16:42:00Z",
+            "value": 3.3,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T17:12:00Z",
+            "value": 3.0,
+            "quality": "good"
+          }
+        ]
+      },
+      "limit": {
+        "min_c": 1.0,
+        "max_c": 6.0,
+        "max_rate_c_per_min": 2.0
+      },
+      "last_seen_at": "2026-11-03T17:03:00Z"
+    },
+    {
+      "sensor": {
+        "sensor_id": "sensor-molkerei-02",
+        "site_id": "filiale-001",
+        "asset_id": "asset-ksr-molkerei",
+        "zone_id": "zone-cold-02",
+        "name": "Molkerei · Produkt (unabhängig)",
+        "metric": "air_temperature",
+        "unit": "celsius",
+        "kind": "product",
+        "independent": true,
+        "critical": true,
+        "last_seen_at": "2026-11-03T17:03:00Z"
+      },
+      "series": {
+        "metric": "air_temperature",
+        "unit": "celsius",
+        "points": [
+          {
+            "at": "2026-11-02T17:12:00Z",
+            "value": 3.6,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T17:42:00Z",
+            "value": 3.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T18:12:00Z",
+            "value": 3.6,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T18:42:00Z",
+            "value": 4.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T19:12:00Z",
+            "value": 3.7,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T19:42:00Z",
+            "value": 4.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T20:12:00Z",
+            "value": 3.9,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T20:42:00Z",
+            "value": 4.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T21:12:00Z",
+            "value": 4.2,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T21:42:00Z",
+            "value": 4.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T22:12:00Z",
+            "value": 4.3,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T22:42:00Z",
+            "value": 4.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T23:12:00Z",
+            "value": 4.3,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T23:42:00Z",
+            "value": 4.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T00:12:00Z",
+            "value": 4.2,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T00:42:00Z",
+            "value": 4.2,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T01:12:00Z",
+            "value": 4.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T01:42:00Z",
+            "value": 4.3,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T02:12:00Z",
+            "value": 3.9,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T02:42:00Z",
+            "value": 4.2,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T03:12:00Z",
+            "value": 3.9,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T03:42:00Z",
+            "value": 3.9,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T04:12:00Z",
+            "value": 3.9,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T04:42:00Z",
+            "value": 3.6,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T05:12:00Z",
+            "value": 3.9,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T05:42:00Z",
+            "value": 3.4,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T06:12:00Z",
+            "value": 3.7,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T06:42:00Z",
+            "value": 3.4,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T07:12:00Z",
+            "value": 3.4,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T07:42:00Z",
+            "value": 3.4,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T08:12:00Z",
+            "value": 3.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T08:42:00Z",
+            "value": 3.4,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T09:12:00Z",
+            "value": 3.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T09:42:00Z",
+            "value": 3.3,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T10:12:00Z",
+            "value": 2.9,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T10:42:00Z",
+            "value": 3.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T11:12:00Z",
+            "value": 3.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T11:42:00Z",
+            "value": 2.9,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T12:12:00Z",
+            "value": 3.2,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T12:42:00Z",
+            "value": 2.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T13:12:00Z",
+            "value": 3.2,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T13:42:00Z",
+            "value": 2.9,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T14:12:00Z",
+            "value": 3.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T14:42:00Z",
+            "value": 3.2,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T15:12:00Z",
+            "value": 3.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T15:42:00Z",
+            "value": 3.4,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T16:12:00Z",
+            "value": 3.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T16:42:00Z",
+            "value": 3.5,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T17:12:00Z",
+            "value": 3.3,
+            "quality": "good"
+          }
+        ]
+      },
+      "limit": {
+        "min_c": 1.0,
+        "max_c": 6.0,
+        "max_rate_c_per_min": 2.0
+      },
+      "last_seen_at": "2026-11-03T17:03:00Z"
+    },
+    {
+      "sensor": {
+        "sensor_id": "sensor-tk-01",
+        "site_id": "filiale-001",
+        "asset_id": "asset-ksr-tk",
+        "zone_id": "zone-cold-02",
+        "name": "TK-Zelle · Luft",
+        "metric": "air_temperature",
+        "unit": "celsius",
+        "kind": "air",
+        "independent": false,
+        "critical": true,
+        "last_seen_at": "2026-11-03T17:08:00Z"
+      },
+      "series": {
+        "metric": "air_temperature",
+        "unit": "celsius",
+        "points": [
+          {
+            "at": "2026-11-02T17:12:00Z",
+            "value": -18.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T17:42:00Z",
+            "value": -18.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T18:12:00Z",
+            "value": -18.2,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T18:42:00Z",
+            "value": -17.9,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T19:12:00Z",
+            "value": -18.2,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T19:42:00Z",
+            "value": -17.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T20:12:00Z",
+            "value": -18.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T20:42:00Z",
+            "value": -17.9,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T21:12:00Z",
+            "value": -17.9,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T21:42:00Z",
+            "value": -18.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T22:12:00Z",
+            "value": -17.7,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T22:42:00Z",
+            "value": -18.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T23:12:00Z",
+            "value": -17.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-02T23:42:00Z",
+            "value": -18.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T00:12:00Z",
+            "value": -17.9,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T00:42:00Z",
+            "value": -17.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T01:12:00Z",
+            "value": -18.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T01:42:00Z",
+            "value": -17.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T02:12:00Z",
+            "value": -18.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T02:42:00Z",
+            "value": -17.8,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T03:12:00Z",
+            "value": -18.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T03:42:00Z",
+            "value": -18.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T04:12:00Z",
+            "value": -18.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T04:42:00Z",
+            "value": -18.2,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T05:12:00Z",
+            "value": -17.9,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T05:42:00Z",
+            "value": -18.3,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T06:12:00Z",
+            "value": -18.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T06:42:00Z",
+            "value": -18.3,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T07:12:00Z",
+            "value": -18.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T07:42:00Z",
+            "value": -18.2,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T08:12:00Z",
+            "value": -18.3,
+            "quality": "frozen"
+          },
+          {
+            "at": "2026-11-03T08:42:00Z",
+            "value": -18.1,
+            "quality": "frozen"
+          },
+          {
+            "at": "2026-11-03T09:12:00Z",
+            "value": -18.4,
+            "quality": "frozen"
+          },
+          {
+            "at": "2026-11-03T09:42:00Z",
+            "value": -18.1,
+            "quality": "frozen"
+          },
+          {
+            "at": "2026-11-03T10:12:00Z",
+            "value": -18.4,
+            "quality": "frozen"
+          },
+          {
+            "at": "2026-11-03T10:42:00Z",
+            "value": -18.2,
+            "quality": "frozen"
+          },
+          {
+            "at": "2026-11-03T11:12:00Z",
+            "value": -18.3,
+            "quality": "frozen"
+          },
+          {
+            "at": "2026-11-03T11:42:00Z",
+            "value": -18.4,
+            "quality": "frozen"
+          },
+          {
+            "at": "2026-11-03T12:12:00Z",
+            "value": -18.1,
+            "quality": "frozen"
+          },
+          {
+            "at": "2026-11-03T12:42:00Z",
+            "value": -18.5,
+            "quality": "frozen"
+          },
+          {
+            "at": "2026-11-03T13:12:00Z",
+            "value": -18.1,
+            "quality": "frozen"
+          },
+          {
+            "at": "2026-11-03T13:42:00Z",
+            "value": -18.4,
+            "quality": "frozen"
+          },
+          {
+            "at": "2026-11-03T14:12:00Z",
+            "value": -18.2,
+            "quality": "frozen"
+          },
+          {
+            "at": "2026-11-03T14:42:00Z",
+            "value": -18.2,
+            "quality": "frozen"
+          },
+          {
+            "at": "2026-11-03T15:12:00Z",
+            "value": -18.3,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T15:42:00Z",
+            "value": -18.1,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T16:12:00Z",
+            "value": -18.4,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T16:42:00Z",
+            "value": -18.0,
+            "quality": "good"
+          },
+          {
+            "at": "2026-11-03T17:12:00Z",
+            "value": -18.3,
+            "quality": "good"
+          }
+        ]
+      },
+      "limit": null,
+      "last_seen_at": "2026-11-03T17:08:00Z"
+    }
+  ],
+  "limit_violations": [
+    {
+      "sensor_id": "sensor-cold-left-01",
+      "at": "2026-11-03T16:40:00Z",
+      "kind": "above_max",
+      "value": 9.1
+    },
+    {
+      "sensor_id": "sensor-cold-right-01",
+      "at": "2026-11-03T11:12:00Z",
+      "kind": "above_max",
+      "value": 8.4
+    },
+    {
+      "sensor_id": "sensor-molkerei-01",
+      "at": "2026-11-03T09:30:00Z",
+      "kind": "below_min",
+      "value": 0.4
+    }
+  ],
+  "data_quality": [
+    {
+      "sensor_id": "sensor-tk-01",
+      "kind": "frozen",
+      "since": "2026-11-03T15:40:00Z",
+      "detail": "Wert -18.2 °C unverändert seit 42 Minuten"
+    },
+    {
+      "sensor_id": "sensor-molkerei-01",
+      "kind": "gap",
+      "since": "2026-11-03T13:30:00Z",
+      "detail": "Keine Messwerte für 18 Minuten"
+    },
+    {
+      "sensor_id": "sensor-cold-right-01",
+      "kind": "clock_skew",
+      "since": "2026-11-03T12:10:00Z",
+      "detail": "source_ts weicht 320 s vom Gateway ab (Policy max 300 s)"
+    },
+    {
+      "sensor_id": "sensor-cold-left-02",
+      "kind": "divergence",
+      "since": "2026-11-03T16:30:00Z",
+      "detail": "Abweichung 2.6 °C zum unabhängigen Sensor LINKS (Policy 2.0 °C)"
+    }
+  ]
+}

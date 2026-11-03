@@ -1,0 +1,13 @@
+{
+  "user": {
+    "user_id": "approver-01",
+    "name": "Betriebsfreigabe Nord",
+    "kind": "operator",
+    "roles": [
+      "approver",
+      "master_admin"
+    ]
+  },
+  "mfa_ok": true,
+  "expires_at": "2026-11-03T20:00:00Z"
+}

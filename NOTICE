@@ -1,0 +1,23 @@
+# NOTICE
+
+**GeDefense Retail — ColdChain & Store Infrastructure Security**
+
+Copyright © 2026 VisionGaiaTechnology.
+
+This project is licensed under the **GNU Affero General Public License, version 3.0
+(AGPL-3.0)**. The complete license text is in [LICENSE](LICENSE).
+
+- Product names: “GeDefense”, “GeDefense Retail”, “GeDefense Universe” and “VisionGaiaTechnology”
+  are names of VisionGaiaTechnology (VGT).
+- Brand assets: the original GeDefense logo (`docs/assets/gedefense-logo.png`) and the mascot
+  (`docs/assets/sirdu-512.png`) are original VisionGaiaTechnology material. They are not third-party
+  assets, are not loaded from an external CDN, and are distributed with this repository for
+  project-related use. Trademark rights are not granted by the software license.
+- Third-party components: see [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md). The Go standard
+  library is the only software dependency; no third-party JavaScript, CSS or fonts are bundled and
+  no runtime CDN is used.
+- Status: `0.2.0-alpha.2` is an **experimental alpha**. It is not production-ready and makes **no
+  compliance or certification claim** (no HACCP, NIS2, IEC 62443 or similar).
+
+If you redistribute or operate this software, keep this NOTICE, the LICENSE file and the
+third-party notices with the distribution.

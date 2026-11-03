@@ -1,0 +1,199 @@
+/*
+ * GeDefense Retail — design tokens.
+ * Layer order is declared here once and governs every following stylesheet.
+ *
+ * Material story: warm shop light (amber/copper) over deep, cold mineral
+ * surfaces. The signature colour is light, not decoration: it marks the edge of
+ * the current working plane, the focus ring and the primary action. Status
+ * colours (success/warning/high/critical) stay functional and always appear
+ * together with a text label.
+ */
+@layer reset, tokens, base, layout, components, views, utilities;
+
+@layer tokens {
+  :root {
+    color-scheme: dark;
+
+    /* ---- surface family: cold mineral graphite (sRGB fallback) ---- */
+    --bg-deep: #080a0c;
+    --bg-base: #0c1013;
+    --surface-1: #171c20;
+    --surface-2: #1d2328;
+    --surface-3: #252c31;
+    --surface-inset: #11161a;
+
+    /* ---- text ---- */
+    --text-1: #f2f5f6;
+    --text-2: #c6ced2;
+    --text-3: #98a4a9;
+    --text-on-accent: #1d1508;
+
+    /* ---- signature: warm store light (amber/copper) ---- */
+    --accent: #e3a566;
+    --accent-bright: #ffc286;
+    --accent-deep: #c58646;
+    --accent-soft: rgba(227, 165, 102, 0.14);
+    --accent-line: rgba(227, 165, 102, 0.5);
+    --focus: #ffcf9a;
+
+    /* ---- functional status colours ---- */
+    --success: #72c9a2;
+    --low: #a7cdd3;
+    --info: #8fc2d8;
+    --warning: #efc76d;
+    --high: #f09b60;
+    --critical: #ed6b5f;
+
+    /* ---- lines & glass ---- */
+    --line: rgba(255, 255, 255, 0.07);
+    --line-strong: rgba(255, 255, 255, 0.13);
+    --glass-1: rgba(25, 31, 36, 0.6);
+    --glass-2: rgba(21, 26, 30, 0.78);
+    --glass-3: rgba(15, 19, 22, 0.9);
+    --glass-stroke: rgba(255, 255, 255, 0.09);
+    --glass-highlight: rgba(255, 255, 255, 0.16);
+    --scrim: rgba(5, 8, 10, 0.66);
+
+    /* ---- typography ---- */
+    --font-sans: ui-sans-serif, -apple-system, "Segoe UI Variable Text", "Segoe UI",
+      Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+    --font-mono: ui-monospace, "Cascadia Mono", "SFMono-Regular", Consolas,
+      "Liberation Mono", Menlo, monospace;
+    --fs-100: 0.6875rem;
+    --fs-200: 0.75rem;
+    --fs-300: 0.8125rem;
+    --fs-400: 0.875rem;
+    --fs-500: 1rem;
+    --fs-600: 1.125rem;
+    --fs-700: clamp(1.2rem, 0.95rem + 0.6vw, 1.45rem);
+    --fs-800: clamp(1.5rem, 1.1rem + 1.2vw, 2rem);
+    --fs-900: clamp(1.85rem, 1.2rem + 2vw, 2.75rem);
+    --lh-tight: 1.12;
+    --lh-snug: 1.32;
+    --lh-normal: 1.55;
+    --tracking-tight: -0.015em;
+    --tracking-wide: 0.09em;
+    --tracking-caps: 0.13em;
+
+    /* ---- spacing ---- */
+    --sp-1: 0.25rem;
+    --sp-2: 0.5rem;
+    --sp-3: 0.75rem;
+    --sp-4: 1rem;
+    --sp-5: 1.25rem;
+    --sp-6: 1.5rem;
+    --sp-7: 1.75rem;
+    --sp-8: 2rem;
+    --sp-10: 2.5rem;
+    --sp-12: 3rem;
+    --sp-16: 4rem;
+
+    /* ---- geometry ---- */
+    --r-xs: 4px;
+    --r-sm: 6px;
+    --r-control: 8px;
+    --r-panel: 12px;
+    --r-sheet: 16px;
+    --r-pill: 999px;
+    --rail-w: 14.75rem;
+    --rail-compact-w: 4.75rem;
+    --topbar-h: 4rem;
+    --content-max: 106rem;
+    --gutter: clamp(1rem, 2.2vw, 2rem);
+    --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.32);
+    --shadow-2: 0 18px 44px -22px rgba(0, 0, 0, 0.7);
+    --shadow-3: 0 32px 80px -32px rgba(0, 0, 0, 0.85);
+
+    /* ---- depth & material ---- */
+    --z-base: 0;
+    --z-sticky: 20;
+    --z-rail: 30;
+    --z-topbar: 40;
+    --z-inspector: 50;
+    --z-overlay: 60;
+    --z-toast: 70;
+    --blur-glass: 18px;
+    --blur-sheet: 28px;
+    --light-edge: linear-gradient(
+      90deg,
+      var(--accent-bright) 0%,
+      var(--accent) 26%,
+      rgba(227, 165, 102, 0.16) 62%,
+      transparent 100%
+    );
+
+    /* ---- motion ---- */
+    --dur-1: 90ms;
+    --dur-2: 160ms;
+    --dur-3: 260ms;
+    --dur-view: 320ms;
+    --ease: cubic-bezier(0.2, 0.75, 0.25, 1);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+    /* ---- ambient light: one warm source, one cold source, no grid ---- */
+    --ambient: radial-gradient(120% 80% at -6% -12%, rgba(227, 165, 102, 0.075), transparent 58%),
+      radial-gradient(90% 70% at 96% -18%, rgba(126, 176, 196, 0.06), transparent 62%),
+      linear-gradient(178deg, #0d1114 0%, #0b0e11 46%, #080b0d 100%);
+
+    /* ---- chart series (semantic, colour-blind friendly order) ---- */
+    --series-1: #e3a566;
+    --series-2: #8fc2d8;
+    --series-3: #a9cdb9;
+    --series-4: #cbb3d6;
+    --series-5: #d9c78f;
+    --series-6: #96a6c4;
+  }
+
+  /* OKLCH where supported: same intent, better perceptual control. */
+  @supports (color: oklch(50% 0.1 200)) {
+    :root {
+      --bg-deep: oklch(0.125 0.008 235);
+      --bg-base: oklch(0.155 0.009 235);
+      --surface-1: oklch(0.205 0.011 235);
+      --surface-2: oklch(0.235 0.012 235);
+      --surface-3: oklch(0.275 0.013 235);
+      --surface-inset: oklch(0.175 0.010 235);
+      --text-1: oklch(0.96 0.005 235);
+      --text-2: oklch(0.835 0.008 235);
+      --text-3: oklch(0.705 0.010 235);
+      --accent: oklch(0.78 0.10 68);
+      --accent-bright: oklch(0.865 0.105 74);
+      --accent-deep: oklch(0.67 0.115 58);
+      --focus: oklch(0.89 0.10 78);
+      --success: oklch(0.78 0.095 158);
+      --low: oklch(0.82 0.05 200);
+      --info: oklch(0.79 0.065 218);
+      --warning: oklch(0.845 0.125 88);
+      --high: oklch(0.755 0.145 48);
+      --critical: oklch(0.68 0.175 24);
+      --scrim: oklch(0.09 0.006 235 / 0.72);
+    }
+  }
+
+  /* Semantic status mapping. Colour is always paired with a label in the UI. */
+  [data-severity="info"] { --sev: var(--info); --sev-soft: rgba(143, 194, 216, 0.13); }
+  [data-severity="low"] { --sev: var(--low); --sev-soft: rgba(167, 205, 211, 0.12); }
+  [data-severity="medium"] { --sev: var(--warning); --sev-soft: rgba(239, 199, 109, 0.14); }
+  [data-severity="high"] { --sev: var(--high); --sev-soft: rgba(240, 155, 96, 0.15); }
+  [data-severity="critical"] { --sev: var(--critical); --sev-soft: rgba(237, 107, 95, 0.16); }
+
+  [data-quality="good"] { --q: var(--success); }
+  [data-quality="uncertain"],
+  [data-quality="clock_uncertain"] { --q: var(--warning); }
+  [data-quality="bad"],
+  [data-quality="frozen"] { --q: var(--critical); }
+  [data-quality="stale"],
+  [data-quality="missing"] { --q: var(--text-3); }
+
+  [data-site-status="online"] { --st: var(--success); }
+  [data-site-status="degraded"] { --st: var(--warning); }
+  [data-site-status="offline"] { --st: var(--critical); }
+  [data-site-status="unknown"] { --st: var(--text-3); }
+
+  /* Metric tone helper for confidence / risk bars. */
+  [data-tone="high"] { --tone: var(--success); }
+  [data-tone="medium"] { --tone: var(--warning); }
+  [data-tone="low"] { --tone: var(--high); }
+  [data-tone="critical"] { --tone: var(--critical); }
+  [data-tone="neutral"] { --tone: var(--text-3); }
+}

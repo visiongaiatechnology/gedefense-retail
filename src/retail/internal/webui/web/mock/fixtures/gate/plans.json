@@ -1,0 +1,314 @@
+{
+  "items": [
+    {
+      "plan_id": "pln-2026-11-04-01",
+      "site_id": "filiale-001",
+      "target_id": "aksm-1",
+      "asset_id": "asset-danfoss-aksm800",
+      "protocol": "modbus_tcp",
+      "operations": [
+        {
+          "operation_id": "op-1",
+          "protocol": "modbus_tcp",
+          "function": "fc6",
+          "address": "40001",
+          "current_value": "4.0",
+          "new_value": "3.5",
+          "unit": "celsius",
+          "notes": "Sollwert K\u00fchlraum LINKS"
+        },
+        {
+          "operation_id": "op-2",
+          "protocol": "modbus_tcp",
+          "function": "fc6",
+          "address": "40002",
+          "current_value": "2.5",
+          "new_value": "2.0",
+          "unit": "celsius",
+          "notes": "Sollwert Molkerei"
+        }
+      ],
+      "reason": "Sollwertanpassung Fleischzone nach Wartung; Messwerte vor Ort gepr\u00fcft.",
+      "ticket_ref": "SVC-2026-1104",
+      "requested_by": "vendor-acme",
+      "requested_at": "2026-11-02T17:40:00Z",
+      "window_start": "2026-11-04T06:00:00Z",
+      "window_end": "2026-11-04T08:00:00Z",
+      "state": "pending",
+      "approvals": [],
+      "plan_hash": "f1080ca40d37e0adc56b2d6b37508f3ae6ac1597e706414fd12a5b18d0cfc0e9",
+      "created_at": "2026-11-02T17:40:00Z",
+      "updated_at": "2026-11-02T17:40:00Z",
+      "executed_at": "",
+      "executed_by": "",
+      "critical": true,
+      "four_eyes": true
+    },
+    {
+      "plan_id": "pln-2026-11-04-02",
+      "site_id": "filiale-001",
+      "target_id": "xweb-1",
+      "asset_id": "asset-dixell-xweb",
+      "protocol": "http",
+      "operations": [
+        {
+          "operation_id": "op-1",
+          "protocol": "http",
+          "function": "http_post",
+          "address": "/cgi-bin/config",
+          "current_value": "-",
+          "new_value": "sha256:9c1f3a0b7d4e6f8123456789abcdef0123456789abcdef0123456789abcdef01",
+          "unit": "",
+          "notes": "Konfigurations-Export (Body-Hash)"
+        }
+      ],
+      "reason": "Supervisor-Konfiguration nach Firmware-Update neu einspielen.",
+      "ticket_ref": "SVC-2026-1105",
+      "requested_by": "vendor-acme",
+      "requested_at": "2026-11-02T17:52:00Z",
+      "window_start": "2026-11-04T09:00:00Z",
+      "window_end": "2026-11-04T11:00:00Z",
+      "state": "pending",
+      "approvals": [],
+      "plan_hash": "6f70f5d16373806e1d601c91d95b0c970c38639699b3be4e6d2817f92208b657",
+      "created_at": "2026-11-02T17:52:00Z",
+      "updated_at": "2026-11-02T17:52:00Z",
+      "executed_at": "",
+      "executed_by": "",
+      "critical": false,
+      "four_eyes": false
+    },
+    {
+      "plan_id": "pln-2026-11-04-03",
+      "site_id": "filiale-001",
+      "target_id": "aksm-1",
+      "asset_id": "asset-danfoss-aksm800",
+      "protocol": "modbus_tcp",
+      "operations": [
+        {
+          "operation_id": "op-1",
+          "protocol": "modbus_tcp",
+          "function": "fc6",
+          "address": "40010",
+          "current_value": "5.0",
+          "new_value": "4.5",
+          "unit": "celsius",
+          "notes": "Sollwert Reserve"
+        }
+      ],
+      "reason": "Korrektur nach Sensorpr\u00fcfung; zweite Freigabe noch offen.",
+      "ticket_ref": "SVC-2026-1106",
+      "requested_by": "vendor-acme",
+      "requested_at": "2026-11-02T18:05:00Z",
+      "window_start": "2026-11-04T07:00:00Z",
+      "window_end": "2026-11-04T09:00:00Z",
+      "state": "pending",
+      "approvals": [
+        {
+          "approval_id": "apr-c1",
+          "plan_id": "pln-2026-11-04-03",
+          "approver_id": "approver-01",
+          "role": "approver",
+          "approved": true,
+          "comment": "Werte plausibel, Ziel best\u00e4tigt",
+          "plan_hash": "c6d8b30b8cc1ba87c5fc31196a625208f095f385e5181275f374f3028719cae2",
+          "mfa_used": true,
+          "at": "2026-11-02T18:10:00Z"
+        }
+      ],
+      "plan_hash": "c6d8b30b8cc1ba87c5fc31196a625208f095f385e5181275f374f3028719cae2",
+      "created_at": "2026-11-02T18:05:00Z",
+      "updated_at": "2026-11-02T18:05:00Z",
+      "executed_at": "",
+      "executed_by": "",
+      "critical": true,
+      "four_eyes": true
+    },
+    {
+      "plan_id": "pln-2026-11-03-04",
+      "site_id": "filiale-001",
+      "target_id": "aksm-1",
+      "asset_id": "asset-danfoss-aksm800",
+      "protocol": "modbus_tcp",
+      "operations": [
+        {
+          "operation_id": "op-1",
+          "protocol": "modbus_tcp",
+          "function": "fc6",
+          "address": "40001",
+          "current_value": "4.0",
+          "new_value": "3.8",
+          "unit": "celsius",
+          "notes": "Sollwert K\u00fchlraum"
+        }
+      ],
+      "reason": "Freigegebene Nachjustierung im aktiven Wartungsfenster.",
+      "ticket_ref": "SVC-2026-1101",
+      "requested_by": "vendor-acme",
+      "requested_at": "2026-11-03T15:20:00Z",
+      "window_start": "2026-11-03T18:00:00Z",
+      "window_end": "2026-11-03T20:00:00Z",
+      "state": "approved",
+      "approvals": [
+        {
+          "approval_id": "apr-d1",
+          "plan_id": "pln-2026-11-03-04",
+          "approver_id": "approver-01",
+          "role": "approver",
+          "approved": true,
+          "comment": "Technisch plausibel",
+          "plan_hash": "8092e221e56fdd01bfd827dd758f3a76bd06a056a082a2693450d8986195ccf1",
+          "mfa_used": true,
+          "at": "2026-11-03T17:05:00Z"
+        },
+        {
+          "approval_id": "apr-d2",
+          "plan_id": "pln-2026-11-03-04",
+          "approver_id": "master-admin-01",
+          "role": "master_admin",
+          "approved": true,
+          "comment": "Vier-Augen vollst\u00e4ndig",
+          "plan_hash": "8092e221e56fdd01bfd827dd758f3a76bd06a056a082a2693450d8986195ccf1",
+          "mfa_used": true,
+          "at": "2026-11-03T17:12:00Z"
+        }
+      ],
+      "plan_hash": "8092e221e56fdd01bfd827dd758f3a76bd06a056a082a2693450d8986195ccf1",
+      "created_at": "2026-11-03T15:20:00Z",
+      "updated_at": "2026-11-03T15:20:00Z",
+      "executed_at": "",
+      "executed_by": "",
+      "critical": true,
+      "four_eyes": true
+    },
+    {
+      "plan_id": "pln-2026-11-03-05",
+      "site_id": "filiale-001",
+      "target_id": "xweb-1",
+      "asset_id": "asset-dixell-xweb",
+      "protocol": "http",
+      "operations": [
+        {
+          "operation_id": "op-1",
+          "protocol": "http",
+          "function": "http_post",
+          "address": "/cgi-bin/config",
+          "current_value": "-",
+          "new_value": "sha256:aa11bb22cc33dd44ee55ff6600112233445566778899aabbccddeeff00112233",
+          "unit": "",
+          "notes": ""
+        }
+      ],
+      "reason": "Konfiguration w\u00e4hrend Wartung gesetzt; Session beendet.",
+      "ticket_ref": "SVC-2026-1102",
+      "requested_by": "vendor-acme",
+      "requested_at": "2026-11-03T10:10:00Z",
+      "window_start": "2026-11-03T10:30:00Z",
+      "window_end": "2026-11-03T11:30:00Z",
+      "state": "executed",
+      "approvals": [
+        {
+          "approval_id": "apr-e1",
+          "plan_id": "pln-2026-11-03-05",
+          "approver_id": "approver-01",
+          "role": "approver",
+          "approved": true,
+          "comment": "i.O.",
+          "plan_hash": "2fac2621b2b53b91aa085a832d97cb900e51bc3830120d7cce2e05c1a5ab5191",
+          "mfa_used": true,
+          "at": "2026-11-03T10:20:00Z"
+        }
+      ],
+      "plan_hash": "2fac2621b2b53b91aa085a832d97cb900e51bc3830120d7cce2e05c1a5ab5191",
+      "created_at": "2026-11-03T10:10:00Z",
+      "updated_at": "2026-11-03T10:10:00Z",
+      "executed_at": "2026-11-03T10:40:00Z",
+      "executed_by": "vendor-acme",
+      "critical": false,
+      "four_eyes": false
+    },
+    {
+      "plan_id": "pln-2026-11-02-06",
+      "site_id": "filiale-001",
+      "target_id": "aksm-1",
+      "asset_id": "asset-danfoss-aksm800",
+      "protocol": "modbus_tcp",
+      "operations": [
+        {
+          "operation_id": "op-1",
+          "protocol": "modbus_tcp",
+          "function": "fc6",
+          "address": "40001",
+          "current_value": "4.0",
+          "new_value": "9.0",
+          "unit": "celsius",
+          "notes": "Unplausibler Sollwert"
+        }
+      ],
+      "reason": "Testantrag mit unplausiblem Wert.",
+      "ticket_ref": "SVC-2026-1098",
+      "requested_by": "vendor-acme",
+      "requested_at": "2026-11-02T09:05:00Z",
+      "window_start": "2026-11-02T09:30:00Z",
+      "window_end": "2026-11-02T10:30:00Z",
+      "state": "rejected",
+      "approvals": [
+        {
+          "approval_id": "apr-f1",
+          "plan_id": "pln-2026-11-02-06",
+          "approver_id": "approver-01",
+          "role": "approver",
+          "approved": false,
+          "comment": "Sollwert 9 Grad liegt au\u00dferhalb des Betreiberbereichs.",
+          "plan_hash": "53de311cec1a5ee9763f1a70bef6e1a5b1a36dd81c534eab3d85779d853f9f25",
+          "mfa_used": true,
+          "at": "2026-11-02T09:20:00Z"
+        }
+      ],
+      "plan_hash": "53de311cec1a5ee9763f1a70bef6e1a5b1a36dd81c534eab3d85779d853f9f25",
+      "created_at": "2026-11-02T09:05:00Z",
+      "updated_at": "2026-11-02T09:05:00Z",
+      "executed_at": "",
+      "executed_by": "",
+      "critical": false,
+      "four_eyes": false
+    },
+    {
+      "plan_id": "pln-2026-11-02-07",
+      "site_id": "filiale-001",
+      "target_id": "xweb-1",
+      "asset_id": "asset-dixell-xweb",
+      "protocol": "http",
+      "operations": [
+        {
+          "operation_id": "op-1",
+          "protocol": "http",
+          "function": "http_post",
+          "address": "/cgi-bin/config",
+          "current_value": "-",
+          "new_value": "sha256:deadbeef",
+          "unit": "",
+          "notes": ""
+        }
+      ],
+      "reason": "Antrag ohne Freigabe; Fenster abgelaufen.",
+      "ticket_ref": "SVC-2026-1099",
+      "requested_by": "vendor-acme",
+      "requested_at": "2026-11-02T06:00:00Z",
+      "window_start": "2026-11-02T06:30:00Z",
+      "window_end": "2026-11-02T07:30:00Z",
+      "state": "expired",
+      "approvals": [],
+      "plan_hash": "abc5aab3c7c2e6f1853912ee3e98995fe85905a7e9ed1aa91d91ccef481fdfd9",
+      "created_at": "2026-11-02T06:00:00Z",
+      "updated_at": "2026-11-02T06:00:00Z",
+      "executed_at": "",
+      "executed_by": "",
+      "critical": false,
+      "four_eyes": false
+    }
+  ],
+  "total": 7,
+  "limit": 100,
+  "offset": 0
+}

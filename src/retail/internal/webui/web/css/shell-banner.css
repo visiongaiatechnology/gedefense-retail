@@ -1,0 +1,19 @@
+/*
+ * Persistent connection/staleness banner below the command bar. Kept in its own
+ * file so layout.css stays inside the file-size budget.
+ */
+@layer layout {
+  .shell-banner {
+    padding: var(--sp-2) var(--gutter) 0;
+  }
+
+  .shell-banner:empty {
+    display: none;
+  }
+
+  @media (max-width: 820px) {
+    .shell-banner {
+      padding: var(--sp-2) var(--sp-3) 0;
+    }
+  }
+}

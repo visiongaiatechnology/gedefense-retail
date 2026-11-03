@@ -1,0 +1,37 @@
+[Unit]
+Description=GeDefense Retail Access Gate (Management-/Konfigurationspfad)
+Documentation=file:///opt/gedefense-retail/docs/retail/access-gate-operations-runbook.md
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=gedefense-gate
+Group=gedefense-gate
+ExecStart=/opt/gedefense-retail/bin/retailgate serve --config /etc/gedefense-retail/gate.json
+Restart=on-failure
+RestartSec=5s
+# Fail-safe: the gate only controls the management path. If it stops, remote
+# management is closed, while the refrigeration plant keeps running autonomously.
+CapabilityBoundingSet=
+AmbientCapabilities=
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+# Data dir is the only writable location (plans, sessions, audit).
+ReadWritePaths=/var/lib/gedefense-gate
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+RestrictNamespaces=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+SystemCallArchitectures=native
+TimeoutStopSec=20s
+KillSignal=SIGTERM
+
+[Install]
+WantedBy=multi-user.target

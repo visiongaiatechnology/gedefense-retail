@@ -1,0 +1,93 @@
+{
+  "items": [
+    {
+      "subject": "controller_parameters",
+      "asset_id": "asset-verbund-01",
+      "zone_id": "zone-cold-01",
+      "version": "2.5",
+      "sha256": "a3750b9bdd9935b1a4e91d44a901bed880b8f74aac69e0bbcfd91e0dff153e27",
+      "changed": true,
+      "approved": false,
+      "first_seen_at": "2026-11-03T16:14:00Z",
+      "last_seen_at": "2026-11-03T16:14:00Z"
+    },
+    {
+      "subject": "firmware",
+      "asset_id": "asset-verbund-02",
+      "zone_id": "zone-cold-02",
+      "version": "3.1.2",
+      "sha256": "5e9a94fed1d56fce0659924446052437081e99451fe57189dd429348f4e38326",
+      "changed": false,
+      "approved": true,
+      "first_seen_at": "2026-10-02T09:00:00Z",
+      "last_seen_at": "2026-11-03T08:00:00Z"
+    },
+    {
+      "subject": "controller_parameters",
+      "asset_id": "asset-ksr-molkerei",
+      "zone_id": "zone-cold-02",
+      "version": "2.6",
+      "sha256": "1194fad20c282e33191ede20fe86d7fa643ac93b1e65758bbbb80b91cae87cff",
+      "changed": true,
+      "approved": true,
+      "first_seen_at": "2026-11-03T08:30:00Z",
+      "last_seen_at": "2026-11-03T08:30:00Z"
+    },
+    {
+      "subject": "firmware",
+      "asset_id": "asset-sensorgw-01",
+      "zone_id": "zone-cold-01",
+      "version": "1.2.4",
+      "sha256": "73c8b44bb342b60b4621b3ff04dbfa0899ee052d290ab2e44cde7929200fd37c",
+      "changed": false,
+      "approved": false,
+      "first_seen_at": "2026-10-18T11:20:00Z",
+      "last_seen_at": "2026-10-18T11:20:00Z"
+    },
+    {
+      "subject": "configuration",
+      "asset_id": "asset-bms-gw",
+      "zone_id": "zone-mgmt-01",
+      "version": "4.0",
+      "sha256": "9a3f8ab7e834126a3fcf5b9d2fefcba9e772081ff0dd3857e9972efbff9a16eb",
+      "changed": true,
+      "approved": false,
+      "first_seen_at": "2026-11-03T12:10:00Z",
+      "last_seen_at": "2026-11-03T12:10:00Z"
+    },
+    {
+      "subject": "controller_parameters",
+      "asset_id": "asset-ksr-tk",
+      "zone_id": "zone-cold-02",
+      "version": "1.8",
+      "sha256": "e03efe0d53f353b7544837c31eef2f8e50eba84209bc7bd2c613f4c67221a7e4",
+      "changed": false,
+      "approved": true,
+      "first_seen_at": "2026-10-11T07:45:00Z",
+      "last_seen_at": "2026-11-03T08:00:00Z"
+    }
+  ],
+  "changes": [
+    {
+      "asset_id": "asset-verbund-01",
+      "subject": "controller_parameters",
+      "at": "2026-11-03T16:14:00Z",
+      "approved": false,
+      "alert_id": "alrt-2026-11-03-01"
+    },
+    {
+      "asset_id": "asset-bms-gw",
+      "subject": "configuration",
+      "at": "2026-11-03T12:10:00Z",
+      "approved": false,
+      "alert_id": ""
+    },
+    {
+      "asset_id": "asset-ksr-molkerei",
+      "subject": "controller_parameters",
+      "at": "2026-11-03T08:30:00Z",
+      "approved": true,
+      "alert_id": ""
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "status": "ok",
+  "product": "GeDefense Retail Access Gate",
+  "version": "0.2.0-mock",
+  "now": "2026-11-03T18:20:00Z",
+  "uptime_s": 86400,
+  "audit_chain_ok": true,
+  "targets": [
+    {
+      "target_id": "aksm-1",
+      "protocol": "modbus_tcp",
+      "state": "listening"
+    },
+    {
+      "target_id": "xweb-1",
+      "protocol": "http",
+      "state": "listening"
+    }
+  ],
+  "failsafe": {
+    "active": false,
+    "reason": ""
+  }
+}

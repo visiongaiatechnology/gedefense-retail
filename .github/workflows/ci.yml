@@ -1,0 +1,53 @@
+﻿name: ci
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  go:
+    name: Go build/vet/test/race
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: src/retail
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: src/retail/go.mod
+          cache: false
+      - name: go build
+        run: go build ./...
+      - name: go vet
+        run: go vet ./...
+      - name: gofmt
+        if: runner.os == 'Linux'
+        run: test -z "$(gofmt -l .)"
+      - name: go test
+        run: go test ./...
+      - name: go test -race
+        run: go test -race ./...
+
+  e2e:
+    name: Loopback E2E (Linux)
+    needs: go
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: src/retail/go.mod
+          cache: false
+      - name: e2e (retaild)
+        run: python3 tests/e2e.py
+      - name: e2e (retailgate)
+        run: python3 tests/gate_e2e.py

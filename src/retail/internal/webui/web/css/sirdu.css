@@ -1,0 +1,96 @@
+/*
+ * Brand mascot (Sirdu) and the local logo integration. Small, local, lazy
+ * imagery only; the mascot never appears inside an operational decision flow.
+ */
+@layer components {
+  .sirdu-figure,
+  .sirdu-404,
+  .sirdu-offline,
+  .sirdu-dialog__figure {
+    display: block;
+    object-fit: contain;
+    filter: drop-shadow(0 1rem 2rem color-mix(in srgb, #000 35%, transparent));
+  }
+
+  .sirdu-404 {
+    width: clamp(9rem, 18vw, 13rem);
+    max-height: 42vh;
+    margin-inline: auto;
+    object-position: bottom center;
+  }
+
+  .notfound {
+    display: grid;
+    gap: var(--sp-4);
+    justify-items: center;
+    padding-block: var(--sp-5);
+  }
+
+  .notfound > .state {
+    width: min(42rem, 100%);
+  }
+
+  .shell-banner__offline {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+  }
+
+  .shell-banner__offline > :last-child {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .sirdu-offline {
+    width: 3rem;
+    height: 3rem;
+    flex: none;
+    object-position: top center;
+  }
+
+  .sirdu-dialog {
+    display: grid;
+    grid-template-columns: minmax(7rem, 11rem) minmax(0, 1fr);
+    gap: var(--sp-4);
+    align-items: center;
+  }
+
+  .sirdu-dialog__figure {
+    width: 100%;
+    max-height: 16rem;
+    object-fit: contain;
+  }
+
+  .sirdu-dialog__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+  }
+
+  .sirdu-dialog__line {
+    color: var(--text-1);
+    font-size: var(--fs-400);
+    line-height: var(--lh-snug);
+  }
+
+  @media (max-width: 620px) {
+    .sirdu-dialog {
+      grid-template-columns: minmax(0, 1fr);
+      justify-items: center;
+      text-align: center;
+    }
+
+    .sirdu-dialog__figure {
+      max-height: 12rem;
+    }
+
+    .shell-banner__offline {
+      align-items: flex-start;
+    }
+
+    .sirdu-offline {
+      width: 2.25rem;
+      height: 2.25rem;
+    }
+  }
+}

@@ -1,0 +1,531 @@
+{
+  "items": [
+    {
+      "asset_id": "asset-verbund-01",
+      "site_id": "filiale-001",
+      "zone_id": "zone-cold-01",
+      "name": "Verbundregler Kälte LINKS",
+      "asset_type": "refrigeration_controller",
+      "vendor": "Danfoss",
+      "model": "AK-PC 781",
+      "firmware_version": "1.42",
+      "firmware_source": "modbus:read_fc3",
+      "firmware_confidence": 0.7,
+      "network_identifiers": [
+        {
+          "kind": "ip",
+          "value": "10.20.30.11",
+          "source": "collector.pnf.flow",
+          "confidence": 0.95,
+          "first_seen": "2026-09-14T07:42:00Z",
+          "last_seen": "2026-11-03T17:09:00Z"
+        },
+        {
+          "kind": "mac",
+          "value": "02:1a:11:00:00:01",
+          "source": "sniff.arp",
+          "confidence": 0.7,
+          "first_seen": "2026-09-14T07:42:00Z",
+          "last_seen": "2026-11-03T17:09:00Z"
+        },
+        {
+          "kind": "protocol_hint",
+          "value": "modbus_tcp:502",
+          "source": "collector.pnf.flow",
+          "confidence": 0.8,
+          "first_seen": "2026-09-14T07:42:00Z",
+          "last_seen": "2026-11-03T17:09:00Z"
+        }
+      ],
+      "protocols": [
+        "modbus_tcp"
+      ],
+      "criticality": "critical",
+      "confidence": 0.92,
+      "classification_source": "auto",
+      "source": "discovery.passive",
+      "first_seen_at": "2026-09-14T07:42:00Z",
+      "last_seen_at": "2026-11-03T17:09:00Z",
+      "retired": false,
+      "operator_notes": ""
+    },
+    {
+      "asset_id": "asset-verbund-02",
+      "site_id": "filiale-001",
+      "zone_id": "zone-cold-02",
+      "name": "Verbundregler Kälte RECHTS",
+      "asset_type": "refrigeration_controller",
+      "vendor": "Emerson",
+      "model": "E2 RX",
+      "firmware_version": "3.1.2",
+      "firmware_source": "bacnet:readproperty",
+      "firmware_confidence": 0.6,
+      "network_identifiers": [
+        {
+          "kind": "ip",
+          "value": "10.20.30.12",
+          "source": "collector.pnf.flow",
+          "confidence": 0.95,
+          "first_seen": "2026-09-14T07:42:00Z",
+          "last_seen": "2026-11-03T17:09:00Z"
+        },
+        {
+          "kind": "protocol_hint",
+          "value": "bacnet_ip:47808",
+          "source": "collector.bacnet",
+          "confidence": 0.8,
+          "first_seen": "2026-09-14T08:02:00Z",
+          "last_seen": "2026-11-03T17:08:00Z"
+        }
+      ],
+      "protocols": [
+        "bacnet_ip"
+      ],
+      "criticality": "critical",
+      "confidence": 0.88,
+      "classification_source": "auto",
+      "source": "discovery.passive",
+      "first_seen_at": "2026-09-14T07:42:00Z",
+      "last_seen_at": "2026-11-03T17:09:00Z",
+      "retired": false,
+      "operator_notes": ""
+    },
+    {
+      "asset_id": "asset-ksr-molkerei",
+      "site_id": "filiale-001",
+      "zone_id": "zone-cold-02",
+      "name": "Kühlstellenregler Molkerei",
+      "asset_type": "refrigeration_controller",
+      "vendor": "Carel",
+      "model": "pRack PR100",
+      "firmware_version": "2.6.0",
+      "firmware_source": "modbus:read_fc3",
+      "firmware_confidence": 0.65,
+      "network_identifiers": [
+        {
+          "kind": "ip",
+          "value": "10.20.30.21",
+          "source": "collector.pnf.flow",
+          "confidence": 0.95,
+          "first_seen": "2026-09-14T07:42:00Z",
+          "last_seen": "2026-11-03T17:09:00Z"
+        }
+      ],
+      "protocols": [
+        "modbus_tcp"
+      ],
+      "criticality": "high",
+      "confidence": 0.81,
+      "classification_source": "auto",
+      "source": "discovery.passive",
+      "first_seen_at": "2026-09-14T07:42:00Z",
+      "last_seen_at": "2026-11-03T17:09:00Z",
+      "retired": false,
+      "operator_notes": ""
+    },
+    {
+      "asset_id": "asset-ksr-tk",
+      "site_id": "filiale-001",
+      "zone_id": "zone-cold-02",
+      "name": "Kühlstellenregler TK-Zelle",
+      "asset_type": "refrigeration_controller",
+      "vendor": "Danfoss",
+      "model": "EKC 202",
+      "firmware_version": "1.8",
+      "firmware_source": "modbus:read_fc3",
+      "firmware_confidence": 0.6,
+      "network_identifiers": [
+        {
+          "kind": "ip",
+          "value": "10.20.30.22",
+          "source": "collector.pnf.flow",
+          "confidence": 0.95,
+          "first_seen": "2026-09-14T07:42:00Z",
+          "last_seen": "2026-11-03T17:09:00Z"
+        }
+      ],
+      "protocols": [
+        "modbus_tcp"
+      ],
+      "criticality": "critical",
+      "confidence": 0.76,
+      "classification_source": "auto",
+      "source": "discovery.passive",
+      "first_seen_at": "2026-09-14T07:42:00Z",
+      "last_seen_at": "2026-11-03T17:09:00Z",
+      "retired": false,
+      "operator_notes": ""
+    },
+    {
+      "asset_id": "asset-ksr-fleisch",
+      "site_id": "filiale-001",
+      "zone_id": "zone-cold-01",
+      "name": "Kühlstellenregler Fleisch",
+      "asset_type": "refrigeration_controller",
+      "vendor": "Eliwell",
+      "model": "EW 971",
+      "firmware_version": "4.2",
+      "firmware_source": "modbus:read_fc3",
+      "firmware_confidence": 0.55,
+      "network_identifiers": [
+        {
+          "kind": "ip",
+          "value": "10.20.30.23",
+          "source": "collector.pnf.flow",
+          "confidence": 0.95,
+          "first_seen": "2026-09-14T07:42:00Z",
+          "last_seen": "2026-11-03T17:09:00Z"
+        }
+      ],
+      "protocols": [
+        "modbus_tcp"
+      ],
+      "criticality": "high",
+      "confidence": 0.72,
+      "classification_source": "auto",
+      "source": "discovery.passive",
+      "first_seen_at": "2026-09-14T07:42:00Z",
+      "last_seen_at": "2026-11-03T17:09:00Z",
+      "retired": false,
+      "operator_notes": ""
+    },
+    {
+      "asset_id": "asset-sensorgw-01",
+      "site_id": "filiale-001",
+      "zone_id": "zone-cold-01",
+      "name": "Sensor-Gateway Kälte",
+      "asset_type": "sensor_gateway",
+      "vendor": "TEKO",
+      "model": "SG-200",
+      "firmware_version": "1.2.4",
+      "firmware_source": "mqtt:json:status",
+      "firmware_confidence": 0.5,
+      "network_identifiers": [
+        {
+          "kind": "ip",
+          "value": "10.20.30.31",
+          "source": "collector.pnf.flow",
+          "confidence": 0.95,
+          "first_seen": "2026-09-14T07:42:00Z",
+          "last_seen": "2026-11-03T17:09:00Z"
+        },
+        {
+          "kind": "protocol_hint",
+          "value": "mqtt:1883",
+          "source": "collector.mqtt",
+          "confidence": 0.9,
+          "first_seen": "2026-09-14T07:50:00Z",
+          "last_seen": "2026-11-03T17:09:00Z"
+        }
+      ],
+      "protocols": [
+        "mqtt"
+      ],
+      "criticality": "high",
+      "confidence": 0.84,
+      "classification_source": "auto",
+      "source": "discovery.passive",
+      "first_seen_at": "2026-09-14T07:42:00Z",
+      "last_seen_at": "2026-11-03T17:09:00Z",
+      "retired": false,
+      "operator_notes": ""
+    },
+    {
+      "asset_id": "asset-bms-gw",
+      "site_id": "filiale-001",
+      "zone_id": "zone-mgmt-01",
+      "name": "Gebäudeleittechnik Gateway",
+      "asset_type": "bms",
+      "vendor": "Siemens",
+      "model": "",
+      "firmware_version": "4.0",
+      "firmware_source": "bacnet:readproperty",
+      "firmware_confidence": 0.4,
+      "network_identifiers": [
+        {
+          "kind": "ip",
+          "value": "10.20.40.10",
+          "source": "collector.pnf.flow",
+          "confidence": 0.95,
+          "first_seen": "2026-09-14T07:42:00Z",
+          "last_seen": "2026-11-03T17:09:00Z"
+        }
+      ],
+      "protocols": [
+        "bacnet_ip",
+        "snmp"
+      ],
+      "criticality": "medium",
+      "confidence": 0.58,
+      "classification_source": "auto",
+      "source": "discovery.passive",
+      "first_seen_at": "2026-09-14T07:42:00Z",
+      "last_seen_at": "2026-11-03T17:09:00Z",
+      "retired": false,
+      "operator_notes": ""
+    },
+    {
+      "asset_id": "asset-edge-01",
+      "site_id": "filiale-001",
+      "zone_id": "zone-mgmt-01",
+      "name": "Edge-Gateway Filiale",
+      "asset_type": "edge_gateway",
+      "vendor": "",
+      "model": "",
+      "firmware_version": "",
+      "firmware_source": "",
+      "firmware_confidence": 0.0,
+      "network_identifiers": [
+        {
+          "kind": "ip",
+          "value": "10.20.40.1",
+          "source": "collector.pnf.flow",
+          "confidence": 0.95,
+          "first_seen": "2026-09-14T07:42:00Z",
+          "last_seen": "2026-11-03T17:09:00Z"
+        }
+      ],
+      "protocols": [],
+      "criticality": "critical",
+      "confidence": 0.98,
+      "classification_source": "manual",
+      "source": "operator.config",
+      "first_seen_at": "2026-09-14T07:42:00Z",
+      "last_seen_at": "2026-11-03T17:09:00Z",
+      "retired": false,
+      "operator_notes": "Gateway mit GeDefense Retail, dedizierter Managementpfad."
+    },
+    {
+      "asset_id": "asset-switch-ot-01",
+      "site_id": "filiale-001",
+      "zone_id": "zone-ot-mon-01",
+      "name": "Netzwerk-Switch OT",
+      "asset_type": "network_device",
+      "vendor": "Hirschmann",
+      "model": "RS20",
+      "firmware_version": "",
+      "firmware_source": "",
+      "firmware_confidence": 0.0,
+      "network_identifiers": [
+        {
+          "kind": "ip",
+          "value": "10.20.30.2",
+          "source": "collector.pnf.flow",
+          "confidence": 0.95,
+          "first_seen": "2026-09-14T07:42:00Z",
+          "last_seen": "2026-11-03T17:09:00Z"
+        }
+      ],
+      "protocols": [
+        "snmp"
+      ],
+      "criticality": "high",
+      "confidence": 0.9,
+      "classification_source": "auto",
+      "source": "discovery.passive",
+      "first_seen_at": "2026-09-14T07:42:00Z",
+      "last_seen_at": "2026-11-03T17:09:00Z",
+      "retired": false,
+      "operator_notes": ""
+    },
+    {
+      "asset_id": "asset-hmi-technik",
+      "site_id": "filiale-001",
+      "zone_id": "zone-mgmt-01",
+      "name": "HMI Technikraum",
+      "asset_type": "hmi",
+      "vendor": "Weintek",
+      "model": "cMT3072",
+      "firmware_version": "3.2",
+      "firmware_source": "modbus:read_fc3",
+      "firmware_confidence": 0.45,
+      "network_identifiers": [
+        {
+          "kind": "ip",
+          "value": "10.20.30.41",
+          "source": "collector.pnf.flow",
+          "confidence": 0.95,
+          "first_seen": "2026-09-14T07:42:00Z",
+          "last_seen": "2026-11-03T17:09:00Z"
+        }
+      ],
+      "protocols": [
+        "modbus_tcp"
+      ],
+      "criticality": "medium",
+      "confidence": 0.64,
+      "classification_source": "auto",
+      "source": "discovery.passive",
+      "first_seen_at": "2026-09-14T07:42:00Z",
+      "last_seen_at": "2026-11-03T17:09:00Z",
+      "retired": false,
+      "operator_notes": ""
+    },
+    {
+      "asset_id": "asset-unknown-01",
+      "site_id": "filiale-001",
+      "zone_id": "zone-unknown-01",
+      "name": "Unbekanntes Gerät 10.20.30.77",
+      "asset_type": "unknown",
+      "vendor": "",
+      "model": "",
+      "firmware_version": "",
+      "firmware_source": "",
+      "firmware_confidence": 0.0,
+      "network_identifiers": [
+        {
+          "kind": "ip",
+          "value": "10.20.30.77",
+          "source": "collector.pnf.flow",
+          "confidence": 0.95,
+          "first_seen": "2026-11-03T15:42:00Z",
+          "last_seen": "2026-11-03T17:07:00Z"
+        }
+      ],
+      "protocols": [
+        "modbus_tcp"
+      ],
+      "criticality": "medium",
+      "confidence": 0.3,
+      "classification_source": "auto",
+      "source": "discovery.passive",
+      "first_seen_at": "2026-09-14T07:42:00Z",
+      "last_seen_at": "2026-11-03T17:09:00Z",
+      "retired": false,
+      "operator_notes": "Passiv im OT-Prozess beobachtet; Typ und Rolle nicht belegt."
+    },
+    {
+      "asset_id": "asset-reserve-regler",
+      "site_id": "filiale-001",
+      "zone_id": "zone-cold-02",
+      "name": "Reserve-Regler (ausgemustert)",
+      "asset_type": "refrigeration_controller",
+      "vendor": "Danfoss",
+      "model": "EKC 201",
+      "firmware_version": "",
+      "firmware_source": "",
+      "firmware_confidence": 0.0,
+      "network_identifiers": [
+        {
+          "kind": "ip",
+          "value": "10.20.30.99",
+          "source": "collector.pnf.flow",
+          "confidence": 0.95,
+          "first_seen": "2026-09-14T07:42:00Z",
+          "last_seen": "2026-10-19T09:00:00Z"
+        }
+      ],
+      "protocols": [
+        "modbus_tcp"
+      ],
+      "criticality": "low",
+      "confidence": 0.42,
+      "classification_source": "auto",
+      "source": "discovery.passive",
+      "first_seen_at": "2026-09-14T07:42:00Z",
+      "last_seen_at": "2026-11-03T17:09:00Z",
+      "retired": true,
+      "operator_notes": ""
+    },
+    {
+      "asset_id": "asset-verbund-11",
+      "site_id": "filiale-002",
+      "zone_id": "zone-cold-11",
+      "name": "Verbundregler Markt Süd",
+      "asset_type": "refrigeration_controller",
+      "vendor": "Emerson",
+      "model": "E3",
+      "firmware_version": "2.9.1",
+      "firmware_source": "modbus:read_fc3",
+      "firmware_confidence": 0.6,
+      "network_identifiers": [
+        {
+          "kind": "ip",
+          "value": "10.30.30.11",
+          "source": "collector.pnf.flow",
+          "confidence": 0.95,
+          "first_seen": "2026-09-14T07:42:00Z",
+          "last_seen": "2026-11-03T17:09:00Z"
+        }
+      ],
+      "protocols": [
+        "modbus_tcp"
+      ],
+      "criticality": "critical",
+      "confidence": 0.86,
+      "classification_source": "auto",
+      "source": "discovery.passive",
+      "first_seen_at": "2026-09-14T07:42:00Z",
+      "last_seen_at": "2026-11-03T17:09:00Z",
+      "retired": false,
+      "operator_notes": ""
+    },
+    {
+      "asset_id": "asset-sensorgw-11",
+      "site_id": "filiale-002",
+      "zone_id": "zone-cold-11",
+      "name": "Sensor-Gateway Markt Süd",
+      "asset_type": "sensor_gateway",
+      "vendor": "TEKO",
+      "model": "SG-100",
+      "firmware_version": "1.1.9",
+      "firmware_source": "mqtt:json:status",
+      "firmware_confidence": 0.45,
+      "network_identifiers": [
+        {
+          "kind": "ip",
+          "value": "10.30.30.31",
+          "source": "collector.pnf.flow",
+          "confidence": 0.95,
+          "first_seen": "2026-09-14T07:42:00Z",
+          "last_seen": "2026-11-03T17:09:00Z"
+        }
+      ],
+      "protocols": [
+        "mqtt"
+      ],
+      "criticality": "high",
+      "confidence": 0.79,
+      "classification_source": "auto",
+      "source": "discovery.passive",
+      "first_seen_at": "2026-09-14T07:42:00Z",
+      "last_seen_at": "2026-11-03T17:09:00Z",
+      "retired": false,
+      "operator_notes": ""
+    },
+    {
+      "asset_id": "asset-edge-11",
+      "site_id": "filiale-002",
+      "zone_id": "zone-mgmt-11",
+      "name": "Edge-Gateway Markt Süd",
+      "asset_type": "edge_gateway",
+      "vendor": "",
+      "model": "",
+      "firmware_version": "",
+      "firmware_source": "",
+      "firmware_confidence": 0.0,
+      "network_identifiers": [
+        {
+          "kind": "ip",
+          "value": "10.40.40.1",
+          "source": "collector.pnf.flow",
+          "confidence": 0.95,
+          "first_seen": "2026-09-14T07:42:00Z",
+          "last_seen": "2026-11-03T17:09:00Z"
+        }
+      ],
+      "protocols": [],
+      "criticality": "critical",
+      "confidence": 0.95,
+      "classification_source": "manual",
+      "source": "operator.config",
+      "first_seen_at": "2026-09-14T07:42:00Z",
+      "last_seen_at": "2026-11-03T17:09:00Z",
+      "retired": false,
+      "operator_notes": ""
+    }
+  ],
+  "total": 15,
+  "limit": 200,
+  "offset": 0
+}

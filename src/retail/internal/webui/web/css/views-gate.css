@@ -1,0 +1,375 @@
+/*
+ * views-gate.css (Access Gate view; split for the file-size budget).
+ */
+@layer views {
+  /* ---- session & navigation ---- */
+  .gate-sessionbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-3) var(--sp-5);
+    padding: var(--sp-3) var(--sp-4);
+    border-radius: var(--r-control);
+  }
+
+  .gate-sessionbar__identity {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+
+  .gate-sessionbar__name {
+    color: var(--text-1);
+    font-size: var(--fs-400);
+    font-weight: 620;
+  }
+
+  .gate-sessionbar__meta,
+  .gate-sessionbar__roles {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-2);
+    color: var(--text-3);
+    font-size: var(--fs-100);
+  }
+
+  .gate-sessionbar > .btn {
+    margin-inline-start: auto;
+  }
+
+  .gate-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    align-items: center;
+  }
+
+
+  /* Empty tab/session hosts must not add vertical gap in login mode. */
+  .view--gate > div:empty {
+    display: none;
+  }
+
+  .gate-auth__logo {
+    width: 3.5rem;
+    height: 3.5rem;
+    object-fit: contain;
+    margin-block-end: var(--sp-3);
+    filter: drop-shadow(0 0 1.2rem color-mix(in srgb, var(--accent) 20%, transparent));
+  }
+
+  /* ---- gate login ---- */
+  .gate-auth {
+    display: flex;
+    justify-content: center;
+    padding-block: var(--sp-2);
+  }
+
+  .gate-auth__card {
+    width: min(44rem, 100%);
+    padding: clamp(1.25rem, 3vw, 2.25rem);
+  }
+
+  .gate-auth__kicker {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-2);
+    color: var(--text-3);
+    font-size: var(--fs-100);
+    font-weight: 600;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+  }
+
+  .gate-auth__title {
+    margin-block: var(--sp-2) var(--sp-2);
+    font-size: var(--fs-700);
+  }
+
+  .gate-auth__text {
+    max-width: 62ch;
+    color: var(--text-2);
+    font-size: var(--fs-300);
+  }
+
+  .gate-auth__health {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-2) var(--sp-4);
+    margin-block-start: var(--sp-4);
+    padding: var(--sp-2) var(--sp-3);
+    border: 1px solid var(--line);
+    border-radius: var(--r-control);
+    background: var(--surface-inset);
+  }
+
+  .gate-auth__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+    margin-block-start: var(--sp-4);
+  }
+
+  .gate-auth__submit {
+    align-self: flex-start;
+    margin-block-start: var(--sp-2);
+  }
+
+  .gate-auth__note {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sp-2);
+    margin-block-start: var(--sp-3);
+    padding-inline-start: var(--sp-3);
+    border-inline-start: 2px solid var(--accent);
+    color: var(--text-3);
+    font-size: var(--fs-100);
+    line-height: var(--lh-snug);
+  }
+
+
+  /* ---- filters (inbox / sessions / denies) ---- */
+  .gate-filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: var(--sp-3);
+    padding: var(--sp-3) var(--sp-4);
+    border-block-end: 1px solid var(--line);
+  }
+
+  .gate-filters .field {
+    flex: 0 1 12rem;
+  }
+
+  .gate-workspace .gate-filters .field {
+    flex: 1 1 7rem;
+  }
+
+  .gate-filters__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+    margin-inline-start: auto;
+  }
+
+
+  /* ---- inbox master/detail ---- */
+  .gate-workspace {
+    display: grid;
+    grid-template-columns: minmax(17rem, 24rem) minmax(0, 1fr);
+    gap: clamp(1rem, 1.8vw, 1.5rem);
+    align-items: start;
+  }
+
+  .gate-workspace__list,
+  .gate-workspace__detail {
+    min-width: 0;
+  }
+
+  .gate-inbox__body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .gate-plan-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .gate-plan-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    width: 100%;
+    padding: var(--sp-3) var(--sp-4);
+    border: 0;
+    border-block-end: 1px solid var(--line);
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: start;
+  }
+
+  .gate-plan-row:last-child {
+    border-block-end: 0;
+  }
+
+  .gate-plan-row:hover {
+    background: color-mix(in srgb, var(--surface-3) 40%, transparent);
+  }
+
+  .gate-plan-row[aria-current="true"] {
+    background: color-mix(in srgb, var(--accent) 8%, transparent);
+    box-shadow: inset 2px 0 0 var(--accent);
+  }
+
+  .gate-plan-row__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-2);
+    color: var(--text-3);
+    font-size: var(--fs-100);
+  }
+
+  .gate-plan-row__title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--sp-2);
+    color: var(--text-1);
+    font-size: var(--fs-300);
+    font-weight: 600;
+    line-height: var(--lh-snug);
+  }
+
+  .gate-plan-row__proto {
+    color: var(--text-3);
+    font-weight: 450;
+    font-size: var(--fs-100);
+  }
+
+  .gate-plan-row__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.7rem;
+    color: var(--text-3);
+    font-size: var(--fs-100);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .gate-plan-row__eyes {
+    color: var(--high);
+    font-weight: 600;
+  }
+
+
+  /* ---- plan detail ---- */
+  .gate-plan-detail {
+    gap: var(--sp-4);
+  }
+
+  .gate-plan-detail__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--sp-3);
+  }
+
+  .gate-plan-detail__title {
+    font-size: var(--fs-600);
+    font-weight: 640;
+    line-height: var(--lh-snug);
+    overflow-wrap: anywhere;
+  }
+
+  .gate-plan-detail__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-2) var(--sp-4);
+    color: var(--text-3);
+    font-size: var(--fs-200);
+  }
+
+  .gate-plan-detail__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-2);
+  }
+
+  .gate-plan-detail__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: var(--sp-3) var(--sp-4);
+    padding: var(--sp-3) var(--sp-4);
+    border: 1px solid var(--line);
+    border-radius: var(--r-control);
+    background: var(--surface-inset);
+  }
+
+  .gate-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    min-width: 0;
+  }
+
+  .gate-meta__label {
+    color: var(--text-3);
+    font-size: var(--fs-100);
+    font-weight: 600;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+  }
+
+  .gate-meta__value {
+    color: var(--text-1);
+    font-size: var(--fs-300);
+    overflow-wrap: anywhere;
+  }
+
+  .gate-meta__value--mono {
+    font-family: var(--font-mono);
+    font-size: var(--fs-200);
+  }
+
+  .gate-reason {
+    padding: var(--sp-3) var(--sp-4);
+    border-inline-start: 2px solid var(--accent);
+    background: color-mix(in srgb, var(--accent) 5%, transparent);
+    border-radius: 0 var(--r-control) var(--r-control) 0;
+  }
+
+  .gate-reason__label {
+    color: var(--text-3);
+    font-size: var(--fs-100);
+    font-weight: 600;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+  }
+
+  .gate-reason__text {
+    margin-block-start: 0.25rem;
+    color: var(--text-1);
+    font-size: var(--fs-300);
+    line-height: var(--lh-snug);
+  }
+
+  .gate-section__title {
+    color: var(--text-2);
+    font-size: var(--fs-300);
+    font-weight: 640;
+  }
+
+  .gate-op-flow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    white-space: nowrap;
+  }
+
+  .gate-op-flow__from {
+    color: var(--text-3);
+    text-decoration: line-through;
+    text-decoration-color: color-mix(in srgb, var(--text-3) 55%, transparent);
+  }
+
+  .gate-op-flow__to {
+    color: var(--accent-bright);
+    font-weight: 620;
+  }
+
+  .gate-op-flow .icon {
+    width: 0.8rem;
+    height: 0.8rem;
+    color: var(--text-3);
+  }
+}

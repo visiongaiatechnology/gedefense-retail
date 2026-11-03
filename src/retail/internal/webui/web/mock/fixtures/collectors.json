@@ -1,0 +1,47 @@
+[
+  {
+    "adapter_id": "modbus.pool1",
+    "state": "running",
+    "events": 9123,
+    "errors": 0,
+    "parser_errors": 0,
+    "unsupported": 0,
+    "last_event_at": "2026-11-03T17:11:00Z"
+  },
+  {
+    "adapter_id": "mqtt.telemetry",
+    "state": "running",
+    "events": 6312,
+    "errors": 0,
+    "parser_errors": 2,
+    "unsupported": 0,
+    "last_event_at": "2026-11-03T17:10:00Z"
+  },
+  {
+    "adapter_id": "bacnet.ip",
+    "state": "degraded",
+    "events": 1820,
+    "errors": 4,
+    "parser_errors": 2,
+    "unsupported": 14,
+    "last_event_at": "2026-11-03T17:05:00Z"
+  },
+  {
+    "adapter_id": "snmp.edge",
+    "state": "running",
+    "events": 2411,
+    "errors": 0,
+    "parser_errors": 0,
+    "unsupported": 0,
+    "last_event_at": "2026-11-03T17:06:00Z"
+  },
+  {
+    "adapter_id": "pcap.offline",
+    "state": "stopped",
+    "events": 320,
+    "errors": 0,
+    "parser_errors": 0,
+    "unsupported": 0,
+    "last_event_at": "2026-11-03T12:12:00Z"
+  }
+]

@@ -1,0 +1,267 @@
+/*
+ * views-workspace.css (split from views.css for the file-size budget).
+ */
+@layer views {
+
+  /* ---- incident workspace ---- */
+  .incident-workspace {
+    display: grid;
+    grid-template-columns: minmax(16rem, 20rem) minmax(0, 1fr);
+    gap: clamp(1rem, 1.8vw, 1.5rem);
+    align-items: start;
+  }
+
+  .incident-list {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--line);
+    border-radius: var(--r-panel);
+    background: var(--surface-1);
+    overflow: hidden;
+  }
+
+  .incident-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    width: 100%;
+    padding: var(--sp-3) var(--sp-4);
+    border: 0;
+    border-block-end: 1px solid var(--line);
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: start;
+  }
+
+  .incident-item:last-child {
+    border-block-end: 0;
+  }
+
+  .incident-item:hover {
+    background: color-mix(in srgb, var(--surface-3) 40%, transparent);
+  }
+
+  .incident-item[aria-current="true"] {
+    background: color-mix(in srgb, var(--accent) 8%, transparent);
+    box-shadow: inset 2px 0 0 var(--accent);
+  }
+
+  .incident-item__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-2);
+  }
+
+  .incident-item__title {
+    color: var(--text-1);
+    font-size: var(--fs-300);
+    font-weight: 580;
+    line-height: var(--lh-snug);
+  }
+
+  .incident-item__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 0.6rem;
+    color: var(--text-3);
+    font-size: var(--fs-100);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .incident-detail {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1rem, 1.8vw, 1.5rem);
+    min-width: 0;
+  }
+
+  .incident-detail__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--sp-3);
+  }
+
+  .incident-detail__title {
+    font-size: var(--fs-700);
+    font-weight: 640;
+    line-height: var(--lh-tight);
+    max-width: 40ch;
+  }
+
+  .incident-detail__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2) var(--sp-4);
+    margin-block-start: var(--sp-2);
+    color: var(--text-3);
+    font-size: var(--fs-200);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .incident-alert-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .incident-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sp-3);
+    padding: var(--sp-3) var(--sp-5);
+    border-block-end: 1px solid var(--line);
+  }
+
+  .incident-alert:last-child {
+    border-block-end: 0;
+  }
+
+  .incident-alert__main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .incident-alert__title {
+    color: var(--text-1);
+    font-size: var(--fs-300);
+    font-weight: 560;
+    line-height: var(--lh-snug);
+  }
+
+  .incident-alert__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 0.7rem;
+    color: var(--text-3);
+    font-size: var(--fs-100);
+  }
+
+  .incident-alert__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-1);
+    justify-content: flex-end;
+    flex: none;
+  }
+
+  .incident-note-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+    padding: var(--sp-4) var(--sp-5);
+    border-block-start: 1px solid var(--line);
+    background: var(--surface-inset);
+  }
+
+  .incident-note-form__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-2);
+  }
+
+  .incident-note-form__count {
+    color: var(--text-3);
+    font-size: var(--fs-100);
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (max-width: 1100px) {
+    .threat-layout,
+    .incident-workspace {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .incident-list {
+      max-height: 20rem;
+      overflow: auto;
+    }
+  }
+
+  /* Tablet/small desktop: the fleet row becomes a composed two-row record
+     instead of squeezing four columns into the available width. */
+  @media (max-width: 1180px) {
+    .fleet-row {
+      grid-template-columns: minmax(0, 1fr) auto;
+      row-gap: var(--sp-2);
+    }
+
+    .fleet-row__identity {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .fleet-row__meta {
+      grid-column: 2;
+      grid-row: 1;
+      align-items: flex-end;
+    }
+
+    .fleet-row__stats {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      gap: var(--sp-2) var(--sp-6);
+    }
+
+    .fleet-row__cold {
+      grid-column: 1 / -1;
+      grid-row: 3;
+      width: 100%;
+      max-width: 26rem;
+    }
+  }
+
+  @media (max-width: 820px) {
+    .fleet-row {
+      grid-template-columns: minmax(0, 1fr) auto;
+      padding: var(--sp-3) var(--sp-4);
+    }
+
+    .fleet-row__stats {
+      grid-column: 1 / -1;
+      gap: var(--sp-2) var(--sp-5);
+    }
+
+    .fleet-row__meta {
+      align-items: flex-end;
+    }
+
+    .cc-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .incident-alert {
+      flex-direction: column;
+      padding-inline: var(--sp-4);
+    }
+
+    .incident-alert__actions {
+      justify-content: flex-start;
+    }
+
+    .window-card,
+    .session-row,
+    .violation-row,
+    .dq-row,
+    .change-row,
+    .collector-row,
+    .zone-asset {
+      padding-inline: var(--sp-4);
+    }
+
+    .integrity-summary {
+      padding: var(--sp-3) var(--sp-4);
+    }
+
+    .access-axis__svg {
+      min-height: 10rem;
+    }
+  }
+}

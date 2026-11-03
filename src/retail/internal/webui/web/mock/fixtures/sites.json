@@ -1,0 +1,130 @@
+{
+  "items": [
+    {
+      "site_id": "filiale-001",
+      "tenant_id": "tenant-retail-nord",
+      "name": "Markt Nord",
+      "country": "DE",
+      "timezone": "Europe/Berlin",
+      "status": "online",
+      "gateway_asset_id": "asset-edge-01",
+      "zones": [
+        {
+          "zone_id": "zone-ext-01",
+          "site_id": "filiale-001",
+          "name": "Externe Wartung",
+          "kind": "external_maintenance",
+          "purpose": "Dedizierter Fernwartungspfad für Kältedienstleister",
+          "critical": true,
+          "operator_id": "user-anlagenverantwortlich-01"
+        },
+        {
+          "zone_id": "zone-mgmt-01",
+          "site_id": "filiale-001",
+          "name": "Management",
+          "kind": "management",
+          "purpose": "Filialleitung, Backoffice, zentrale Dienste",
+          "critical": false,
+          "operator_id": "user-filialleitung-01"
+        },
+        {
+          "zone_id": "zone-retail-it-01",
+          "site_id": "filiale-001",
+          "name": "Retail-IT",
+          "kind": "retail_it",
+          "purpose": "POS, Kassenumfeld, WLAN, Drucksysteme",
+          "critical": false,
+          "operator_id": ""
+        },
+        {
+          "zone_id": "zone-ot-mon-01",
+          "site_id": "filiale-001",
+          "name": "OT-Monitoring",
+          "kind": "ot_monitoring",
+          "purpose": "Passiver TAP / Spiegelport, Collector-Erreichbarkeit",
+          "critical": false,
+          "operator_id": ""
+        },
+        {
+          "zone_id": "zone-cold-01",
+          "site_id": "filiale-001",
+          "name": "Kälte OT LINKS",
+          "kind": "ot_process",
+          "purpose": "Verbundregler Kälte LINKS, Kühlraum LINKS, Molkerei",
+          "critical": true,
+          "operator_id": "user-anlagenverantwortlich-01"
+        },
+        {
+          "zone_id": "zone-cold-02",
+          "site_id": "filiale-001",
+          "name": "Kälte OT RECHTS",
+          "kind": "ot_process",
+          "purpose": "Verbundregler Kälte RECHTS, TK-Zelle, Kühlregale",
+          "critical": true,
+          "operator_id": "user-anlagenverantwortlich-01"
+        },
+        {
+          "zone_id": "zone-unknown-01",
+          "site_id": "filiale-001",
+          "name": "Nicht zugeordnetes Segment",
+          "kind": "unknown",
+          "purpose": "Passiv beobachtete Geräte ohne Betreiberzuordnung",
+          "critical": false,
+          "operator_id": ""
+        }
+      ],
+      "last_seen_at": "2026-11-03T17:10:00Z",
+      "created_at": "2026-09-14T07:30:00Z",
+      "updated_at": "2026-11-03T17:10:00Z",
+      "tags": [
+        "pilot",
+        "cold-chain"
+      ]
+    },
+    {
+      "site_id": "filiale-002",
+      "tenant_id": "tenant-retail-sued",
+      "name": "Markt Süd",
+      "country": "DE",
+      "timezone": "Europe/Berlin",
+      "status": "degraded",
+      "gateway_asset_id": "asset-edge-11",
+      "zones": [
+        {
+          "zone_id": "zone-cold-11",
+          "site_id": "filiale-002",
+          "name": "Kälte OT",
+          "kind": "ot_process",
+          "purpose": "Verbundregler, TK-Zelle",
+          "critical": true,
+          "operator_id": "user-anlagenverantwortlich-02"
+        },
+        {
+          "zone_id": "zone-mgmt-11",
+          "site_id": "filiale-002",
+          "name": "Management",
+          "kind": "management",
+          "purpose": "Filialleitung",
+          "critical": false
+        },
+        {
+          "zone_id": "zone-retail-it-11",
+          "site_id": "filiale-002",
+          "name": "Retail-IT",
+          "kind": "retail_it",
+          "purpose": "POS und Kassenumfeld",
+          "critical": false
+        }
+      ],
+      "last_seen_at": "2026-11-03T16:46:00Z",
+      "created_at": "2026-10-02T06:10:00Z",
+      "updated_at": "2026-11-03T16:46:00Z",
+      "tags": [
+        "pilot"
+      ]
+    }
+  ],
+  "total": 2,
+  "limit": 50,
+  "offset": 0
+}

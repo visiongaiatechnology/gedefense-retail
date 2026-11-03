@@ -1,0 +1,335 @@
+/*
+ * Reset + base typography and accessibility primitives.
+ */
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  p,
+  figure,
+  blockquote,
+  dl,
+  dd,
+  fieldset {
+    margin: 0;
+  }
+
+  fieldset {
+    padding: 0;
+    border: 0;
+  }
+
+  ::placeholder {
+    color: var(--text-3);
+    opacity: 1;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+    color: inherit;
+  }
+
+  button {
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+  }
+
+  button:disabled,
+  input:disabled,
+  select:disabled,
+  textarea:disabled {
+    cursor: not-allowed;
+  }
+
+  img,
+  svg,
+  video,
+  canvas {
+    display: block;
+    max-width: 100%;
+  }
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+  }
+
+  ul[class],
+  ol[class] {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  dialog {
+    padding: 0;
+    border: 0;
+    color: inherit;
+    background: none;
+    max-width: none;
+    max-height: none;
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+}
+
+@layer base {
+  :root {
+    background-color: var(--bg-deep);
+    accent-color: var(--accent);
+  }
+
+  body {
+    min-height: 100dvh;
+    margin: 0;
+    background: var(--ambient);
+    background-color: var(--bg-deep);
+    color: var(--text-1);
+    font-family: var(--font-sans);
+    font-size: var(--fs-400);
+    line-height: var(--lh-normal);
+    overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: 620;
+    line-height: var(--lh-tight);
+    letter-spacing: var(--tracking-tight);
+    text-wrap: balance;
+  }
+
+  h1 {
+    font-size: var(--fs-800);
+  }
+
+  h2 {
+    font-size: var(--fs-600);
+  }
+
+  h3 {
+    font-size: var(--fs-500);
+  }
+
+  h4 {
+    font-size: var(--fs-400);
+  }
+
+  p {
+    max-width: 76ch;
+    text-wrap: pretty;
+  }
+
+  a {
+    color: var(--accent-bright);
+    text-decoration-color: color-mix(in srgb, var(--accent) 55%, transparent);
+    text-underline-offset: 0.18em;
+  }
+
+  a:hover {
+    text-decoration-color: var(--accent-bright);
+  }
+
+  code,
+  kbd,
+  samp,
+  pre {
+    font-family: var(--font-mono);
+    font-size: 0.94em;
+  }
+
+  kbd {
+    display: inline-block;
+    min-width: 1.9em;
+    padding: 0.12em 0.45em;
+    border: 1px solid var(--line-strong);
+    border-block-end-width: 2px;
+    border-radius: var(--r-xs);
+    background: var(--surface-2);
+    color: var(--text-2);
+    font-size: var(--fs-100);
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  hr {
+    height: 1px;
+    margin: 0;
+    border: 0;
+    background: var(--line);
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--accent) 32%, transparent);
+    color: var(--text-1);
+  }
+
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+    border-radius: var(--r-sm);
+  }
+
+  :where(button, a, input, select, textarea):focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border: 2px solid transparent;
+    border-radius: var(--r-pill);
+    background-clip: padding-box;
+    background-color: color-mix(in srgb, var(--text-3) 42%, transparent);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: color-mix(in srgb, var(--text-3) 65%, transparent);
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* Utility primitives that belong to the accessibility layer. */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .skip-link {
+    position: fixed;
+    inset-block-start: -100%;
+    inset-inline-start: var(--sp-4);
+    z-index: var(--z-toast);
+    padding: var(--sp-3) var(--sp-4);
+    border-radius: var(--r-control);
+    background: var(--accent);
+    color: var(--text-on-accent);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .skip-link:focus-visible {
+    inset-block-start: var(--sp-4);
+    outline: 2px solid var(--text-1);
+    outline-offset: 3px;
+  }
+
+  .noscript-notice {
+    max-width: 46rem;
+    margin: var(--sp-10) auto;
+    padding: var(--sp-6);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--r-panel);
+    background: var(--surface-1);
+  }
+
+  .noscript-notice h1 {
+    margin-block-end: var(--sp-3);
+    font-size: var(--fs-700);
+  }
+
+  .num {
+    font-variant-numeric: tabular-nums slashed-zero;
+    font-feature-settings: "tnum" 1, "zero" 1;
+  }
+
+  .mono {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+  }
+
+  .list-disc {
+    padding-inline-start: 1.15em;
+    list-style: disc;
+  }
+
+  /* Reduced motion: keep functional state changes, remove ambient movement. */
+  @media (prefers-reduced-motion: reduce) {
+    :root {
+      --dur-1: 1ms;
+      --dur-2: 1ms;
+      --dur-3: 1ms;
+      --dur-view: 1ms;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 1ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 1ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Reduced transparency: equivalent opaque premium material instead of blur. */
+  @media (prefers-reduced-transparency: reduce) {
+    :root {
+      --glass-1: var(--surface-1);
+      --glass-2: var(--surface-1);
+      --glass-3: var(--surface-inset);
+    }
+
+    .glass {
+      backdrop-filter: none !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    :root {
+      --glass-1: Canvas;
+      --glass-2: Canvas;
+      --glass-3: Canvas;
+      --line: CanvasText;
+      --line-strong: CanvasText;
+    }
+
+    .chip,
+    .badge,
+    .panel,
+    .glass {
+      border: 1px solid CanvasText;
+    }
+
+    .icon {
+      forced-color-adjust: auto;
+    }
+  }
+}

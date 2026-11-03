@@ -1,0 +1,167 @@
+{
+  "items": [
+    {
+      "at": "2026-11-03T08:00:00Z",
+      "kind": "access",
+      "severity": "info",
+      "title": "Freigegebenes Wartungsfenster gestartet: Kältetechnik Meier GmbH",
+      "ref_id": "mw-2026-11-03-01",
+      "category": "access",
+      "site_id": "filiale-001"
+    },
+    {
+      "at": "2026-11-03T08:04:00Z",
+      "kind": "access",
+      "severity": "info",
+      "title": "Sitzung techniker-03 im freigegebenen Fenster",
+      "ref_id": "sess-2026-11-03-aa71",
+      "category": "access",
+      "site_id": "filiale-001"
+    },
+    {
+      "at": "2026-11-03T09:40:00Z",
+      "kind": "access",
+      "severity": "info",
+      "title": "Sitzung techniker-03 beendet",
+      "ref_id": "sess-2026-11-03-aa71",
+      "category": "access",
+      "site_id": "filiale-001"
+    },
+    {
+      "at": "2026-11-03T10:00:00Z",
+      "kind": "access",
+      "severity": "info",
+      "title": "Wartungsfenster geschlossen",
+      "ref_id": "mw-2026-11-03-01",
+      "category": "access",
+      "site_id": "filiale-001"
+    },
+    {
+      "at": "2026-11-02T10:24:00Z",
+      "kind": "alert",
+      "severity": "low",
+      "title": "Konfigurationsänderung ohne dokumentierte Freigabe",
+      "ref_id": "alrt-2026-11-02-01",
+      "category": "integrity",
+      "site_id": "filiale-001"
+    },
+    {
+      "at": "2026-11-03T11:08:00Z",
+      "kind": "alert",
+      "severity": "medium",
+      "title": "Temperaturanstieg über konfigurierte Änderungsrate",
+      "ref_id": "alrt-2026-11-03-04",
+      "category": "thermal",
+      "site_id": "filiale-001"
+    },
+    {
+      "at": "2026-11-03T13:12:00Z",
+      "kind": "access",
+      "severity": "info",
+      "title": "Gemeldete Fernwartung außerhalb eines Fensters",
+      "ref_id": "sess-2026-11-03-c3d4",
+      "category": "access",
+      "site_id": "filiale-001"
+    },
+    {
+      "at": "2026-11-03T15:42:00Z",
+      "kind": "access",
+      "severity": "high",
+      "title": "Unbekannte Sitzung auf Verbundregler LINKS",
+      "ref_id": "sess-2026-11-03-9b21",
+      "category": "access",
+      "site_id": "filiale-001"
+    },
+    {
+      "at": "2026-11-03T15:42:00Z",
+      "kind": "alert",
+      "severity": "high",
+      "title": "Sitzung außerhalb des freigegebenen Wartungsfensters",
+      "ref_id": "alrt-2026-11-03-02",
+      "category": "access",
+      "site_id": "filiale-001"
+    },
+    {
+      "at": "2026-11-03T16:12:00Z",
+      "kind": "event",
+      "severity": "high",
+      "title": "Flow von unbekanntem Partner 10.20.30.55",
+      "ref_id": "evt-2026-11-03-flow-00",
+      "category": "network",
+      "site_id": "filiale-001"
+    },
+    {
+      "at": "2026-11-03T16:12:00Z",
+      "kind": "alert",
+      "severity": "high",
+      "title": "Unbekannter Kommunikationspartner im OT-Prozess",
+      "ref_id": "alrt-2026-11-03-03",
+      "category": "network",
+      "site_id": "filiale-001"
+    },
+    {
+      "at": "2026-11-03T16:14:00Z",
+      "kind": "event",
+      "severity": "high",
+      "title": "Beobachteter Schreibversuch (FC6) auf Register 40001",
+      "ref_id": "evt-2026-11-03-write-01",
+      "category": "network",
+      "site_id": "filiale-001"
+    },
+    {
+      "at": "2026-11-03T16:14:00Z",
+      "kind": "alert",
+      "severity": "critical",
+      "title": "Sollwertänderung außerhalb Wartungsfenster mit anschließendem Temperaturanstieg",
+      "ref_id": "alrt-2026-11-03-01",
+      "category": "thermal",
+      "site_id": "filiale-001"
+    },
+    {
+      "at": "2026-11-03T16:22:00Z",
+      "kind": "incident",
+      "severity": "critical",
+      "title": "Korrelierte Kette: mögliche thermische Manipulation",
+      "ref_id": "inc-2026-11-03-01",
+      "category": "thermal",
+      "site_id": "filiale-001"
+    },
+    {
+      "at": "2026-11-03T16:40:00Z",
+      "kind": "event",
+      "severity": "medium",
+      "title": "Temperatur Kühlraum LINKS: 6.8 °C",
+      "ref_id": "evt-2026-11-03-telemetry-01",
+      "category": "thermal",
+      "site_id": "filiale-001"
+    },
+    {
+      "at": "2026-11-03T16:41:00Z",
+      "kind": "event",
+      "severity": "medium",
+      "title": "Temperatur Kühlraum LINKS: 7.0 °C",
+      "ref_id": "evt-2026-11-03-telemetry-03",
+      "category": "thermal",
+      "site_id": "filiale-001"
+    },
+    {
+      "at": "2026-11-03T17:08:00Z",
+      "kind": "alert",
+      "severity": "medium",
+      "title": "Eingefrorener Messwert an TK-Zelle",
+      "ref_id": "alrt-2026-11-03-05",
+      "category": "data_quality",
+      "site_id": "filiale-001"
+    },
+    {
+      "at": "2026-11-03T17:08:00Z",
+      "kind": "event",
+      "severity": "medium",
+      "title": "Datenqualität: eingefrorener Wert",
+      "ref_id": "evt-2026-11-03-dq-01",
+      "category": "data_quality",
+      "site_id": "filiale-001"
+    }
+  ],
+  "total": 18
+}

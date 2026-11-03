@@ -1,0 +1,560 @@
+{
+  "generated_at": "2026-11-03T17:12:00Z",
+  "totals": {
+    "sites": 2,
+    "assets": 15,
+    "sensors": 7,
+    "open_alerts": 4,
+    "critical": 1,
+    "high": 2,
+    "collectors_running": 3,
+    "collectors_failed": 0,
+    "peers": 14
+  },
+  "sites": [
+    {
+      "site": {
+        "site_id": "filiale-001",
+        "tenant_id": "tenant-retail-nord",
+        "name": "Markt Nord",
+        "country": "DE",
+        "timezone": "Europe/Berlin",
+        "status": "online",
+        "gateway_asset_id": "asset-edge-01",
+        "zones": [
+          {
+            "zone_id": "zone-ext-01",
+            "site_id": "filiale-001",
+            "name": "Externe Wartung",
+            "kind": "external_maintenance",
+            "purpose": "Dedizierter Fernwartungspfad für Kältedienstleister",
+            "critical": true,
+            "operator_id": "user-anlagenverantwortlich-01"
+          },
+          {
+            "zone_id": "zone-mgmt-01",
+            "site_id": "filiale-001",
+            "name": "Management",
+            "kind": "management",
+            "purpose": "Filialleitung, Backoffice, zentrale Dienste",
+            "critical": false,
+            "operator_id": "user-filialleitung-01"
+          },
+          {
+            "zone_id": "zone-retail-it-01",
+            "site_id": "filiale-001",
+            "name": "Retail-IT",
+            "kind": "retail_it",
+            "purpose": "POS, Kassenumfeld, WLAN, Drucksysteme",
+            "critical": false,
+            "operator_id": ""
+          },
+          {
+            "zone_id": "zone-ot-mon-01",
+            "site_id": "filiale-001",
+            "name": "OT-Monitoring",
+            "kind": "ot_monitoring",
+            "purpose": "Passiver TAP / Spiegelport, Collector-Erreichbarkeit",
+            "critical": false,
+            "operator_id": ""
+          },
+          {
+            "zone_id": "zone-cold-01",
+            "site_id": "filiale-001",
+            "name": "Kälte OT LINKS",
+            "kind": "ot_process",
+            "purpose": "Verbundregler Kälte LINKS, Kühlraum LINKS, Molkerei",
+            "critical": true,
+            "operator_id": "user-anlagenverantwortlich-01"
+          },
+          {
+            "zone_id": "zone-cold-02",
+            "site_id": "filiale-001",
+            "name": "Kälte OT RECHTS",
+            "kind": "ot_process",
+            "purpose": "Verbundregler Kälte RECHTS, TK-Zelle, Kühlregale",
+            "critical": true,
+            "operator_id": "user-anlagenverantwortlich-01"
+          },
+          {
+            "zone_id": "zone-unknown-01",
+            "site_id": "filiale-001",
+            "name": "Nicht zugeordnetes Segment",
+            "kind": "unknown",
+            "purpose": "Passiv beobachtete Geräte ohne Betreiberzuordnung",
+            "critical": false,
+            "operator_id": ""
+          }
+        ],
+        "last_seen_at": "2026-11-03T17:10:00Z",
+        "created_at": "2026-09-14T07:30:00Z",
+        "updated_at": "2026-11-03T17:10:00Z",
+        "tags": [
+          "pilot",
+          "cold-chain"
+        ]
+      },
+      "site_status": "online",
+      "assets": 12,
+      "open_alerts": 3,
+      "critical": 1,
+      "high": 2,
+      "last_event_at": "2026-11-03T17:11:00Z",
+      "coldchain": {
+        "sensors": 6,
+        "limit_violations": 2,
+        "data_quality_issues": 3
+      },
+      "gateway": {
+        "last_event_at": "2026-11-03T17:11:00Z",
+        "status": "online"
+      }
+    },
+    {
+      "site": {
+        "site_id": "filiale-002",
+        "tenant_id": "tenant-retail-sued",
+        "name": "Markt Süd",
+        "country": "DE",
+        "timezone": "Europe/Berlin",
+        "status": "degraded",
+        "gateway_asset_id": "asset-edge-11",
+        "zones": [
+          {
+            "zone_id": "zone-cold-11",
+            "site_id": "filiale-002",
+            "name": "Kälte OT",
+            "kind": "ot_process",
+            "purpose": "Verbundregler, TK-Zelle",
+            "critical": true,
+            "operator_id": "user-anlagenverantwortlich-02"
+          },
+          {
+            "zone_id": "zone-mgmt-11",
+            "site_id": "filiale-002",
+            "name": "Management",
+            "kind": "management",
+            "purpose": "Filialleitung",
+            "critical": false
+          },
+          {
+            "zone_id": "zone-retail-it-11",
+            "site_id": "filiale-002",
+            "name": "Retail-IT",
+            "kind": "retail_it",
+            "purpose": "POS und Kassenumfeld",
+            "critical": false
+          }
+        ],
+        "last_seen_at": "2026-11-03T16:46:00Z",
+        "created_at": "2026-10-02T06:10:00Z",
+        "updated_at": "2026-11-03T16:46:00Z",
+        "tags": [
+          "pilot"
+        ]
+      },
+      "site_status": "degraded",
+      "assets": 3,
+      "open_alerts": 1,
+      "critical": 0,
+      "high": 0,
+      "last_event_at": "2026-11-03T16:46:00Z",
+      "coldchain": {
+        "sensors": 1,
+        "limit_violations": 0,
+        "data_quality_issues": 1
+      },
+      "gateway": {
+        "last_event_at": "2026-11-03T16:46:00Z",
+        "status": "degraded"
+      }
+    }
+  ],
+  "recent_alerts": [
+    {
+      "alert_id": "alrt-2026-11-03-01",
+      "site_id": "filiale-001",
+      "asset_ids": [
+        "asset-verbund-01"
+      ],
+      "zone_ids": [
+        "zone-cold-01"
+      ],
+      "sensor_ids": [
+        "sensor-cold-left-01"
+      ],
+      "category": "thermal",
+      "severity": "critical",
+      "confidence": 0.86,
+      "title": "Sollwertänderung außerhalb Wartungsfenster mit anschließendem Temperaturanstieg",
+      "summary": "Beobachteter Schreibversuch auf Kühlraum LINKS, keine Freigabe für dieses Zeitfenster, Temperatur steigt seit 6 Minuten.",
+      "rule_id": "retail.thermal.setpoint-deviation",
+      "rule_version": "1",
+      "first_seen_at": "2026-11-03T16:14:00Z",
+      "last_seen_at": "2026-11-03T16:41:00Z",
+      "status": "open",
+      "assignee": "user-soc-01",
+      "evidence": [
+        {
+          "kind": "event",
+          "ref_id": "evt-2026-11-03-write-01",
+          "description": "FC6 Write Single Register wurde passiv beobachtet",
+          "at": "2026-11-03T16:14:00Z",
+          "source": "adapter.modbus.readonly",
+          "value": "value_hint=redacted",
+          "confidence": 0.9
+        },
+        {
+          "kind": "baseline",
+          "ref_id": "baseline-comm-2026-10",
+          "description": "Quelle 10.20.30.55 wurde bisher nie beobachtet",
+          "at": "2026-11-03T16:14:00Z",
+          "source": "detect.baseline",
+          "value": "",
+          "confidence": 0.75
+        },
+        {
+          "kind": "measurement",
+          "ref_id": "sensor-cold-left-01",
+          "description": "Temperatur +2.1 °C in 6 min",
+          "at": "2026-11-03T16:40:00Z",
+          "source": "detect.thermal",
+          "value": "6.8 celsius",
+          "confidence": 0.82
+        },
+        {
+          "kind": "policy",
+          "ref_id": "policy-filiale-001",
+          "description": "Grenzwert max_c=8.0 für Kühlraum LINKS, Version 7",
+          "at": "2026-11-03T08:00:00Z",
+          "source": "policy.store",
+          "value": "max_c=8.0",
+          "confidence": 1.0
+        }
+      ],
+      "recommended_actions": [
+        {
+          "action": "Dienstleistersitzung im Managementpfad nach Freigabe sperren",
+          "requires_approval": true,
+          "safety_note": "Keine OT-Prozesskommunikation unterbrechen."
+        }
+      ],
+      "safety_constraints": [
+        "no_ot_write",
+        "no_actuator_control",
+        "no_automatic_isolation"
+      ],
+      "dedup_key": "retail.thermal.setpoint-deviation:alrt-2026-11-03-01",
+      "incident_id": "inc-2026-11-03-01",
+      "audit_history": [
+        {
+          "at": "2026-11-03T16:14:00Z",
+          "actor": "detection",
+          "role": "system",
+          "action": "alert_created"
+        }
+      ],
+      "created_at": "2026-11-03T16:14:00Z",
+      "updated_at": "2026-11-03T16:41:00Z",
+      "correlation": {
+        "chain_id": "chain-thermal-manipulation",
+        "observed_facts": [
+          "FC6-Write außerhalb Wartungsfenster beobachtet",
+          "Unbekannte Quelle 10.20.30.55 (nicht in Baseline)",
+          "Temperaturanstieg 2.1 °C in 6 min in Kühlraum LINKS",
+          "Kein Abtau- oder Türereignis im Zeitfenster"
+        ],
+        "hypothesis": "Mögliche unbefugte Sollwertänderung über einen nicht freigegebenen Zugang.",
+        "alternative_explanations": [
+          "Fehlbedienung durch Dienstleister",
+          "Anlagenstörung",
+          "Sensorfehler",
+          "Abtauzyklus"
+        ],
+        "recommended_checks": [
+          "Dienstleisterkontakt verifizieren",
+          "Ist-Sollwert am Regler prüfen",
+          "Kühlketten-Prozess des Betreibers starten"
+        ],
+        "indicators": [
+          "write_fc_outside_window",
+          "unknown_peer",
+          "thermal_rate_breach"
+        ]
+      }
+    },
+    {
+      "alert_id": "alrt-2026-11-03-02",
+      "site_id": "filiale-001",
+      "asset_ids": [
+        "asset-verbund-01"
+      ],
+      "zone_ids": [
+        "zone-cold-01"
+      ],
+      "sensor_ids": [],
+      "category": "access",
+      "severity": "high",
+      "confidence": 0.79,
+      "title": "Sitzung außerhalb des freigegebenen Wartungsfensters",
+      "summary": "Externe Sitzung von 10.20.30.55 auf den Verbundregler LINKS; für dieses Zeitfenster existiert keine Freigabe.",
+      "rule_id": "retail.access.off-window",
+      "rule_version": "1",
+      "first_seen_at": "2026-11-03T15:42:00Z",
+      "last_seen_at": "2026-11-03T15:47:00Z",
+      "status": "acknowledged",
+      "assignee": "user-soc-01",
+      "evidence": [
+        {
+          "kind": "event",
+          "ref_id": "evt-2026-11-03-access-01",
+          "description": "Access-Session außerhalb Fenster",
+          "at": "2026-11-03T15:42:00Z",
+          "source": "adapter.mfa.observer",
+          "value": "source=10.20.30.55",
+          "confidence": 0.85
+        },
+        {
+          "kind": "window",
+          "ref_id": "mw-2026-11-03-02",
+          "description": "Aktives Fenster deckt 15:00–18:00, Quelle nicht in CIDR-Allowlist",
+          "at": "2026-11-03T15:00:00Z",
+          "source": "policy.store",
+          "value": "10.99.0.0/24",
+          "confidence": 1.0
+        }
+      ],
+      "recommended_actions": [],
+      "safety_constraints": [
+        "no_ot_write",
+        "no_actuator_control",
+        "no_automatic_isolation"
+      ],
+      "dedup_key": "retail.access.off-window:alrt-2026-11-03-02",
+      "incident_id": "inc-2026-11-03-01",
+      "audit_history": [
+        {
+          "at": "2026-11-03T15:42:00Z",
+          "actor": "detection",
+          "role": "system",
+          "action": "alert_created"
+        }
+      ],
+      "created_at": "2026-11-03T15:42:00Z",
+      "updated_at": "2026-11-03T15:47:00Z"
+    },
+    {
+      "alert_id": "alrt-2026-11-03-03",
+      "site_id": "filiale-001",
+      "asset_ids": [
+        "asset-verbund-01"
+      ],
+      "zone_ids": [
+        "zone-cold-01"
+      ],
+      "sensor_ids": [],
+      "category": "network",
+      "severity": "high",
+      "confidence": 0.71,
+      "title": "Unbekannter Kommunikationspartner im OT-Prozess",
+      "summary": "Neue Verbindung von 10.20.30.55 zum Verbundregler LINKS; Partner ist nicht in der gelernten Baseline.",
+      "rule_id": "retail.net.unknown-peer",
+      "rule_version": "1",
+      "first_seen_at": "2026-11-03T16:12:00Z",
+      "last_seen_at": "2026-11-03T16:16:00Z",
+      "status": "investigating",
+      "assignee": "",
+      "evidence": [
+        {
+          "kind": "event",
+          "ref_id": "evt-2026-11-03-flow-01",
+          "description": "Flow 10.20.30.55 → 10.20.30.11:502",
+          "at": "2026-11-03T16:12:00Z",
+          "source": "collector.pnf.flow",
+          "value": "bytes=1840",
+          "confidence": 0.8
+        },
+        {
+          "kind": "baseline",
+          "ref_id": "baseline-comm-2026-10",
+          "description": "Partner seit Baseline-Lernphase nicht beobachtet",
+          "at": "2026-11-03T16:12:00Z",
+          "source": "detect.baseline",
+          "value": "",
+          "confidence": 0.7
+        }
+      ],
+      "recommended_actions": [],
+      "safety_constraints": [
+        "no_ot_write",
+        "no_actuator_control",
+        "no_automatic_isolation"
+      ],
+      "dedup_key": "retail.net.unknown-peer:alrt-2026-11-03-03",
+      "incident_id": "inc-2026-11-03-01",
+      "audit_history": [
+        {
+          "at": "2026-11-03T16:12:00Z",
+          "actor": "detection",
+          "role": "system",
+          "action": "alert_created"
+        }
+      ],
+      "created_at": "2026-11-03T16:12:00Z",
+      "updated_at": "2026-11-03T16:16:00Z"
+    },
+    {
+      "alert_id": "alrt-2026-11-03-04",
+      "site_id": "filiale-001",
+      "asset_ids": [
+        "asset-verbund-02"
+      ],
+      "zone_ids": [
+        "zone-cold-02"
+      ],
+      "sensor_ids": [
+        "sensor-cold-right-01"
+      ],
+      "category": "thermal",
+      "severity": "medium",
+      "confidence": 0.66,
+      "title": "Temperaturanstieg über konfigurierte Änderungsrate",
+      "summary": "Kühlraum RECHTS: Anstieg von 1.4 °C/min überschreitet die Policy-Grenze von 0.5 °C/min.",
+      "rule_id": "retail.thermal.rate",
+      "rule_version": "1",
+      "first_seen_at": "2026-11-03T11:08:00Z",
+      "last_seen_at": "2026-11-03T11:14:00Z",
+      "status": "acknowledged",
+      "assignee": "",
+      "evidence": [
+        {
+          "kind": "measurement",
+          "ref_id": "sensor-cold-right-01",
+          "description": "Rate 1.4 °C/min gemessen",
+          "at": "2026-11-03T11:12:00Z",
+          "source": "detect.thermal",
+          "value": "1.4 celsius/min",
+          "confidence": 0.8
+        }
+      ],
+      "recommended_actions": [],
+      "safety_constraints": [
+        "no_ot_write",
+        "no_actuator_control",
+        "no_automatic_isolation"
+      ],
+      "dedup_key": "retail.thermal.rate:alrt-2026-11-03-04",
+      "incident_id": "",
+      "audit_history": [
+        {
+          "at": "2026-11-03T11:08:00Z",
+          "actor": "detection",
+          "role": "system",
+          "action": "alert_created"
+        }
+      ],
+      "created_at": "2026-11-03T11:08:00Z",
+      "updated_at": "2026-11-03T11:14:00Z"
+    },
+    {
+      "alert_id": "alrt-2026-11-03-05",
+      "site_id": "filiale-001",
+      "asset_ids": [
+        "asset-ksr-tk"
+      ],
+      "zone_ids": [
+        "zone-cold-02"
+      ],
+      "sensor_ids": [
+        "sensor-tk-01"
+      ],
+      "category": "data_quality",
+      "severity": "medium",
+      "confidence": 0.62,
+      "title": "Eingefrorener Messwert an TK-Zelle",
+      "summary": "Sensor TK-Zelle meldet 42 Minuten unverändert denselben Wert; andere Sensoren derselben Zone weichen ab.",
+      "rule_id": "retail.dq.frozen-value",
+      "rule_version": "1",
+      "first_seen_at": "2026-11-03T09:05:00Z",
+      "last_seen_at": "2026-11-03T17:08:00Z",
+      "status": "open",
+      "assignee": "",
+      "evidence": [
+        {
+          "kind": "measurement",
+          "ref_id": "sensor-tk-01",
+          "description": "Wert -18.2 °C unverändert seit 42 min",
+          "at": "2026-11-03T17:08:00Z",
+          "source": "detect.dq",
+          "value": "-18.2 celsius",
+          "confidence": 0.75
+        }
+      ],
+      "recommended_actions": [],
+      "safety_constraints": [
+        "no_ot_write",
+        "no_actuator_control",
+        "no_automatic_isolation"
+      ],
+      "dedup_key": "retail.dq.frozen-value:alrt-2026-11-03-05",
+      "incident_id": "",
+      "audit_history": [
+        {
+          "at": "2026-11-03T09:05:00Z",
+          "actor": "detection",
+          "role": "system",
+          "action": "alert_created"
+        }
+      ],
+      "created_at": "2026-11-03T09:05:00Z",
+      "updated_at": "2026-11-03T17:08:00Z"
+    }
+  ],
+  "collectors": [
+    {
+      "adapter_id": "modbus.pool1",
+      "state": "running",
+      "events": 9123,
+      "errors": 0,
+      "parser_errors": 0,
+      "unsupported": 0,
+      "last_event_at": "2026-11-03T17:11:00Z"
+    },
+    {
+      "adapter_id": "mqtt.telemetry",
+      "state": "running",
+      "events": 6312,
+      "errors": 0,
+      "parser_errors": 2,
+      "unsupported": 0,
+      "last_event_at": "2026-11-03T17:10:00Z"
+    },
+    {
+      "adapter_id": "bacnet.ip",
+      "state": "degraded",
+      "events": 1820,
+      "errors": 4,
+      "parser_errors": 2,
+      "unsupported": 14,
+      "last_event_at": "2026-11-03T17:05:00Z"
+    },
+    {
+      "adapter_id": "snmp.edge",
+      "state": "running",
+      "events": 2411,
+      "errors": 0,
+      "parser_errors": 0,
+      "unsupported": 0,
+      "last_event_at": "2026-11-03T17:06:00Z"
+    },
+    {
+      "adapter_id": "pcap.offline",
+      "state": "stopped",
+      "events": 320,
+      "errors": 0,
+      "parser_errors": 0,
+      "unsupported": 0,
+      "last_event_at": "2026-11-03T12:12:00Z"
+    }
+  ]
+}

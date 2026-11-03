@@ -1,0 +1,31 @@
+{
+  "plans": {
+    "pending": 0,
+    "approved": 0,
+    "executed": 0,
+    "rejected": 0,
+    "expired": 0
+  },
+  "sessions": {
+    "active": 0,
+    "revoked_today": 0
+  },
+  "denies": {
+    "last_24h": 0,
+    "last": []
+  },
+  "policy": {
+    "version": 1,
+    "updated_at": "2026-11-03T06:00:00Z",
+    "updated_by": "master-admin-01"
+  },
+  "audit": {
+    "chain_ok": true,
+    "entries": 0
+  },
+  "failsafe": {
+    "active": false,
+    "reason": ""
+  },
+  "targets": []
+}

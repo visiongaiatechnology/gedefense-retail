@@ -1,0 +1,29 @@
+{
+  "policy_id": "gate-policy-filiale-001",
+  "version": 1,
+  "updated_at": "2026-11-03T12:00:00Z",
+  "updated_by": "master-01",
+  "default_deny": true,
+  "critical_assets": ["asset-danfoss-aksm800"],
+  "four_eyes_assets": ["asset-danfoss-aksm800"],
+  "modbus_write_allowlist": [
+    {
+      "target_id": "aksm-1",
+      "fc": 6,
+      "register": 40001,
+      "value": "3.5",
+      "max_delta": 5.0,
+      "note": "Sollwert Fleischzone (Beispiel, Betreiber verantwortet Wert)"
+    }
+  ],
+  "http_write_allowlist": [
+    {
+      "target_id": "xweb-1",
+      "method": "POST",
+      "path_prefix": "/cgi-bin/config",
+      "note": "Supervisor-Konfigurationsformular (Beispiel)"
+    }
+  ],
+  "token": { "max_uses": 1, "bind_source_ip": true },
+  "notify": { "deny_min_severity": "medium" }
+}

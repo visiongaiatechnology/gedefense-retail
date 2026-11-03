@@ -1,0 +1,42 @@
+{
+  "completed": false,
+  "completed_at": "",
+  "language": "en",
+  "remote_ip": "127.0.0.1",
+  "loopback": true,
+  "site": null,
+  "whitelist_cidrs": [
+    "127.0.0.1/32",
+    "::1/128"
+  ],
+  "admin_created": false,
+  "collectors": [],
+  "supported_collectors": [
+    {
+      "id": "modbus",
+      "name": "Modbus TCP",
+      "hint": "Register, setpoints, operating states"
+    },
+    {
+      "id": "pcap",
+      "name": "PCAP",
+      "hint": "Passive traffic capture"
+    },
+    {
+      "id": "mqtt",
+      "name": "MQTT",
+      "hint": "Broker and device topics"
+    },
+    {
+      "id": "bacnet",
+      "name": "BACnet/IP",
+      "hint": "Building and refrigeration controls"
+    },
+    {
+      "id": "snmp",
+      "name": "SNMP",
+      "hint": "Network and device health"
+    }
+  ],
+  "bind_hint": ""
+}

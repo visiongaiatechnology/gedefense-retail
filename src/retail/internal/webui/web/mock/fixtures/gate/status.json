@@ -1,0 +1,91 @@
+{
+  "plans": {
+    "pending": 3,
+    "approved": 1,
+    "executed": 1,
+    "rejected": 1,
+    "expired": 1
+  },
+  "sessions": {
+    "active": 2,
+    "revoked_today": 1
+  },
+  "denies": {
+    "last_24h": 3,
+    "last": [
+      {
+        "deny_id": "den-2026-11-03-01",
+        "at": "2026-11-03T17:58:00Z",
+        "session_id": "",
+        "plan_id": "",
+        "user_id": "",
+        "source_ip": "10.10.40.99",
+        "target_id": "aksm-1",
+        "protocol": "modbus_tcp",
+        "function": "fc6",
+        "address": "40001",
+        "value_hint": "4.2",
+        "reason": "operation_not_approved",
+        "severity": "critical",
+        "via_bypass": true
+      },
+      {
+        "deny_id": "den-2026-11-03-02",
+        "at": "2026-11-03T16:40:00Z",
+        "session_id": "ses-2026-11-03-a01",
+        "plan_id": "pln-2026-11-03-04",
+        "user_id": "vendor-acme",
+        "source_ip": "10.10.40.12",
+        "target_id": "aksm-1",
+        "protocol": "modbus_tcp",
+        "function": "fc6",
+        "address": "40002",
+        "value_hint": "2.0",
+        "reason": "outside_window",
+        "severity": "high",
+        "via_bypass": false
+      },
+      {
+        "deny_id": "den-2026-11-03-03",
+        "at": "2026-11-03T14:12:00Z",
+        "session_id": "ses-2026-11-03-a02",
+        "plan_id": "pln-2026-11-04-02",
+        "user_id": "vendor-acme",
+        "source_ip": "10.10.40.13",
+        "target_id": "xweb-1",
+        "protocol": "http",
+        "function": "http_post",
+        "address": "/cgi-bin/other",
+        "value_hint": "",
+        "reason": "address_mismatch",
+        "severity": "medium",
+        "via_bypass": false
+      }
+    ]
+  },
+  "policy": {
+    "version": 3,
+    "updated_at": "2026-11-03T12:00:00Z",
+    "updated_by": "master-admin-01"
+  },
+  "audit": {
+    "chain_ok": true,
+    "entries": 812
+  },
+  "failsafe": {
+    "active": false,
+    "reason": ""
+  },
+  "targets": [
+    {
+      "target_id": "aksm-1",
+      "protocol": "modbus_tcp",
+      "state": "listening"
+    },
+    {
+      "target_id": "xweb-1",
+      "protocol": "http",
+      "state": "listening"
+    }
+  ]
+}

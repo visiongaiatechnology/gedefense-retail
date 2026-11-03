@@ -1,0 +1,29 @@
+{
+  "product": "GeDefense Retail",
+  "edition": "ColdChain & Store Infrastructure Security",
+  "version": "0.1.0-mock",
+  "http_api": "v1",
+  "capabilities": {
+    "read_only": true,
+    "simulation": true,
+    "protocols": [
+      "modbus_tcp",
+      "mqtt",
+      "bacnet_ip",
+      "snmp",
+      "pcap"
+    ],
+    "not_in_mvp": [
+      "opc_ua",
+      "snmp_v3",
+      "lonworks",
+      "active_discovery",
+      "plc_write"
+    ]
+  },
+  "roles": [
+    "viewer",
+    "operator",
+    "admin"
+  ]
+}

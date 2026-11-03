@@ -1,0 +1,102 @@
+{
+  "items": [
+    {
+      "incident_id": "inc-2026-11-03-01",
+      "site_id": "filiale-001",
+      "title": "Verdacht auf unbefugte Sollwertänderung Kühlraum LINKS",
+      "severity": "critical",
+      "status": "investigating",
+      "assignee": "user-soc-01",
+      "alert_ids": [
+        "alrt-2026-11-03-01",
+        "alrt-2026-11-03-02",
+        "alrt-2026-11-03-03"
+      ],
+      "zone_ids": [
+        "zone-cold-01"
+      ],
+      "asset_ids": [
+        "asset-verbund-01"
+      ],
+      "first_seen_at": "2026-11-03T15:42:00Z",
+      "last_seen_at": "2026-11-03T16:41:00Z",
+      "summary": "Korrelierte Kette aus unbekannter Wartungssitzung, beobachtetem Schreibversuch und thermischem Trend. Prüfung durch den Betreiber läuft; keine Anlagenaktion durch GeDefense.",
+      "correlation": {
+        "chain_id": "chain-thermal-manipulation",
+        "observed_facts": [
+          "FC6-Write außerhalb Wartungsfenster beobachtet",
+          "Unbekannte Quelle 10.20.30.55 (nicht in Baseline)",
+          "Temperaturanstieg 2.1 °C in 6 min in Kühlraum LINKS",
+          "Kein Abtau- oder Türereignis im Zeitfenster"
+        ],
+        "hypothesis": "Mögliche unbefugte Sollwertänderung über einen nicht freigegebenen Zugang.",
+        "alternative_explanations": [
+          "Fehlbedienung durch Dienstleister",
+          "Anlagenstörung",
+          "Sensorfehler",
+          "Abtauzyklus"
+        ],
+        "recommended_checks": [
+          "Dienstleisterkontakt verifizieren",
+          "Ist-Sollwert am Regler prüfen",
+          "Kühlketten-Prozess des Betreibers starten"
+        ],
+        "indicators": [
+          "write_fc_outside_window",
+          "unknown_peer",
+          "thermal_rate_breach"
+        ]
+      },
+      "notes": [
+        {
+          "at": "2026-11-03T16:30:00Z",
+          "actor": "user-soc-01",
+          "role": "soc",
+          "note": "Dienstleisterkontakt per Betreiberprozess angefragt. Keine Aussage zur Produktsicherheit getroffen.",
+          "pinned": true
+        },
+        {
+          "at": "2026-11-03T16:25:00Z",
+          "actor": "user-filialleitung-01",
+          "role": "filialleitung",
+          "note": "Kühlraum LINKS visuell geprüft; Kühlung läuft, Temperatur wird weiter beobachtet.",
+          "pinned": false
+        }
+      ],
+      "created_at": "2026-11-03T16:22:00Z",
+      "updated_at": "2026-11-03T16:30:00Z"
+    },
+    {
+      "incident_id": "inc-2026-11-02-02",
+      "site_id": "filiale-001",
+      "title": "Fehlbedienung bei Wartung – abgeschlossen",
+      "severity": "medium",
+      "status": "resolved",
+      "assignee": "user-filialleitung-01",
+      "alert_ids": [],
+      "zone_ids": [
+        "zone-cold-02"
+      ],
+      "asset_ids": [
+        "asset-verbund-02"
+      ],
+      "first_seen_at": "2026-11-02T14:00:00Z",
+      "last_seen_at": "2026-11-02T14:40:00Z",
+      "summary": "Dienstleister bestätigte Fehlbedienung während eines Wartungsfensters. Dokumentiert, keine weitere Maßnahme.",
+      "notes": [
+        {
+          "at": "2026-11-02T14:40:00Z",
+          "actor": "user-filialleitung-01",
+          "role": "filialleitung",
+          "note": "Rückmeldung des Dienstleisters liegt vor.",
+          "pinned": false
+        }
+      ],
+      "created_at": "2026-11-02T14:00:00Z",
+      "updated_at": "2026-11-02T14:40:00Z"
+    }
+  ],
+  "total": 2,
+  "limit": 50,
+  "offset": 0
+}

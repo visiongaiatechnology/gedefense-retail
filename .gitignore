@@ -1,0 +1,18 @@
+# GeDefense Retail - public repository ignore rules
+# Runtime data, local builds and release artifacts never belong in git.
+var/
+bin/
+dist/
+tmp/
+*.exe
+*.test
+*.prof
+*.log
+config/retail.json
+config/gate.json
+config/*.local.json
+config/*.secret*
+.env
+.env.*
+.DS_Store
+Thumbs.db

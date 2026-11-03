@@ -1,0 +1,26 @@
+[
+  {
+    "sensor_id": "sensor-tk-01",
+    "kind": "frozen",
+    "since": "2026-11-03T15:40:00Z",
+    "detail": "Wert -18.2 °C unverändert seit 42 Minuten"
+  },
+  {
+    "sensor_id": "sensor-molkerei-01",
+    "kind": "gap",
+    "since": "2026-11-03T13:30:00Z",
+    "detail": "Keine Messwerte für 18 Minuten"
+  },
+  {
+    "sensor_id": "sensor-cold-right-01",
+    "kind": "clock_skew",
+    "since": "2026-11-03T12:10:00Z",
+    "detail": "source_ts weicht 320 s vom Gateway ab (Policy max 300 s)"
+  },
+  {
+    "sensor_id": "sensor-cold-left-02",
+    "kind": "divergence",
+    "since": "2026-11-03T16:30:00Z",
+    "detail": "Abweichung 2.6 °C zum unabhängigen Sensor LINKS (Policy 2.0 °C)"
+  }
+]

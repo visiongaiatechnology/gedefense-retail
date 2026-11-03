@@ -1,0 +1,318 @@
+/*
+ * components-data.css (split from components-data.css for the file-size budget).
+ */
+@layer components {
+  /* ---- signature instrument strip (one plane, not four KPI cards) ---- */
+  .instrument {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+    border: 1px solid var(--line);
+    border-radius: var(--r-panel);
+    background: linear-gradient(180deg, var(--surface-2), var(--surface-1));
+    box-shadow: var(--shadow-1);
+    overflow: hidden;
+  }
+
+  .instrument::before {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: 0;
+    height: 2px;
+    background: var(--light-edge);
+    content: "";
+  }
+
+  .instrument__item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: var(--sp-4) var(--sp-5);
+    border-inline-end: 1px solid var(--line);
+    min-width: 0;
+  }
+
+  .instrument__item:last-child {
+    border-inline-end: 0;
+  }
+
+  .instrument__label {
+    color: var(--text-3);
+    font-size: var(--fs-100);
+    font-weight: 600;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+  }
+
+  .instrument__value {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35rem;
+    color: var(--text-1);
+    font-size: var(--fs-700);
+    font-weight: 620;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+
+  .instrument__unit {
+    color: var(--text-3);
+    font-size: var(--fs-200);
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+
+  .instrument__hint {
+    color: var(--text-3);
+    font-size: var(--fs-100);
+    line-height: var(--lh-snug);
+  }
+
+  .instrument__hint[data-sev] {
+    color: var(--sev);
+  }
+
+  .instrument__item[data-severity="critical"] .instrument__hint {
+    color: var(--critical);
+  }
+
+  .instrument__item[data-severity="warning"] .instrument__hint {
+    color: var(--warning);
+  }
+
+
+  /* ---- filter bar ---- */
+  .filterbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: var(--sp-3);
+    padding: var(--sp-3) var(--sp-4);
+    border: 1px solid var(--glass-stroke);
+    border-radius: var(--r-panel);
+    background: var(--glass-1);
+    backdrop-filter: blur(var(--blur-glass)) saturate(1.15);
+  }
+
+  .filterbar .field {
+    flex: 0 1 auto;
+    min-width: 9rem;
+  }
+
+  .filterbar .field--search {
+    flex: 1 1 16rem;
+    min-width: 12rem;
+  }
+
+  .filterbar__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+    margin-inline-start: auto;
+  }
+
+  .filterbar__result {
+    color: var(--text-3);
+    font-size: var(--fs-200);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+
+  /* ---- tables ---- */
+  .table-wrap {
+    overflow-x: auto;
+    border-radius: 0 0 var(--r-panel) var(--r-panel);
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--fs-300);
+  }
+
+  .data-table caption {
+    padding: var(--sp-3) var(--sp-5);
+    color: var(--text-3);
+    font-size: var(--fs-200);
+    text-align: start;
+    caption-side: top;
+  }
+
+  .data-table th {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 1;
+    padding: var(--sp-2) var(--sp-4);
+    border-block-end: 1px solid var(--line-strong);
+    background: var(--surface-1);
+    color: var(--text-3);
+    font-size: var(--fs-100);
+    font-weight: 600;
+    letter-spacing: var(--tracking-wide);
+    text-align: start;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .data-table td {
+    padding: var(--sp-3) var(--sp-4);
+    border-block-end: 1px solid var(--line);
+    color: var(--text-2);
+    vertical-align: middle;
+  }
+
+  .data-table tbody tr:hover {
+    background: color-mix(in srgb, var(--surface-3) 38%, transparent);
+  }
+
+  .data-table tbody tr:last-child td {
+    border-block-end: 0;
+  }
+
+  .data-table .cell-primary {
+    color: var(--text-1);
+    font-weight: 560;
+  }
+
+  .data-table .cell-num {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .data-table .cell-mono {
+    font-family: var(--font-mono);
+    font-size: var(--fs-100);
+  }
+
+  .sort-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+  }
+
+  .sort-btn:hover {
+    color: var(--text-1);
+  }
+
+  .sort-btn .icon {
+    width: 0.8rem;
+    height: 0.8rem;
+    opacity: 0.55;
+  }
+
+  .sort-btn[aria-sort="ascending"] .icon,
+  .sort-btn[aria-sort="descending"] .icon {
+    opacity: 1;
+    color: var(--accent);
+  }
+
+  .row-open {
+    padding: 0;
+    background: none;
+    color: var(--text-1);
+    font: inherit;
+    font-weight: 560;
+    text-align: start;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 0.2em;
+  }
+
+  .row-open:hover {
+    text-decoration-color: var(--accent);
+  }
+
+  .cell-sub {
+    display: block;
+    margin-block-start: 0.1rem;
+    color: var(--text-3);
+    font-size: var(--fs-100);
+    font-weight: 400;
+  }
+
+  .row-flag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    color: var(--warning);
+    font-size: var(--fs-100);
+    font-weight: 600;
+  }
+
+
+  /* ---- generic record list (mobile-friendly composition) ---- */
+  .record-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .record {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sp-3);
+    width: 100%;
+    padding: var(--sp-3) var(--sp-5);
+    border-block-end: 1px solid var(--line);
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: start;
+    text-decoration: none;
+  }
+
+  .record:last-child {
+    border-block-end: 0;
+  }
+
+  .record:hover {
+    background: color-mix(in srgb, var(--surface-3) 38%, transparent);
+  }
+
+  .record[aria-current="true"] {
+    background: color-mix(in srgb, var(--accent) 7%, transparent);
+    box-shadow: inset 2px 0 0 var(--accent);
+  }
+
+  .record__main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .record__title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-2);
+    color: var(--text-1);
+    font-weight: 560;
+  }
+
+  .record__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 0.7rem;
+    color: var(--text-3);
+    font-size: var(--fs-100);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .record__side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.2rem;
+    color: var(--text-3);
+    font-size: var(--fs-100);
+    white-space: nowrap;
+  }
+}

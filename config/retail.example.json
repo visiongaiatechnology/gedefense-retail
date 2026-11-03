@@ -1,0 +1,126 @@
+{
+  "listen": "127.0.0.1:8080",
+  "data_dir": "./var/lib/gedefense-retail",
+  "log_level": "info",
+  "site": {
+    "site_id": "filiale-001",
+    "tenant_id": "tenant-demo",
+    "name": "Markt Nord (Demo)",
+    "country": "DE",
+    "timezone": "Europe/Berlin",
+    "status": "unknown",
+    "zones": [
+      { "zone_id": "zone-ot-process", "site_id": "filiale-001", "name": "OT-Prozess (Kälte)", "kind": "ot_process", "critical": true },
+      { "zone_id": "zone-ot-monitoring", "site_id": "filiale-001", "name": "OT-Monitoring (TAP)", "kind": "ot_monitoring", "critical": true },
+      { "zone_id": "zone-retail-it", "site_id": "filiale-001", "name": "Retail-IT", "kind": "retail_it" },
+      { "zone_id": "zone-management", "site_id": "filiale-001", "name": "Management", "kind": "management", "critical": true },
+      { "zone_id": "zone-external-maint", "site_id": "filiale-001", "name": "Externe Wartung", "kind": "external_maintenance" },
+      { "zone_id": "zone-cool-meat", "site_id": "filiale-001", "name": "Kühlbereich Fleisch", "kind": "cooling_area", "critical": true },
+      { "zone_id": "zone-cool-dairy", "site_id": "filiale-001", "name": "Kühlbereich Molkerei", "kind": "cooling_area", "critical": true },
+      { "zone_id": "zone-cool-frozen", "site_id": "filiale-001", "name": "Tiefkühlbereich", "kind": "cooling_area", "critical": true }
+    ],
+    "tags": ["pilot"]
+  },
+  "users": [
+    {
+      "user_id": "admin",
+      "name": "Filial-Administrator",
+      "role": "admin",
+      "token_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "user_id": "technik-01",
+      "name": "Technik Nord",
+      "role": "operator",
+      "token_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "user_id": "viewer-01",
+      "name": "Marktleitung",
+      "role": "viewer",
+      "token_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  ],
+  "security": {
+    "require_whitelist": true,
+    "dashboard_whitelist_cidrs": ["127.0.0.1/32", "::1/128"],
+    "trust_proxy_headers": false,
+    "trusted_proxy_cidrs": [],
+    "setup_token_ttl_s": 3600
+  },
+  "collectors": [
+    {
+      "adapter_id": "modbus.meat",
+      "enabled": false,
+      "zone_id": "zone-ot-process",
+      "options": {
+        "mode": "poll",
+        "target": "10.10.20.10:502",
+        "unit": "1",
+        "interval": "30s",
+        "timeout": "2s",
+        "registers": "3:100:sensor-meat-01-air:air_temperature:celsius:0.1:0"
+      }
+    },
+    {
+      "adapter_id": "httpui.tap",
+      "enabled": false,
+      "zone_id": "zone-ot-monitoring",
+      "options": {
+        "listen": "127.0.0.1:18080",
+        "device_ip": "10.10.20.10",
+        "device_port": "443",
+        "max_connections": "32",
+        "max_header_bytes": "16384"
+      }
+    },
+    {
+      "adapter_id": "pcap.replay",
+      "enabled": false,
+      "zone_id": "zone-ot-monitoring",
+      "options": {
+        "files": "../../tests/testdata/pcap/normal.pcap"
+      }
+    }
+  ],
+  "simulation": {
+    "enabled": true,
+    "listen": "127.0.0.1:8080"
+  },
+  "policy": {
+    "policy_id": "policy-filiale-001",
+    "site_id": "filiale-001",
+    "version": 1,
+    "updated_at": "2026-11-03T12:00:00Z",
+    "updated_by": "admin",
+    "reason": "Initiale Demo-Policy, Betreiber verantwortet Grenzwerte",
+    "temperature": {
+      "limits": [
+        { "zone_id": "zone-cool-meat", "metric": "air_temperature", "min_c": 1.0, "max_c": 5.0, "max_rate_c_per_min": 0.2, "setpoint_tolerance_c": 1.0 },
+        { "zone_id": "zone-cool-dairy", "metric": "air_temperature", "min_c": 1.0, "max_c": 7.0, "max_rate_c_per_min": 0.2, "setpoint_tolerance_c": 1.0 },
+        { "zone_id": "zone-cool-frozen", "metric": "air_temperature", "min_c": -22.0, "max_c": -15.0, "max_rate_c_per_min": 0.3, "setpoint_tolerance_c": 2.0 }
+      ],
+      "absolute_impossible_min_c": -40.0,
+      "absolute_impossible_max_c": 40.0
+    },
+    "sensors": { "divergence_c": 1.5, "divergence_window_s": 600 },
+    "network": {
+      "baseline_required": false,
+      "learned_baseline_window_s": 3600,
+      "unknown_peer_grace_s": 600,
+      "monitored_ports": [502, 47808, 1883, 161, 80, 443, 8000, 8080, 8443],
+      "allowed_pairs": [
+        { "source_asset_id": "asset-edge-gateway", "target_asset_id": "asset-danfoss-aksm800", "protocol": "modbus_tcp", "port": 502, "note": "Edge liest Status" },
+        { "source_asset_id": "asset-mqtt-gateway", "target_asset_id": "asset-edge-gateway", "protocol": "mqtt", "port": 1883, "note": "Telemetrie-Gateway" }
+      ]
+    },
+    "maintenance": {
+      "require_window": true,
+      "grace_period_s": 300,
+      "trusted_vendors": ["Kältetechnik Müller GmbH"]
+    },
+    "data_quality": { "frozen_value_window_s": 1800, "telemetry_gap_s": 900, "max_clock_skew_s": 300 },
+    "retention": { "event_days": 30, "alert_days": 180, "audit_days": 365, "max_event_mb": 2048, "max_spool_mb": 512 },
+    "alerting": { "min_notify_severity": "high" }
+  }
+}

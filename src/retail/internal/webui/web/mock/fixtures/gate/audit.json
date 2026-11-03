@@ -1,0 +1,53 @@
+{
+  "items": [
+    {
+      "seq": 809,
+      "at": "2026-11-03T17:05:00Z",
+      "actor": "approver-01",
+      "role": "approver",
+      "action": "gate.plan.approve",
+      "object_type": "write_plan",
+      "object_id": "pln-2026-11-03-04",
+      "reason": "Technisch plausibel",
+      "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "f92210df98b8b8a35935bbecbfc045527739577ef3ae5c16056ca8241481843e"
+    },
+    {
+      "seq": 810,
+      "at": "2026-11-03T17:58:00Z",
+      "actor": "system",
+      "role": "gate",
+      "action": "gate.write.denied",
+      "object_type": "denied_write",
+      "object_id": "den-2026-11-03-01",
+      "reason": "operation_not_approved",
+      "prev_hash": "f92210df98b8b8a35935bbecbfc045527739577ef3ae5c16056ca8241481843e",
+      "hash": "2ee482fa62229645ccd577e5c2a050f5ef15fe3e1828ef2826b745d2447b6f29"
+    },
+    {
+      "seq": 811,
+      "at": "2026-11-03T18:02:00Z",
+      "actor": "vendor-acme",
+      "role": "vendor_write_requester",
+      "action": "gate.session.open",
+      "object_type": "write_session",
+      "object_id": "ses-2026-11-03-a01",
+      "reason": "",
+      "prev_hash": "2ee482fa62229645ccd577e5c2a050f5ef15fe3e1828ef2826b745d2447b6f29",
+      "hash": "e9f29c69ddd2ee1b01bb1e28381c4a833dae24f633facd9bd6f7f943a91c43fe"
+    },
+    {
+      "seq": 812,
+      "at": "2026-11-03T18:10:00Z",
+      "actor": "master-admin-01",
+      "role": "master_admin",
+      "action": "gate.policy.reload",
+      "object_type": "gate_policy",
+      "object_id": "gate-policy-filiale-001",
+      "reason": "Policy-Version 3",
+      "prev_hash": "e9f29c69ddd2ee1b01bb1e28381c4a833dae24f633facd9bd6f7f943a91c43fe",
+      "hash": "fc0cd8004b69564206f16d05ba04788317c171b46598b085874487be390362ca"
+    }
+  ],
+  "chain_ok": true
+}

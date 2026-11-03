@@ -1,0 +1,99 @@
+/*
+ * components-feedback.css (split from components.css for the file-size budget).
+ */
+@layer components {
+
+  /* ---- toasts ---- */
+  .toast-stack {
+    position: fixed;
+    inset-block-end: 1rem;
+    inset-inline-end: 1rem;
+    z-index: var(--z-toast);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--sp-2);
+    max-width: min(26rem, calc(100vw - 2rem));
+    pointer-events: none;
+  }
+
+  .toast {
+    pointer-events: auto;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sp-2);
+    width: 100%;
+    padding: var(--sp-3) var(--sp-4);
+    border: 1px solid var(--glass-stroke);
+    border-radius: var(--r-control);
+    background: var(--glass-3);
+    box-shadow: var(--shadow-2);
+    backdrop-filter: blur(var(--blur-sheet));
+    color: var(--text-1);
+    font-size: var(--fs-300);
+    animation: toast-in var(--dur-3) var(--ease-out) both;
+  }
+
+  .toast--alert {
+    border-color: color-mix(in srgb, var(--sev, var(--warning)) 40%, var(--glass-stroke));
+  }
+
+  .toast__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .toast__title {
+    font-weight: 640;
+  }
+
+  .toast__text {
+    color: var(--text-2);
+    font-size: var(--fs-200);
+  }
+
+  @keyframes toast-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (max-width: 820px) {
+    .toast-stack {
+      inset-block-end: calc(5.4rem + env(safe-area-inset-bottom));
+      inset-inline: var(--sp-3);
+      max-width: none;
+      align-items: stretch;
+    }
+
+    .panel__head,
+    .panel__body,
+    .panel__foot {
+      padding-inline: var(--sp-4);
+    }
+
+    .state {
+      padding: var(--sp-6) var(--sp-4);
+    }
+
+    .btn {
+      min-height: 2.6rem;
+    }
+  }
+
+  /* Phones: help/account actions live in the "Mehr" sheet; layer order means
+     this rule must sit in the components layer to override .btn display. */
+  @media (max-width: 820px) {
+    .topbar__actions .topbar__action--secondary {
+      display: none;
+    }
+  }
+}

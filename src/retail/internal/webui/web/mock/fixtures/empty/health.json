@@ -1,0 +1,16 @@
+{
+  "status": "ok",
+  "product": "GeDefense Retail",
+  "version": "0.1.0-mock",
+  "commit": "mock",
+  "build_date": "2026-11-03T06:00:00Z",
+  "now": "2026-11-03T17:12:00Z",
+  "uptime_s": 120,
+  "read_only": true,
+  "storage": {
+    "events": 0,
+    "alerts": 0,
+    "audit_chain_ok": true
+  },
+  "collectors": []
+}

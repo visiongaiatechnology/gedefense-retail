@@ -1,0 +1,17 @@
+{
+  "generated_at": "2026-11-03T17:12:00Z",
+  "totals": {
+    "sites": 0,
+    "assets": 0,
+    "sensors": 0,
+    "open_alerts": 0,
+    "critical": 0,
+    "high": 0,
+    "collectors_running": 0,
+    "collectors_failed": 0,
+    "peers": 0
+  },
+  "sites": [],
+  "recent_alerts": [],
+  "collectors": []
+}

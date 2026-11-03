@@ -1,0 +1,298 @@
+/*
+ * Setup wizard — later steps (admin, collectors, summary, completion),
+ * abort dialog and responsive rules. Split for the file-size budget.
+ */
+@layer views {
+  /* ---- admin token ---- */
+  .setup-token {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+  }
+
+  .setup-token__value {
+    display: block;
+    padding: var(--sp-3);
+    border: 1px solid color-mix(in srgb, var(--critical) 45%, var(--line));
+    border-radius: var(--r-control);
+    background: var(--surface-inset);
+    color: var(--text-1);
+    font-family: var(--font-mono);
+    font-size: var(--fs-300);
+    overflow-wrap: anywhere;
+    user-select: all;
+  }
+
+  .setup-ack {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sp-2);
+    color: var(--text-2);
+    font-size: var(--fs-300);
+  }
+
+  .setup-ack .checkbox {
+    margin-block-start: 0.2rem;
+    accent-color: var(--accent);
+  }
+
+  /* ---- collectors ---- */
+  .setup-collector-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: var(--sp-2);
+  }
+
+  .setup-collector {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sp-3);
+    padding: var(--sp-3);
+    border: 1px solid var(--line);
+    border-radius: var(--r-control);
+    background: var(--surface-inset);
+    cursor: pointer;
+  }
+
+  .setup-collector:has(input:checked) {
+    border-color: color-mix(in srgb, var(--accent) 50%, var(--line));
+    background: color-mix(in srgb, var(--accent) 6%, var(--surface-1));
+  }
+
+  .setup-collector .checkbox {
+    margin-block-start: 0.2rem;
+    accent-color: var(--accent);
+  }
+
+  .setup-collector__text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+
+  .setup-collector__name {
+    color: var(--text-1);
+    font-size: var(--fs-300);
+    font-weight: 600;
+  }
+
+  .setup-collector__hint {
+    color: var(--text-3);
+    font-size: var(--fs-100);
+  }
+
+  /* ---- summary / completion ---- */
+  .setup-summary {
+    display: grid;
+    grid-template-columns: minmax(8rem, max-content) minmax(0, 1fr);
+    gap: 0.45rem var(--sp-4);
+    margin: 0;
+    padding: var(--sp-3);
+    border: 1px solid var(--line);
+    border-radius: var(--r-control);
+    background: var(--surface-inset);
+  }
+
+  .setup-summary dt {
+    color: var(--text-3);
+    font-size: var(--fs-100);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .setup-summary dd {
+    margin: 0;
+    color: var(--text-1);
+    font-size: var(--fs-300);
+    overflow-wrap: anywhere;
+  }
+
+  .setup-done {
+    width: 100%;
+    padding: clamp(1.4rem, 3vw, 2.2rem);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+    align-items: flex-start;
+  }
+
+  .setup-done__logo {
+    width: 4rem;
+    height: 4rem;
+    object-fit: contain;
+  }
+
+  .setup-done__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2) var(--sp-4);
+    color: var(--text-3);
+    font-size: var(--fs-100);
+  }
+
+  .setup-restart {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+  }
+
+  .setup-restart__title {
+    color: var(--text-1);
+    font-size: var(--fs-400);
+    font-weight: 640;
+  }
+
+  .setup-restart__row {
+    display: grid;
+    grid-template-columns: minmax(6rem, max-content) minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--sp-3);
+    padding: var(--sp-2) var(--sp-3);
+    border: 1px solid var(--line);
+    border-radius: var(--r-control);
+    background: var(--surface-inset);
+  }
+
+  .setup-restart__os {
+    color: var(--text-2);
+    font-size: var(--fs-200);
+    font-weight: 600;
+  }
+
+  .setup-restart__cmd {
+    color: var(--text-1);
+    font-size: var(--fs-200);
+    overflow-wrap: anywhere;
+  }
+
+  .setup-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-2);
+    padding: var(--sp-3) clamp(1rem, 4vw, 3rem);
+    border-block-start: 1px solid var(--line);
+    color: var(--text-3);
+    font-size: var(--fs-100);
+  }
+
+  /* ---- abort dialog ---- */
+  .setup-abort__backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal, 1000);
+    display: grid;
+    place-items: center;
+    padding: var(--sp-4);
+    background: color-mix(in srgb, #000 62%, transparent);
+    backdrop-filter: blur(6px);
+  }
+
+  .setup-abort__dialog {
+    width: min(30rem, 100%);
+    padding: var(--sp-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+  }
+
+  .setup-abort__title {
+    color: var(--text-1);
+    font-size: var(--fs-500);
+    font-weight: 640;
+  }
+
+  .setup-abort__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--sp-2);
+  }
+
+  /* ---- responsive ---- */
+  @media (max-width: 900px) {
+    .setup-stepper {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .setup-grid--2 {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (max-width: 620px) {
+    .setup-header {
+      align-items: flex-start;
+    }
+
+    .setup-header__actions {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .setup-loopback {
+      order: 2;
+    }
+
+    .setup-stepper {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .setup-stepper__label {
+      font-size: var(--fs-100);
+    }
+
+    .setup-card__marker {
+      display: none;
+    }
+
+    .setup-restart__row {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--sp-2);
+    }
+
+    .setup-restart__row .btn {
+      justify-self: start;
+    }
+
+    .setup-language-list,
+    .setup-collector-list {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+}
+
+@layer components {
+  .lang-select {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+  }
+
+  .lang-select__label {
+    color: var(--text-3);
+    font-size: var(--fs-100);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+  }
+
+  .lang-select__select {
+    min-width: 7.5rem;
+  }
+
+  .lang-select--compact .lang-select__select {
+    min-height: 2rem;
+    padding-block: 0.15rem;
+    font-size: var(--fs-100);
+  }
+
+  .topbar__lang {
+    display: inline-flex;
+    align-items: center;
+  }
+}

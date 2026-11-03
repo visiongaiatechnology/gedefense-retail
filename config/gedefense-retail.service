@@ -1,0 +1,37 @@
+[Unit]
+Description=GeDefense Retail Edge (ColdChain & Store Infrastructure Security)
+Documentation=file:///opt/gedefense-retail/docs/retail/operations-runbook.md
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=gedefense
+Group=gedefense
+ExecStart=/opt/gedefense-retail/bin/retaild serve --config /etc/gedefense-retail/retail.json
+Restart=on-failure
+RestartSec=5s
+# Fail-safe boundary: the unit must never influence refrigeration control.
+# No capabilities are granted, the filesystem is read-only except the data dir.
+CapabilityBoundingSet=
+AmbientCapabilities=
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/var/lib/gedefense-retail
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+RestrictNamespaces=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+SystemCallArchitectures=native
+# Konfigurationspfad wird ausschlieﬂlich per CLI uebergeben (--config).
+TimeoutStopSec=20s
+KillSignal=SIGTERM
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,822 @@
+{
+  "asset-verbund-01": {
+    "asset": {
+      "asset_id": "asset-verbund-01",
+      "site_id": "filiale-001",
+      "zone_id": "zone-cold-01",
+      "name": "Verbundregler Kälte LINKS",
+      "asset_type": "refrigeration_controller",
+      "vendor": "Danfoss",
+      "model": "AK-PC 781",
+      "firmware_version": "1.42",
+      "firmware_source": "modbus:read_fc3",
+      "firmware_confidence": 0.7,
+      "network_identifiers": [
+        {
+          "kind": "ip",
+          "value": "10.20.30.11",
+          "source": "collector.pnf.flow",
+          "confidence": 0.95,
+          "first_seen": "2026-09-14T07:42:00Z",
+          "last_seen": "2026-11-03T17:09:00Z"
+        },
+        {
+          "kind": "mac",
+          "value": "02:1a:11:00:00:01",
+          "source": "sniff.arp",
+          "confidence": 0.7,
+          "first_seen": "2026-09-14T07:42:00Z",
+          "last_seen": "2026-11-03T17:09:00Z"
+        },
+        {
+          "kind": "protocol_hint",
+          "value": "modbus_tcp:502",
+          "source": "collector.pnf.flow",
+          "confidence": 0.8,
+          "first_seen": "2026-09-14T07:42:00Z",
+          "last_seen": "2026-11-03T17:09:00Z"
+        }
+      ],
+      "protocols": [
+        "modbus_tcp"
+      ],
+      "criticality": "critical",
+      "confidence": 0.92,
+      "classification_source": "auto",
+      "source": "discovery.passive",
+      "first_seen_at": "2026-09-14T07:42:00Z",
+      "last_seen_at": "2026-11-03T17:09:00Z",
+      "retired": false,
+      "operator_notes": ""
+    },
+    "sensors": [
+      {
+        "sensor_id": "sensor-cold-left-01",
+        "site_id": "filiale-001",
+        "asset_id": "asset-verbund-01",
+        "zone_id": "zone-cold-01",
+        "name": "Kühlraum LINKS · Luft",
+        "metric": "air_temperature",
+        "unit": "celsius",
+        "kind": "air",
+        "independent": false,
+        "critical": true,
+        "last_seen_at": "2026-11-03T17:10:00Z"
+      },
+      {
+        "sensor_id": "sensor-cold-left-02",
+        "site_id": "filiale-001",
+        "asset_id": "asset-verbund-01",
+        "zone_id": "zone-cold-01",
+        "name": "Kühlraum LINKS · Produkt",
+        "metric": "air_temperature",
+        "unit": "celsius",
+        "kind": "product",
+        "independent": true,
+        "critical": true,
+        "last_seen_at": "2026-11-03T17:09:00Z"
+      },
+      {
+        "sensor_id": "sensor-door-left-01",
+        "site_id": "filiale-001",
+        "asset_id": "asset-verbund-01",
+        "zone_id": "zone-cold-01",
+        "name": "Türkontakt Kühlraum LINKS",
+        "metric": "door_state",
+        "unit": "boolean",
+        "kind": "door",
+        "independent": false,
+        "critical": false,
+        "last_seen_at": "2026-11-03T17:10:00Z"
+      }
+    ],
+    "alerts": [
+      {
+        "alert_id": "alrt-2026-11-03-01",
+        "site_id": "filiale-001",
+        "asset_ids": [
+          "asset-verbund-01"
+        ],
+        "zone_ids": [
+          "zone-cold-01"
+        ],
+        "sensor_ids": [
+          "sensor-cold-left-01"
+        ],
+        "category": "thermal",
+        "severity": "critical",
+        "confidence": 0.86,
+        "title": "Sollwertänderung außerhalb Wartungsfenster mit anschließendem Temperaturanstieg",
+        "summary": "Beobachteter Schreibversuch auf Kühlraum LINKS, keine Freigabe für dieses Zeitfenster, Temperatur steigt seit 6 Minuten.",
+        "rule_id": "retail.thermal.setpoint-deviation",
+        "rule_version": "1",
+        "first_seen_at": "2026-11-03T16:14:00Z",
+        "last_seen_at": "2026-11-03T16:41:00Z",
+        "status": "open",
+        "assignee": "user-soc-01",
+        "evidence": [
+          {
+            "kind": "event",
+            "ref_id": "evt-2026-11-03-write-01",
+            "description": "FC6 Write Single Register wurde passiv beobachtet",
+            "at": "2026-11-03T16:14:00Z",
+            "source": "adapter.modbus.readonly",
+            "value": "value_hint=redacted",
+            "confidence": 0.9
+          },
+          {
+            "kind": "baseline",
+            "ref_id": "baseline-comm-2026-10",
+            "description": "Quelle 10.20.30.55 wurde bisher nie beobachtet",
+            "at": "2026-11-03T16:14:00Z",
+            "source": "detect.baseline",
+            "value": "",
+            "confidence": 0.75
+          },
+          {
+            "kind": "measurement",
+            "ref_id": "sensor-cold-left-01",
+            "description": "Temperatur +2.1 °C in 6 min",
+            "at": "2026-11-03T16:40:00Z",
+            "source": "detect.thermal",
+            "value": "6.8 celsius",
+            "confidence": 0.82
+          },
+          {
+            "kind": "policy",
+            "ref_id": "policy-filiale-001",
+            "description": "Grenzwert max_c=8.0 für Kühlraum LINKS, Version 7",
+            "at": "2026-11-03T08:00:00Z",
+            "source": "policy.store",
+            "value": "max_c=8.0",
+            "confidence": 1.0
+          }
+        ],
+        "recommended_actions": [
+          {
+            "action": "Dienstleistersitzung im Managementpfad nach Freigabe sperren",
+            "requires_approval": true,
+            "safety_note": "Keine OT-Prozesskommunikation unterbrechen."
+          }
+        ],
+        "safety_constraints": [
+          "no_ot_write",
+          "no_actuator_control",
+          "no_automatic_isolation"
+        ],
+        "dedup_key": "retail.thermal.setpoint-deviation:alrt-2026-11-03-01",
+        "incident_id": "inc-2026-11-03-01",
+        "audit_history": [
+          {
+            "at": "2026-11-03T16:14:00Z",
+            "actor": "detection",
+            "role": "system",
+            "action": "alert_created"
+          }
+        ],
+        "created_at": "2026-11-03T16:14:00Z",
+        "updated_at": "2026-11-03T16:41:00Z",
+        "correlation": {
+          "chain_id": "chain-thermal-manipulation",
+          "observed_facts": [
+            "FC6-Write außerhalb Wartungsfenster beobachtet",
+            "Unbekannte Quelle 10.20.30.55 (nicht in Baseline)",
+            "Temperaturanstieg 2.1 °C in 6 min in Kühlraum LINKS",
+            "Kein Abtau- oder Türereignis im Zeitfenster"
+          ],
+          "hypothesis": "Mögliche unbefugte Sollwertänderung über einen nicht freigegebenen Zugang.",
+          "alternative_explanations": [
+            "Fehlbedienung durch Dienstleister",
+            "Anlagenstörung",
+            "Sensorfehler",
+            "Abtauzyklus"
+          ],
+          "recommended_checks": [
+            "Dienstleisterkontakt verifizieren",
+            "Ist-Sollwert am Regler prüfen",
+            "Kühlketten-Prozess des Betreibers starten"
+          ],
+          "indicators": [
+            "write_fc_outside_window",
+            "unknown_peer",
+            "thermal_rate_breach"
+          ]
+        }
+      },
+      {
+        "alert_id": "alrt-2026-11-03-02",
+        "site_id": "filiale-001",
+        "asset_ids": [
+          "asset-verbund-01"
+        ],
+        "zone_ids": [
+          "zone-cold-01"
+        ],
+        "sensor_ids": [],
+        "category": "access",
+        "severity": "high",
+        "confidence": 0.79,
+        "title": "Sitzung außerhalb des freigegebenen Wartungsfensters",
+        "summary": "Externe Sitzung von 10.20.30.55 auf den Verbundregler LINKS; für dieses Zeitfenster existiert keine Freigabe.",
+        "rule_id": "retail.access.off-window",
+        "rule_version": "1",
+        "first_seen_at": "2026-11-03T15:42:00Z",
+        "last_seen_at": "2026-11-03T15:47:00Z",
+        "status": "acknowledged",
+        "assignee": "user-soc-01",
+        "evidence": [
+          {
+            "kind": "event",
+            "ref_id": "evt-2026-11-03-access-01",
+            "description": "Access-Session außerhalb Fenster",
+            "at": "2026-11-03T15:42:00Z",
+            "source": "adapter.mfa.observer",
+            "value": "source=10.20.30.55",
+            "confidence": 0.85
+          },
+          {
+            "kind": "window",
+            "ref_id": "mw-2026-11-03-02",
+            "description": "Aktives Fenster deckt 15:00–18:00, Quelle nicht in CIDR-Allowlist",
+            "at": "2026-11-03T15:00:00Z",
+            "source": "policy.store",
+            "value": "10.99.0.0/24",
+            "confidence": 1.0
+          }
+        ],
+        "recommended_actions": [],
+        "safety_constraints": [
+          "no_ot_write",
+          "no_actuator_control",
+          "no_automatic_isolation"
+        ],
+        "dedup_key": "retail.access.off-window:alrt-2026-11-03-02",
+        "incident_id": "inc-2026-11-03-01",
+        "audit_history": [
+          {
+            "at": "2026-11-03T15:42:00Z",
+            "actor": "detection",
+            "role": "system",
+            "action": "alert_created"
+          }
+        ],
+        "created_at": "2026-11-03T15:42:00Z",
+        "updated_at": "2026-11-03T15:47:00Z"
+      },
+      {
+        "alert_id": "alrt-2026-11-03-03",
+        "site_id": "filiale-001",
+        "asset_ids": [
+          "asset-verbund-01"
+        ],
+        "zone_ids": [
+          "zone-cold-01"
+        ],
+        "sensor_ids": [],
+        "category": "network",
+        "severity": "high",
+        "confidence": 0.71,
+        "title": "Unbekannter Kommunikationspartner im OT-Prozess",
+        "summary": "Neue Verbindung von 10.20.30.55 zum Verbundregler LINKS; Partner ist nicht in der gelernten Baseline.",
+        "rule_id": "retail.net.unknown-peer",
+        "rule_version": "1",
+        "first_seen_at": "2026-11-03T16:12:00Z",
+        "last_seen_at": "2026-11-03T16:16:00Z",
+        "status": "investigating",
+        "assignee": "",
+        "evidence": [
+          {
+            "kind": "event",
+            "ref_id": "evt-2026-11-03-flow-01",
+            "description": "Flow 10.20.30.55 → 10.20.30.11:502",
+            "at": "2026-11-03T16:12:00Z",
+            "source": "collector.pnf.flow",
+            "value": "bytes=1840",
+            "confidence": 0.8
+          },
+          {
+            "kind": "baseline",
+            "ref_id": "baseline-comm-2026-10",
+            "description": "Partner seit Baseline-Lernphase nicht beobachtet",
+            "at": "2026-11-03T16:12:00Z",
+            "source": "detect.baseline",
+            "value": "",
+            "confidence": 0.7
+          }
+        ],
+        "recommended_actions": [],
+        "safety_constraints": [
+          "no_ot_write",
+          "no_actuator_control",
+          "no_automatic_isolation"
+        ],
+        "dedup_key": "retail.net.unknown-peer:alrt-2026-11-03-03",
+        "incident_id": "inc-2026-11-03-01",
+        "audit_history": [
+          {
+            "at": "2026-11-03T16:12:00Z",
+            "actor": "detection",
+            "role": "system",
+            "action": "alert_created"
+          }
+        ],
+        "created_at": "2026-11-03T16:12:00Z",
+        "updated_at": "2026-11-03T16:16:00Z"
+      }
+    ],
+    "recent_events": [
+      {
+        "event_id": "evt-2026-11-03-flow-00",
+        "kind": "flow",
+        "site_id": "filiale-001",
+        "zone_id": "zone-cold-01",
+        "asset_id": "asset-verbund-01",
+        "observed_at": "2026-11-03T16:12:00Z",
+        "received_at": "2026-11-03T16:12:00Z",
+        "source": "collector.pnf.flow",
+        "collection_method": "passive_tap",
+        "protocol": "modbus_tcp",
+        "confidence": 0.9,
+        "quality": "good",
+        "flow": {
+          "src_ip": "10.20.30.55",
+          "dst_ip": "10.20.30.11",
+          "src_port": 51422,
+          "dst_port": 502,
+          "protocol": "modbus_tcp",
+          "bytes": 1840,
+          "packets": 24,
+          "direction": "inbound"
+        }
+      },
+      {
+        "event_id": "evt-2026-11-03-write-01",
+        "kind": "write_attempt",
+        "site_id": "filiale-001",
+        "zone_id": "zone-cold-01",
+        "asset_id": "asset-verbund-01",
+        "observed_at": "2026-11-03T16:14:00Z",
+        "received_at": "2026-11-03T16:14:00Z",
+        "source": "adapter.modbus.readonly",
+        "collection_method": "passive_tap",
+        "protocol": "modbus_tcp",
+        "confidence": 0.9,
+        "quality": "good",
+        "write_attempt": {
+          "protocol": "modbus_tcp",
+          "source": "10.20.30.55",
+          "target": "10.20.30.11",
+          "function": "fc6_write_single_register",
+          "register": "40001",
+          "value_hint": "redacted",
+          "allowed": false
+        }
+      },
+      {
+        "event_id": "evt-2026-11-03-access-01",
+        "kind": "access_session",
+        "site_id": "filiale-001",
+        "zone_id": "zone-cold-01",
+        "asset_id": "asset-verbund-01",
+        "observed_at": "2026-11-03T16:15:00Z",
+        "received_at": "2026-11-03T16:15:00Z",
+        "source": "adapter.mfa.observer",
+        "collection_method": "read_only_poll",
+        "protocol": "modbus_tcp",
+        "confidence": 0.9,
+        "quality": "good",
+        "access": {
+          "vendor": "Unbekannter Dienstleister",
+          "user": "remote-07",
+          "method": "vpn",
+          "target_asset": "asset-verbund-01",
+          "window_id": "",
+          "in_window": false,
+          "source_device": "10.20.30.55",
+          "session_id": "sess-2026-11-03-9b21"
+        }
+      },
+      {
+        "event_id": "evt-2026-11-03-telemetry-01",
+        "kind": "telemetry",
+        "site_id": "filiale-001",
+        "zone_id": "zone-cold-01",
+        "asset_id": "asset-verbund-01",
+        "observed_at": "2026-11-03T16:40:00Z",
+        "received_at": "2026-11-03T16:40:00Z",
+        "source": "adapter.modbus.readonly",
+        "collection_method": "read_only_poll",
+        "protocol": "modbus_tcp",
+        "confidence": 0.9,
+        "quality": "good",
+        "sensor_id": "sensor-cold-left-01",
+        "measurement": {
+          "value": 6.8,
+          "unit": "celsius",
+          "quality": "good",
+          "metric": "air_temperature",
+          "mode": "cooling",
+          "observed_at": "2026-11-03T16:40:00Z",
+          "setpoint": 3.5
+        }
+      },
+      {
+        "event_id": "evt-2026-11-03-telemetry-02",
+        "kind": "telemetry",
+        "site_id": "filiale-001",
+        "zone_id": "zone-cold-01",
+        "asset_id": "asset-verbund-01",
+        "observed_at": "2026-11-03T16:40:00Z",
+        "received_at": "2026-11-03T16:40:00Z",
+        "source": "adapter.modbus.readonly",
+        "collection_method": "read_only_poll",
+        "protocol": "modbus_tcp",
+        "confidence": 0.9,
+        "quality": "good",
+        "sensor_id": "sensor-cold-left-02",
+        "measurement": {
+          "value": 6.4,
+          "unit": "celsius",
+          "quality": "uncertain",
+          "metric": "air_temperature",
+          "mode": "cooling",
+          "observed_at": "2026-11-03T16:40:00Z",
+          "setpoint": 3.5
+        }
+      },
+      {
+        "event_id": "evt-2026-11-03-telemetry-03",
+        "kind": "telemetry",
+        "site_id": "filiale-001",
+        "zone_id": "zone-cold-01",
+        "asset_id": "asset-verbund-01",
+        "observed_at": "2026-11-03T16:41:00Z",
+        "received_at": "2026-11-03T16:41:00Z",
+        "source": "adapter.modbus.readonly",
+        "collection_method": "read_only_poll",
+        "protocol": "modbus_tcp",
+        "confidence": 0.9,
+        "quality": "good",
+        "sensor_id": "sensor-cold-left-01",
+        "measurement": {
+          "value": 7.0,
+          "unit": "celsius",
+          "quality": "good",
+          "metric": "air_temperature",
+          "mode": "cooling",
+          "observed_at": "2026-11-03T16:41:00Z",
+          "setpoint": 3.5
+        }
+      },
+      {
+        "event_id": "evt-2026-11-03-config-01",
+        "kind": "config_change",
+        "site_id": "filiale-001",
+        "zone_id": "zone-cold-01",
+        "asset_id": "asset-verbund-01",
+        "observed_at": "2026-11-03T16:14:00Z",
+        "received_at": "2026-11-03T16:14:00Z",
+        "source": "adapter.modbus.readonly",
+        "collection_method": "read_only_poll",
+        "protocol": "modbus_tcp",
+        "confidence": 0.9,
+        "quality": "good",
+        "integrity": {
+          "subject": "controller_parameters",
+          "version": "2.5",
+          "sha256": "a3750b9bdd9935b1a4e91d44a901bed880b8f74aac69e0bbcfd91e0dff153e27",
+          "changed": true,
+          "approved": false
+        },
+        "payload_meta": {
+          "reference": "passive-export-2026-11-03"
+        }
+      },
+      {
+        "event_id": "evt-2026-11-03-clock-01",
+        "kind": "clock_skew",
+        "site_id": "filiale-001",
+        "zone_id": "zone-cold-01",
+        "asset_id": "asset-verbund-01",
+        "observed_at": "2026-11-03T15:50:00Z",
+        "received_at": "2026-11-03T15:50:00Z",
+        "source": "adapter.modbus.readonly",
+        "collection_method": "read_only_poll",
+        "protocol": "modbus_tcp",
+        "confidence": 0.9,
+        "quality": "clock_uncertain"
+      },
+      {
+        "event_id": "evt-2026-11-03-asset-01",
+        "kind": "asset_seen",
+        "site_id": "filiale-001",
+        "zone_id": "zone-cold-01",
+        "asset_id": "asset-unknown-01",
+        "observed_at": "2026-11-03T15:42:00Z",
+        "received_at": "2026-11-03T15:42:00Z",
+        "source": "discovery.passive",
+        "collection_method": "passive_tap",
+        "protocol": "modbus_tcp",
+        "confidence": 0.9,
+        "quality": "good",
+        "device": {
+          "ip": "10.20.30.55",
+          "mac": "02:55:00:00:00:55",
+          "vendor": ""
+        }
+      },
+      {
+        "event_id": "evt-2026-11-03-dq-01",
+        "kind": "telemetry",
+        "site_id": "filiale-001",
+        "zone_id": "zone-cold-01",
+        "asset_id": "asset-verbund-01",
+        "observed_at": "2026-11-03T17:08:00Z",
+        "received_at": "2026-11-03T17:08:00Z",
+        "source": "adapter.modbus.readonly",
+        "collection_method": "read_only_poll",
+        "protocol": "modbus_tcp",
+        "confidence": 0.9,
+        "quality": "good",
+        "sensor_id": "sensor-tk-01",
+        "measurement": {
+          "value": -18.2,
+          "unit": "celsius",
+          "quality": "frozen",
+          "metric": "air_temperature",
+          "mode": "cooling",
+          "observed_at": "2026-11-03T17:08:00Z",
+          "setpoint": 3.5
+        }
+      }
+    ]
+  },
+  "asset-verbund-02": {
+    "asset": {
+      "asset_id": "asset-verbund-02",
+      "site_id": "filiale-001",
+      "zone_id": "zone-cold-02",
+      "name": "Verbundregler Kälte RECHTS",
+      "asset_type": "refrigeration_controller",
+      "vendor": "Emerson",
+      "model": "E2 RX",
+      "firmware_version": "3.1.2",
+      "firmware_source": "bacnet:readproperty",
+      "firmware_confidence": 0.6,
+      "network_identifiers": [
+        {
+          "kind": "ip",
+          "value": "10.20.30.12",
+          "source": "collector.pnf.flow",
+          "confidence": 0.95,
+          "first_seen": "2026-09-14T07:42:00Z",
+          "last_seen": "2026-11-03T17:09:00Z"
+        },
+        {
+          "kind": "protocol_hint",
+          "value": "bacnet_ip:47808",
+          "source": "collector.bacnet",
+          "confidence": 0.8,
+          "first_seen": "2026-09-14T08:02:00Z",
+          "last_seen": "2026-11-03T17:08:00Z"
+        }
+      ],
+      "protocols": [
+        "bacnet_ip"
+      ],
+      "criticality": "critical",
+      "confidence": 0.88,
+      "classification_source": "auto",
+      "source": "discovery.passive",
+      "first_seen_at": "2026-09-14T07:42:00Z",
+      "last_seen_at": "2026-11-03T17:09:00Z",
+      "retired": false,
+      "operator_notes": ""
+    },
+    "sensors": [
+      {
+        "sensor_id": "sensor-cold-right-01",
+        "site_id": "filiale-001",
+        "asset_id": "asset-verbund-02",
+        "zone_id": "zone-cold-02",
+        "name": "Kühlraum RECHTS · Luft",
+        "metric": "air_temperature",
+        "unit": "celsius",
+        "kind": "air",
+        "independent": false,
+        "critical": true,
+        "last_seen_at": "2026-11-03T17:11:00Z"
+      }
+    ],
+    "alerts": [
+      {
+        "alert_id": "alrt-2026-11-03-04",
+        "site_id": "filiale-001",
+        "asset_ids": [
+          "asset-verbund-02"
+        ],
+        "zone_ids": [
+          "zone-cold-02"
+        ],
+        "sensor_ids": [
+          "sensor-cold-right-01"
+        ],
+        "category": "thermal",
+        "severity": "medium",
+        "confidence": 0.66,
+        "title": "Temperaturanstieg über konfigurierte Änderungsrate",
+        "summary": "Kühlraum RECHTS: Anstieg von 1.4 °C/min überschreitet die Policy-Grenze von 0.5 °C/min.",
+        "rule_id": "retail.thermal.rate",
+        "rule_version": "1",
+        "first_seen_at": "2026-11-03T11:08:00Z",
+        "last_seen_at": "2026-11-03T11:14:00Z",
+        "status": "acknowledged",
+        "assignee": "",
+        "evidence": [
+          {
+            "kind": "measurement",
+            "ref_id": "sensor-cold-right-01",
+            "description": "Rate 1.4 °C/min gemessen",
+            "at": "2026-11-03T11:12:00Z",
+            "source": "detect.thermal",
+            "value": "1.4 celsius/min",
+            "confidence": 0.8
+          }
+        ],
+        "recommended_actions": [],
+        "safety_constraints": [
+          "no_ot_write",
+          "no_actuator_control",
+          "no_automatic_isolation"
+        ],
+        "dedup_key": "retail.thermal.rate:alrt-2026-11-03-04",
+        "incident_id": "",
+        "audit_history": [
+          {
+            "at": "2026-11-03T11:08:00Z",
+            "actor": "detection",
+            "role": "system",
+            "action": "alert_created"
+          }
+        ],
+        "created_at": "2026-11-03T11:08:00Z",
+        "updated_at": "2026-11-03T11:14:00Z"
+      }
+    ],
+    "recent_events": [
+      {
+        "event_id": "evt-2026-11-03-flow-00",
+        "kind": "flow",
+        "site_id": "filiale-001",
+        "zone_id": "zone-cold-01",
+        "asset_id": "asset-verbund-01",
+        "observed_at": "2026-11-03T16:12:00Z",
+        "received_at": "2026-11-03T16:12:00Z",
+        "source": "collector.pnf.flow",
+        "collection_method": "passive_tap",
+        "protocol": "modbus_tcp",
+        "confidence": 0.9,
+        "quality": "good",
+        "flow": {
+          "src_ip": "10.20.30.55",
+          "dst_ip": "10.20.30.11",
+          "src_port": 51422,
+          "dst_port": 502,
+          "protocol": "modbus_tcp",
+          "bytes": 1840,
+          "packets": 24,
+          "direction": "inbound"
+        }
+      },
+      {
+        "event_id": "evt-2026-11-03-write-01",
+        "kind": "write_attempt",
+        "site_id": "filiale-001",
+        "zone_id": "zone-cold-01",
+        "asset_id": "asset-verbund-01",
+        "observed_at": "2026-11-03T16:14:00Z",
+        "received_at": "2026-11-03T16:14:00Z",
+        "source": "adapter.modbus.readonly",
+        "collection_method": "passive_tap",
+        "protocol": "modbus_tcp",
+        "confidence": 0.9,
+        "quality": "good",
+        "write_attempt": {
+          "protocol": "modbus_tcp",
+          "source": "10.20.30.55",
+          "target": "10.20.30.11",
+          "function": "fc6_write_single_register",
+          "register": "40001",
+          "value_hint": "redacted",
+          "allowed": false
+        }
+      },
+      {
+        "event_id": "evt-2026-11-03-access-01",
+        "kind": "access_session",
+        "site_id": "filiale-001",
+        "zone_id": "zone-cold-01",
+        "asset_id": "asset-verbund-01",
+        "observed_at": "2026-11-03T16:15:00Z",
+        "received_at": "2026-11-03T16:15:00Z",
+        "source": "adapter.mfa.observer",
+        "collection_method": "read_only_poll",
+        "protocol": "modbus_tcp",
+        "confidence": 0.9,
+        "quality": "good",
+        "access": {
+          "vendor": "Unbekannter Dienstleister",
+          "user": "remote-07",
+          "method": "vpn",
+          "target_asset": "asset-verbund-01",
+          "window_id": "",
+          "in_window": false,
+          "source_device": "10.20.30.55",
+          "session_id": "sess-2026-11-03-9b21"
+        }
+      },
+      {
+        "event_id": "evt-2026-11-03-telemetry-01",
+        "kind": "telemetry",
+        "site_id": "filiale-001",
+        "zone_id": "zone-cold-01",
+        "asset_id": "asset-verbund-01",
+        "observed_at": "2026-11-03T16:40:00Z",
+        "received_at": "2026-11-03T16:40:00Z",
+        "source": "adapter.modbus.readonly",
+        "collection_method": "read_only_poll",
+        "protocol": "modbus_tcp",
+        "confidence": 0.9,
+        "quality": "good",
+        "sensor_id": "sensor-cold-left-01",
+        "measurement": {
+          "value": 6.8,
+          "unit": "celsius",
+          "quality": "good",
+          "metric": "air_temperature",
+          "mode": "cooling",
+          "observed_at": "2026-11-03T16:40:00Z",
+          "setpoint": 3.5
+        }
+      }
+    ]
+  },
+  "asset-unknown-01": {
+    "asset": {
+      "asset_id": "asset-unknown-01",
+      "site_id": "filiale-001",
+      "zone_id": "zone-unknown-01",
+      "name": "Unbekanntes Gerät 10.20.30.77",
+      "asset_type": "unknown",
+      "vendor": "",
+      "model": "",
+      "firmware_version": "",
+      "firmware_source": "",
+      "firmware_confidence": 0.0,
+      "network_identifiers": [
+        {
+          "kind": "ip",
+          "value": "10.20.30.77",
+          "source": "collector.pnf.flow",
+          "confidence": 0.95,
+          "first_seen": "2026-11-03T15:42:00Z",
+          "last_seen": "2026-11-03T17:07:00Z"
+        }
+      ],
+      "protocols": [
+        "modbus_tcp"
+      ],
+      "criticality": "medium",
+      "confidence": 0.3,
+      "classification_source": "auto",
+      "source": "discovery.passive",
+      "first_seen_at": "2026-09-14T07:42:00Z",
+      "last_seen_at": "2026-11-03T17:09:00Z",
+      "retired": false,
+      "operator_notes": "Passiv im OT-Prozess beobachtet; Typ und Rolle nicht belegt."
+    },
+    "sensors": [],
+    "alerts": [],
+    "recent_events": [
+      {
+        "event_id": "evt-2026-11-03-asset-01",
+        "kind": "asset_seen",
+        "site_id": "filiale-001",
+        "zone_id": "zone-cold-01",
+        "asset_id": "asset-unknown-01",
+        "observed_at": "2026-11-03T15:42:00Z",
+        "received_at": "2026-11-03T15:42:00Z",
+        "source": "discovery.passive",
+        "collection_method": "passive_tap",
+        "protocol": "modbus_tcp",
+        "confidence": 0.9,
+        "quality": "good",
+        "device": {
+          "ip": "10.20.30.55",
+          "mac": "02:55:00:00:00:55",
+          "vendor": ""
+        }
+      }
+    ]
+  }
+}

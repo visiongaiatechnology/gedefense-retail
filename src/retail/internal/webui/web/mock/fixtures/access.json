@@ -1,0 +1,204 @@
+{
+  "windows": [
+    {
+      "maintenance_window_id": "mw-2026-11-03-01",
+      "site_id": "filiale-001",
+      "zone_ids": [
+        "zone-cold-01"
+      ],
+      "vendor": "Kältetechnik Meier GmbH",
+      "ticket_ref": "TICKET-4711",
+      "approved_by": "user-filialleitung-01",
+      "approved_at": "2026-11-02T08:00:00Z",
+      "starts_at": "2026-11-03T08:00:00Z",
+      "ends_at": "2026-11-03T10:00:00Z",
+      "target_asset_ids": [
+        "asset-verbund-01"
+      ],
+      "allowed_source_cidrs": [
+        "10.99.0.0/24"
+      ],
+      "status": "closed",
+      "created_at": "2026-11-02T07:00:00Z",
+      "created_by": "user-filialleitung-01",
+      "notes": "Jährliche Verbundregler-Wartung"
+    },
+    {
+      "maintenance_window_id": "mw-2026-11-03-02",
+      "site_id": "filiale-001",
+      "zone_ids": [
+        "zone-cold-01",
+        "zone-cold-02"
+      ],
+      "vendor": "Kältetechnik Meier GmbH",
+      "ticket_ref": "TICKET-4725",
+      "approved_by": "user-filialleitung-01",
+      "approved_at": "2026-11-03T14:30:00Z",
+      "starts_at": "2026-11-03T15:00:00Z",
+      "ends_at": "2026-11-03T18:00:00Z",
+      "target_asset_ids": [
+        "asset-verbund-01"
+      ],
+      "allowed_source_cidrs": [
+        "10.99.0.0/24"
+      ],
+      "status": "active",
+      "created_at": "2026-11-03T14:25:00Z",
+      "created_by": "user-filialleitung-01",
+      "notes": "Nachjustierung nach Warenbeladung"
+    },
+    {
+      "maintenance_window_id": "mw-2026-11-04-01",
+      "site_id": "filiale-001",
+      "zone_ids": [
+        "zone-cold-02"
+      ],
+      "vendor": "Kälte Nord Service",
+      "ticket_ref": "TICKET-4731",
+      "approved_by": "user-anlagenverantwortlich-01",
+      "approved_at": "2026-11-03T16:12:00Z",
+      "starts_at": "2026-11-04T17:12:00Z",
+      "ends_at": "2026-11-04T19:12:00Z",
+      "allowed_source_cidrs": [
+        "10.99.1.0/24"
+      ],
+      "status": "planned",
+      "created_at": "2026-11-03T16:12:00Z",
+      "created_by": "user-anlagenverantwortlich-01",
+      "notes": "Prüfung TK-Zelle"
+    }
+  ],
+  "sessions": [
+    {
+      "session_id": "sess-2026-11-03-aa71",
+      "site_id": "filiale-001",
+      "vendor": "Kältetechnik Meier GmbH",
+      "user": "techniker-03",
+      "method": "vpn",
+      "target_asset": "asset-verbund-01",
+      "source_device": "10.99.0.42",
+      "window_id": "mw-2026-11-03-01",
+      "in_window": true,
+      "started_at": "2026-11-03T08:04:00Z",
+      "ended_at": "2026-11-03T09:40:00Z",
+      "observed": true
+    },
+    {
+      "session_id": "sess-2026-11-03-b1c2",
+      "site_id": "filiale-001",
+      "vendor": "Kältetechnik Meier GmbH",
+      "user": "techniker-03",
+      "method": "vpn",
+      "target_asset": "asset-verbund-01",
+      "source_device": "10.99.0.42",
+      "window_id": "mw-2026-11-03-02",
+      "in_window": true,
+      "started_at": "2026-11-03T15:06:00Z",
+      "observed": true
+    },
+    {
+      "session_id": "sess-2026-11-03-9b21",
+      "site_id": "filiale-001",
+      "vendor": "Unbekannter Dienstleister",
+      "user": "remote-07",
+      "method": "vpn",
+      "target_asset": "asset-verbund-01",
+      "source_device": "10.20.30.55",
+      "window_id": "",
+      "in_window": false,
+      "started_at": "2026-11-03T15:42:00Z",
+      "ended_at": "2026-11-03T15:47:00Z",
+      "observed": true
+    },
+    {
+      "session_id": "sess-2026-11-03-c3d4",
+      "site_id": "filiale-001",
+      "vendor": "Fernwartung Nord",
+      "user": "support-02",
+      "method": "teamviewer",
+      "target_asset": "asset-bms-gw",
+      "source_device": "172.16.0.9",
+      "window_id": "",
+      "in_window": false,
+      "started_at": "2026-11-03T13:12:00Z",
+      "ended_at": "2026-11-03T13:26:00Z",
+      "observed": false
+    },
+    {
+      "session_id": "sess-2026-11-02-77aa",
+      "site_id": "filiale-001",
+      "vendor": "Kälte Nord Service",
+      "user": "techniker-09",
+      "method": "direct",
+      "target_asset": "asset-ksr-tk",
+      "source_device": "10.99.1.17",
+      "window_id": "mw-2026-11-03-01",
+      "in_window": true,
+      "started_at": "2026-11-02T09:12:00Z",
+      "ended_at": "2026-11-02T09:58:00Z",
+      "observed": true
+    }
+  ],
+  "anomalies": [
+    {
+      "alert_id": "alrt-2026-11-03-02",
+      "site_id": "filiale-001",
+      "asset_ids": [
+        "asset-verbund-01"
+      ],
+      "zone_ids": [
+        "zone-cold-01"
+      ],
+      "sensor_ids": [],
+      "category": "access",
+      "severity": "high",
+      "confidence": 0.79,
+      "title": "Sitzung außerhalb des freigegebenen Wartungsfensters",
+      "summary": "Externe Sitzung von 10.20.30.55 auf den Verbundregler LINKS; für dieses Zeitfenster existiert keine Freigabe.",
+      "rule_id": "retail.access.off-window",
+      "rule_version": "1",
+      "first_seen_at": "2026-11-03T15:42:00Z",
+      "last_seen_at": "2026-11-03T15:47:00Z",
+      "status": "acknowledged",
+      "assignee": "user-soc-01",
+      "evidence": [
+        {
+          "kind": "event",
+          "ref_id": "evt-2026-11-03-access-01",
+          "description": "Access-Session außerhalb Fenster",
+          "at": "2026-11-03T15:42:00Z",
+          "source": "adapter.mfa.observer",
+          "value": "source=10.20.30.55",
+          "confidence": 0.85
+        },
+        {
+          "kind": "window",
+          "ref_id": "mw-2026-11-03-02",
+          "description": "Aktives Fenster deckt 15:00–18:00, Quelle nicht in CIDR-Allowlist",
+          "at": "2026-11-03T15:00:00Z",
+          "source": "policy.store",
+          "value": "10.99.0.0/24",
+          "confidence": 1.0
+        }
+      ],
+      "recommended_actions": [],
+      "safety_constraints": [
+        "no_ot_write",
+        "no_actuator_control",
+        "no_automatic_isolation"
+      ],
+      "dedup_key": "retail.access.off-window:alrt-2026-11-03-02",
+      "incident_id": "inc-2026-11-03-01",
+      "audit_history": [
+        {
+          "at": "2026-11-03T15:42:00Z",
+          "actor": "detection",
+          "role": "system",
+          "action": "alert_created"
+        }
+      ],
+      "created_at": "2026-11-03T15:42:00Z",
+      "updated_at": "2026-11-03T15:47:00Z"
+    }
+  ]
+}

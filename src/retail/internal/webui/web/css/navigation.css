@@ -1,0 +1,210 @@
+/*
+ * navigation.css (split from layout.css for the file-size budget).
+ */
+@layer layout {
+
+  /* ---- phone: bottom navigation, recomposed content ---- */
+  @media (max-width: 820px) {
+    .app {
+      display: block;
+    }
+
+    .app__rail {
+      position: fixed;
+      inset-inline: 0;
+      inset-block-end: 0;
+      inset-block-start: auto;
+      z-index: var(--z-rail);
+      flex-direction: row;
+      justify-content: space-between;
+      height: auto;
+      padding: var(--sp-2) max(var(--sp-2), env(safe-area-inset-left))
+        calc(var(--sp-2) + env(safe-area-inset-bottom));
+      border-block-start: 1px solid var(--line-strong);
+      border-inline-end: 0;
+      background: var(--glass-3);
+      backdrop-filter: blur(var(--blur-sheet)) saturate(1.2);
+    }
+
+    .brand,
+    .rail__section-label,
+    .rail__footer {
+      display: none;
+    }
+
+    .rail__nav {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: var(--sp-1);
+      width: 100%;
+    }
+
+    .rail__link {
+      flex-direction: column;
+      gap: 0.15rem;
+      width: auto;
+      min-height: 3.1rem;
+      padding: var(--sp-1) var(--sp-1);
+      font-size: var(--fs-100);
+    }
+
+    .rail__link[aria-current="page"]::before {
+      inset-block: auto;
+      inset-block-start: -1px;
+      inset-inline: 26%;
+      width: auto;
+      height: 2px;
+    }
+
+    .rail__label {
+      position: static;
+      width: auto;
+      height: auto;
+      clip-path: none;
+      overflow: visible;
+      max-width: 100%;
+      font-size: var(--fs-100);
+      text-overflow: ellipsis;
+    }
+
+    .topbar {
+      min-height: 3.4rem;
+      padding: var(--sp-2) max(var(--sp-3), env(safe-area-inset-left))
+        var(--sp-2) max(var(--sp-3), env(safe-area-inset-right));
+    }
+
+    .topbar__context {
+      flex: 1 1 auto;
+    }
+
+    .main {
+      padding: var(--sp-4) var(--sp-3) calc(5.5rem + env(safe-area-inset-bottom));
+    }
+
+    .statusbar {
+      display: none;
+    }
+
+    .view__title {
+      font-size: var(--fs-700);
+    }
+
+    .view__grid,
+    .split,
+    .split--wide-left {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .view__rail--sticky {
+      position: static;
+      max-height: none;
+      overflow: visible;
+    }
+
+    .view__header {
+      align-items: flex-start;
+    }
+
+    .view__actions {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .rail__label {
+      font-size: 0.625rem;
+    }
+  }
+
+
+  /* ---- command bar details & phone navigation ---- */
+  .topbar__brand {
+    display: none;
+    align-items: center;
+    color: var(--text-1);
+    text-decoration: none;
+  }
+
+  .topbar__site {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+  }
+
+  .select--compact {
+    min-height: 2.1rem;
+    padding-block: 0.15rem;
+    padding-inline: 0.6rem 1.9rem;
+    max-width: 16rem;
+    font-size: var(--fs-200);
+  }
+
+  .topbar__freshness {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+    color: var(--text-3);
+    font-size: var(--fs-100);
+    white-space: nowrap;
+  }
+
+  .topbar__freshness-label--stale {
+    color: var(--warning);
+  }
+
+  .nav-badge {
+    margin-inline-start: auto;
+    min-width: 1.25rem;
+    padding: 0.05rem 0.32rem;
+    border-radius: var(--r-pill);
+    background: var(--accent);
+    color: var(--text-on-accent);
+    font-size: var(--fs-100);
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .rail__item--more {
+    display: none;
+  }
+
+  .rail__more {
+    width: 100%;
+  }
+
+  @media (max-width: 820px) {
+    .topbar__brand {
+      display: flex;
+    }
+
+    .topbar__freshness {
+      display: none;
+    }
+
+    .select--compact {
+      max-width: 10.5rem;
+    }
+
+    .rail__item--secondary {
+      display: none;
+    }
+
+    .rail__item--more {
+      display: block;
+    }
+
+    .nav-badge {
+      position: absolute;
+      inset-block-start: 0.2rem;
+      inset-inline-end: 0.45rem;
+      margin: 0;
+      min-width: 1rem;
+      font-size: 0.6rem;
+    }
+
+    .rail__more .icon {
+      color: var(--text-2);
+    }
+
+  }
+}

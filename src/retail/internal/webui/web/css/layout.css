@@ -1,0 +1,399 @@
+/*
+ * layout.css (split from layout.css for the file-size budget).
+ */
+@layer layout {
+  .app {
+    display: grid;
+    grid-template-columns: var(--rail-w) minmax(0, 1fr);
+    min-height: 100dvh;
+  }
+
+  .app__rail {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: var(--z-rail);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-5);
+    height: 100dvh;
+    padding: var(--sp-5) var(--sp-3) var(--sp-4);
+    border-inline-end: 1px solid var(--line);
+    background: var(--glass-2);
+    backdrop-filter: blur(var(--blur-glass)) saturate(1.2);
+    overflow: hidden auto;
+  }
+
+  .app__body {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 100dvh;
+  }
+
+  .topbar {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: var(--z-topbar);
+    display: flex;
+    align-items: center;
+    gap: var(--sp-4);
+    min-height: var(--topbar-h);
+    padding: var(--sp-2) var(--gutter);
+    border-block-end: 1px solid var(--line);
+    background: var(--glass-2);
+    backdrop-filter: blur(var(--blur-glass)) saturate(1.15);
+  }
+
+  .topbar__context {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    min-width: 0;
+  }
+
+  .topbar__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+    margin-inline-start: auto;
+  }
+
+  .main {
+    flex: 1 1 auto;
+    padding: clamp(1rem, 2.4vw, 2.25rem) var(--gutter) var(--sp-12);
+  }
+
+  .main:focus {
+    outline: none;
+  }
+
+  .main__inner {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.25rem, 2.4vw, 2rem);
+    width: 100%;
+    max-width: var(--content-max);
+    margin-inline: auto;
+  }
+
+  .statusbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-2) var(--sp-4);
+    padding: var(--sp-2) var(--gutter);
+    border-block-start: 1px solid var(--line);
+    color: var(--text-3);
+    font-size: var(--fs-100);
+    letter-spacing: 0.01em;
+  }
+
+  .statusbar__spacer {
+    margin-inline-start: auto;
+  }
+
+  .statusbar__item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    white-space: nowrap;
+  }
+
+
+  /* ---- navigation ---- */
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    padding: var(--sp-1) var(--sp-2);
+    color: var(--text-1);
+    text-decoration: none;
+  }
+
+  .brand__mark {
+    flex: none;
+    width: 2.1rem;
+    height: 2.1rem;
+  }
+
+  .brand__text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    min-width: 0;
+  }
+
+  .brand__product {
+    font-size: var(--fs-500);
+    font-weight: 680;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+
+  .brand__edition {
+    overflow: hidden;
+    color: var(--text-3);
+    font-size: var(--fs-100);
+    letter-spacing: var(--tracking-wide);
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .rail__section-label {
+    padding-inline: var(--sp-3);
+    color: var(--text-3);
+    font-size: var(--fs-100);
+    font-weight: 600;
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+  }
+
+  .rail__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .rail__link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    min-height: 2.6rem;
+    padding: var(--sp-2) var(--sp-3);
+    border: 1px solid transparent;
+    border-radius: var(--r-control);
+    color: var(--text-2);
+    font-size: var(--fs-400);
+    font-weight: 520;
+    text-decoration: none;
+    transition: background var(--dur-1) var(--ease), color var(--dur-1) var(--ease);
+  }
+
+  .rail__link:hover {
+    background: color-mix(in srgb, var(--surface-3) 55%, transparent);
+    color: var(--text-1);
+  }
+
+  .rail__link[aria-current="page"] {
+    border-color: var(--line);
+    background: color-mix(in srgb, var(--surface-2) 78%, transparent);
+    color: var(--text-1);
+  }
+
+  /* Signature warm light edge marking the current working plane. */
+  .rail__link[aria-current="page"]::before {
+    position: absolute;
+    inset-block: 18%;
+    inset-inline-start: -1px;
+    width: 2px;
+    border-radius: var(--r-pill);
+    background: var(--light-edge);
+    content: "";
+  }
+
+  .rail__link .icon {
+    flex: none;
+    width: 1.15rem;
+    height: 1.15rem;
+    color: var(--text-3);
+  }
+
+  .rail__link[aria-current="page"] .icon {
+    color: var(--accent);
+  }
+
+  .rail__label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .rail__footer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+    margin-block-start: auto;
+    padding: var(--sp-3) var(--sp-2) 0;
+    border-block-start: 1px solid var(--line);
+  }
+
+  .rail__readonly {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+    color: var(--text-3);
+    font-size: var(--fs-100);
+  }
+
+
+  /* ---- page-level sections ---- */
+  .view {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1rem, 2vw, 1.75rem);
+    animation: view-enter var(--dur-view) var(--ease-out) both;
+  }
+
+  @keyframes view-enter {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .view__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--sp-3) var(--sp-6);
+    padding-block-end: var(--sp-4);
+    border-block-end: 1px solid var(--line);
+  }
+
+  .view__heading {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+    min-width: 0;
+  }
+
+  .view__eyebrow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-2);
+    color: var(--text-3);
+    font-size: var(--fs-100);
+    font-weight: 600;
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+  }
+
+  .view__title {
+    font-size: var(--fs-800);
+    line-height: var(--lh-tight);
+  }
+
+  .view__subtitle {
+    max-width: 76ch;
+    color: var(--text-2);
+    font-size: var(--fs-400);
+  }
+
+  .view__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-2);
+  }
+
+  .view__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(17rem, 22rem);
+    gap: clamp(1rem, 1.8vw, 1.5rem);
+    align-items: start;
+  }
+
+  .view__main,
+  .view__rail {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1rem, 1.8vw, 1.5rem);
+    min-width: 0;
+  }
+
+  .view__rail--sticky {
+    position: sticky;
+    inset-block-start: calc(var(--topbar-h) + var(--sp-3));
+    max-height: calc(100dvh - var(--topbar-h) - var(--sp-6));
+    overflow: auto;
+    scrollbar-width: thin;
+  }
+
+  .split {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1rem, 1.8vw, 1.5rem);
+    align-items: start;
+  }
+
+  .split--wide-left {
+    grid-template-columns: minmax(0, 1.6fr) minmax(16rem, 1fr);
+  }
+
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+  }
+
+  .stack--tight {
+    gap: var(--sp-2);
+  }
+
+  .cluster {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-2);
+  }
+
+
+  /* ---- compact desktop / tablet: icon rail ---- */
+  @media (max-width: 1240px) {
+    .app {
+      grid-template-columns: var(--rail-compact-w) minmax(0, 1fr);
+    }
+
+    .app__rail {
+      align-items: center;
+      gap: var(--sp-4);
+      padding-inline: var(--sp-2);
+    }
+
+    .brand {
+      justify-content: center;
+      padding-inline: 0;
+    }
+
+    .brand__text,
+    .rail__label,
+    .rail__section-label,
+    .rail__readonly span {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+
+    .rail__link {
+      justify-content: center;
+      width: 2.85rem;
+      padding-inline: 0;
+    }
+
+    .rail__nav {
+      align-items: center;
+    }
+
+    .rail__footer {
+      align-items: center;
+      width: 100%;
+      padding-inline: 0;
+    }
+
+    .rail__link .icon {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+  }
+}

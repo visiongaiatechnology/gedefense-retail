@@ -1,0 +1,87 @@
+{
+  "current": {
+    "policy_id": "policy-filiale-001",
+    "site_id": "filiale-001",
+    "version": 7,
+    "updated_at": "2026-11-02T08:00:00Z",
+    "updated_by": "user-anlagenverantwortlich-01",
+    "reason": "Grenzwerte Kühlraum LINKS und Sensor-Divergenz",
+    "hash": "sha256:0a54b8c935953979d1060008de947a076da02940350184c72827976b4e732abb",
+    "temperature": {
+      "limits": [
+        {
+          "zone_id": "zone-cold-01",
+          "metric": "air_temperature",
+          "min_c": 2.0,
+          "max_c": 8.0,
+          "max_rate_c_per_min": 0.5,
+          "setpoint_tolerance_c": 1.5
+        },
+        {
+          "zone_id": "zone-cold-02",
+          "metric": "air_temperature",
+          "min_c": 1.0,
+          "max_c": 6.0,
+          "max_rate_c_per_min": 0.5,
+          "setpoint_tolerance_c": 1.5
+        }
+      ],
+      "absolute_impossible_min_c": -40.0,
+      "absolute_impossible_max_c": 40.0
+    },
+    "sensors": {
+      "divergence_c": 2.0,
+      "divergence_window_s": 600
+    },
+    "network": {
+      "baseline_required": false,
+      "learned_baseline_window_s": 604800,
+      "monitored_ports": [
+        502,
+        47808,
+        1883,
+        161
+      ],
+      "unknown_peer_grace_s": 3600
+    },
+    "maintenance": {
+      "require_window": true,
+      "grace_period_s": 300,
+      "trusted_vendors": [
+        "Kältetechnik Meier GmbH",
+        "Kälte Nord Service"
+      ]
+    },
+    "data_quality": {
+      "frozen_value_window_s": 1800,
+      "telemetry_gap_s": 900,
+      "max_clock_skew_s": 300
+    },
+    "retention": {
+      "event_days": 30,
+      "alert_days": 180,
+      "audit_days": 365,
+      "max_event_mb": 2048,
+      "max_spool_mb": 512
+    },
+    "alerting": {
+      "min_notify_severity": "high",
+      "escalation": [
+        {
+          "after_minutes": 15,
+          "role": "filialleitung",
+          "channel": "local"
+        }
+      ]
+    }
+  },
+  "versions": [
+    {
+      "version": 7,
+      "updated_at": "2026-11-02T08:00:00Z",
+      "updated_by": "user-anlagenverantwortlich-01",
+      "reason": "Grenzwerte Kühlraum LINKS",
+      "hash": "sha256:0a54b8c935953979d1060008de947a076da02940350184c72827976b4e732abb"
+    }
+  ]
+}

@@ -24,7 +24,7 @@
 <a id="alpha-status"></a>
 ## Alpha 状态
 
-> **0.2.0-alpha.5 — 实验性版本，尚未达到生产可用。**
+> **0.2.0-alpha.6 — 实验性版本，尚未达到生产可用。**
 > GeDefense Retail 是早期 Alpha 版本。验证仅在回环环境中针对模拟控制器和模拟管理器完成，并未
 > 针对门店中真实的制冷硬件进行。目前还没有针对 Access Gate 的独立渗透测试，也不作出任何合规或
 > 认证声明。请勿将其用作制冷设备唯一的安全、食品安全或监控控制手段。
@@ -142,18 +142,18 @@ GeDefense Retail 保护并记录超市背后的基础设施：制冷控制器、
 <a id="download"></a>
 ## 下载
 
-**最新 Alpha 版本：[v0.2.0-alpha.5](https://github.com/visiongaiatechnology/gedefense-retail/releases/tag/v0.2.0-alpha.5)。**
-资源：四个归档、[SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.5/SHA256SUMS)、
-[SHA256SUMS.archives](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.5/SHA256SUMS.archives)、
-[SBOM.spdx.json](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.5/SBOM.spdx.json)
+**最新 Alpha 版本：[v0.2.0-alpha.6](https://github.com/visiongaiatechnology/gedefense-retail/releases/tag/v0.2.0-alpha.6)。**
+资源：四个归档、[SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.6/SHA256SUMS)、
+[SHA256SUMS.archives](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.6/SHA256SUMS.archives)、
+[SBOM.spdx.json](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.6/SBOM.spdx.json)
 以及 cosign 签名（`*.sig`/`*.pem`）。Windows 二进制为 **NOT_SIGNED**（Authenticode，Alpha）；请使用哈希/签名。
 
 | 平台 | 归档 | 校验和 |
 |---|---|---|
-| Linux amd64 | [gedefense-retail-0.2.0-alpha.5-linux-amd64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.5/gedefense-retail-0.2.0-alpha.5-linux-amd64.tar.gz) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.5/SHA256SUMS) · [归档](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.5/SHA256SUMS.archives) |
-| Linux arm64 | [gedefense-retail-0.2.0-alpha.5-linux-arm64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.5/gedefense-retail-0.2.0-alpha.5-linux-arm64.tar.gz) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.5/SHA256SUMS) · [归档](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.5/SHA256SUMS.archives) |
-| Windows amd64 | [gedefense-retail-0.2.0-alpha.5-windows-amd64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.5/gedefense-retail-0.2.0-alpha.5-windows-amd64.zip) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.5/SHA256SUMS) · [归档](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.5/SHA256SUMS.archives) |
-| Windows arm64 | [gedefense-retail-0.2.0-alpha.5-windows-arm64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.5/gedefense-retail-0.2.0-alpha.5-windows-arm64.zip) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.5/SHA256SUMS) · [归档](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.5/SHA256SUMS.archives) |
+| Linux amd64 | [gedefense-retail-0.2.0-alpha.6-linux-amd64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.6/gedefense-retail-0.2.0-alpha.6-linux-amd64.tar.gz) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.6/SHA256SUMS) · [归档](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.6/SHA256SUMS.archives) |
+| Linux arm64 | [gedefense-retail-0.2.0-alpha.6-linux-arm64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.6/gedefense-retail-0.2.0-alpha.6-linux-arm64.tar.gz) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.6/SHA256SUMS) · [归档](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.6/SHA256SUMS.archives) |
+| Windows amd64 | [gedefense-retail-0.2.0-alpha.6-windows-amd64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.6/gedefense-retail-0.2.0-alpha.6-windows-amd64.zip) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.6/SHA256SUMS) · [归档](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.6/SHA256SUMS.archives) |
+| Windows arm64 | [gedefense-retail-0.2.0-alpha.6-windows-arm64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.6/gedefense-retail-0.2.0-alpha.6-windows-arm64.zip) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.6/SHA256SUMS) · [归档](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.6/SHA256SUMS.archives) |
 
 **安装前校验：** 在解压包内执行 `sha256sum -c SHA256SUMS`，对下载的归档执行
 `sha256sum -c SHA256SUMS.archives`。归档和 `SHA256SUMS` 使用 cosign keyless 签名；使用

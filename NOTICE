@@ -16,7 +16,7 @@ This project is licensed under the **GNU Affero General Public License, version 
 - Third-party components: see [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md). The Go standard
   library is the only software dependency; no third-party JavaScript, CSS or fonts are bundled and
   no runtime CDN is used.
-- Status: `0.2.0-alpha.5` is an **experimental alpha**. It is not production-ready and makes **no
+- Status: `0.2.0-alpha.6` is an **experimental alpha**. It is not production-ready and makes **no
   compliance or certification claim** (no HACCP, NIS2, IEC 62443 or similar).
 
 If you redistribute or operate this software, keep this NOTICE, the LICENSE file and the

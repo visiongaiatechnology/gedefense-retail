@@ -3,6 +3,18 @@
 All notable changes to GeDefense Retail are documented here. The project follows semantic
 versioning; alpha releases may change behavior without notice and are **not production-ready**.
 
+## [0.2.0-alpha.6] — 2026-11-03
+
+### Release engineering / audit follow-up
+
+- FIND-014 (LOW): release pipeline adds a post-publish `cosign verify-blob` smoke test for
+  `SHA256SUMS`, `SHA256SUMS.archives` and `SBOM.spdx.json`; certificates are normalised to PEM.
+- FIND-015 (INFO): `SOURCE_DATE_EPOCH` corrected to `1793664000` (`2026-11-03T00:00:00Z`), so SBOM and
+  archive timestamps match the actual release date.
+- Third-party GitHub Actions are pinned by commit SHA (checkout, setup-go, upload/download-artifact,
+  cosign-installer); the CI workflow now fails fast if a release script loses its executable bit.
+- Added `docs/INCIDENT-RESPONSE.md` (incident response runbook) and linked it from the documentation index.
+
 ## [0.2.0-alpha.5] — 2026-11-03
 
 ### Release engineering

@@ -25,18 +25,18 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
           fetch-depth: 1
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
           go-version: '1.27.1'
           cache: false
       - name: Build matrix + package + SBOM (reproducible)
         run: |
           export GEDEFENSE_COMMIT="$(git rev-parse --short HEAD)"
-          export SOURCE_DATE_EPOCH=1762290000
+          export SOURCE_DATE_EPOCH=1793664000
           bash scripts/build-release.sh --package
       - name: Show release checksums
         run: |
@@ -44,7 +44,7 @@ jobs:
           cat "dist/${version}/SHA256SUMS"
           cat "dist/${version}/SHA256SUMS.archives"
           test -f "dist/${version}/SBOM.spdx.json"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: release-canonical
           path: |
@@ -62,10 +62,10 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
           go-version: '1.27.1'
           cache: false
@@ -92,10 +92,10 @@ jobs:
       contents: write
       id-token: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
           name: release-canonical
           path: release
@@ -114,7 +114,7 @@ jobs:
           ls -l release
       - name: Install cosign (keyless signing)
         # Pinned by major tag; SHA pinning limitation documented in FIND-005.
-        uses: sigstore/cosign-installer@v3
+        uses: sigstore/cosign-installer@f713795cb21599bc4e5c4b58cbad1da852d7eeb9 # v3
       - name: Sign archives, checksums and SBOM (keyless OIDC)
         run: |
           set -euo pipefail
@@ -148,3 +148,16 @@ jobs:
               --title "GeDefense Retail ${version}" \
               --notes "Release ${version} (ALPHA, not production-approved). Verify each asset with SHA256SUMS and cosign: cosign verify-blob --signature <file>.sig --certificate <file>.pem --certificate-identity-regexp 'https://github.com/${GITHUB_REPOSITORY}/.github/workflows/release.yml@refs/tags/v.*' --certificate-oidc-issuer 'https://token.actions.githubusercontent.com' <file>. Windows binaries are NOT Authenticode-signed (documented limitation). SBOM: SBOM.spdx.json (SPDX-2.3)."
           fi
+
+      - name: Verify published signatures (smoke test)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          version="$(cat VERSION)"
+          tag="v${version}"
+          mkdir -p smoke
+          for file in SHA256SUMS SHA256SUMS.archives SBOM.spdx.json; do
+            gh release download "$tag" --pattern "$file" --pattern "$file.sig" --pattern "$file.pem" --dir smoke --clobber
+            cosign verify-blob               --signature "smoke/${file}.sig"               --certificate "smoke/${file}.pem"               --certificate-identity-regexp "https://github.com/${GITHUB_REPOSITORY}/.github/workflows/release.yml@refs/tags/v.*"               --certificate-oidc-issuer "https://token.actions.githubusercontent.com"               "smoke/${file}"
+          done

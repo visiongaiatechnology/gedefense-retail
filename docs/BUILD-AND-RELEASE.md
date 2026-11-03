@@ -1,7 +1,7 @@
 # GeDefense Retail — Build & Release (Cross-Platform)
 
 **Produkt:** GeDefense Retail — ColdChain & Store Infrastructure Security (VisionGaiaTechnology)
-**Version:** siehe `VERSION` (aktuell `0.2.0-alpha.5`)
+**Version:** siehe `VERSION` (aktuell `0.2.0-alpha.6`)
 **Status:** ALPHA — nicht produktionsfreigegeben.
 
 Dieses Dokument beschreibt den reproduzierbaren Cross-Platform-Build, die
@@ -61,11 +61,11 @@ respektiert; `GEDEFENSE_BUILD_DATE` bleibt als explizite Überschreibung
 unterstützt (Vorrang). Für einen reproduzierbaren Vergleich:
 
 ```bash
-SOURCE_DATE_EPOCH=1762290000 GEDEFENSE_COMMIT=<sha> bash scripts/build-release.sh
+SOURCE_DATE_EPOCH=1793664000 GEDEFENSE_COMMIT=<sha> bash scripts/build-release.sh
 # BuildDate im Binary: 2025-11-04T21:00:00Z (aus dem Epoch abgeleitet)
 ```
 
-Release v0.2.0-alpha.5 verwendet `SOURCE_DATE_EPOCH=1762290000` (= `2025-11-04T21:00:00Z`); derselbe Wert ist im Release-Workflow fixiert. Zwei Builds mit demselben `SOURCE_DATE_EPOCH`, `GEDEFENSE_COMMIT` und derselben
+Release v0.2.0-alpha.6 verwendet `SOURCE_DATE_EPOCH=1793664000` (= `2026-11-03T00:00:00Z`); derselbe Wert ist im Release-Workflow fixiert. Zwei Builds mit demselben `SOURCE_DATE_EPOCH`, `GEDEFENSE_COMMIT` und derselben
 Go-Toolchain sind bit-identisch (Hashvergleich via `SHA256SUMS.binaries`).
 
 ```bash
@@ -261,11 +261,11 @@ Publish-Job mit `environment: release`, `contents: write` + `id-token: write`
 Verifikation (Beispiel):
 
 ```bash
-cosign verify-blob --signature gedefense-retail-0.2.0-alpha.5-linux-amd64.tar.gz.sig \
-  --certificate gedefense-retail-0.2.0-alpha.5-linux-amd64.tar.gz.pem \
+cosign verify-blob --signature gedefense-retail-0.2.0-alpha.6-linux-amd64.tar.gz.sig \
+  --certificate gedefense-retail-0.2.0-alpha.6-linux-amd64.tar.gz.pem \
   --certificate-identity-regexp 'https://github.com/<ORG>/<REPO>/.github/workflows/release.yml@refs/tags/v.*' \
   --certificate-oidc-issuer 'https://token.actions.githubusercontent.com' \
-  gedefense-retail-0.2.0-alpha.5-linux-amd64.tar.gz
+  gedefense-retail-0.2.0-alpha.6-linux-amd64.tar.gz
 sha256sum -c SHA256SUMS
 ```
 

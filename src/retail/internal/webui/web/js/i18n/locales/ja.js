@@ -371,5 +371,7 @@ export default {
   "view.threat.correlation_file": "相関記録", "view.threat.event_timeline": "イベントタイムライン", "view.threat.evidence": "証拠", "view.threat.first_seen": "初回観測",
   "view.threat.last_seen": "最終観測", "view.threat.reference": "参照", "view.threat.rule": "ルール", "view.threat.severity": "重大度",
   "view.threat.source_p1": "送信元: {p1}", "view.threat.threat_timeline": "脅威タイムライン", "view.threat.threats": "脅威", "view.threat.timestamp": "時刻",
-  "view.threat.try_again": "再試行", "view.coldchain.measurements_in_c_limit_band_from_policy_2": "°C の測定値 · 制限帯はポリシー由来", "view.overview.gateway_p1": "ゲートウェイ {p1}", "view.site.runtime_per_read_only_adapter_2": "読み取り専用アダプターごとの稼働状況"
+  "view.threat.try_again": "再試行", "view.coldchain.measurements_in_c_limit_band_from_policy_2": "°C の測定値 · 制限帯はポリシー由来", "view.overview.gateway_p1": "ゲートウェイ {p1}", "view.site.runtime_per_read_only_adapter_2": "読み取り専用アダプターごとの稼働状況",
+  "gate.unavailable.title": "Gate サービスに接続できません", "gate.unavailable.text": "/api/v1/gate の Access Gate API が応答していません。監視は継続し、管理パスは閉じたままです。", "gate.unavailable.hint": "retailgate が実行中か、リバースプロキシが /api/v1/gate を Gate サービスへ転送しているか確認してください。Gate API は retaild とは別のサービスです。", "gate.unavailable.retry": "再確認",
+  "view.access.widened_empty_title": "期間を7日に設定しました", "view.access.widened_empty_text": "過去7日間にも保守アクセスやセッションは観測されていません。", "view.coldchain.widened_empty_title": "期間を拡大しました", "view.coldchain.widened_empty_text": "7日間に拡大しても測定系列がありません。コレクターとデータソースを確認してください。"
 };

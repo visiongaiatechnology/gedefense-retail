@@ -5,7 +5,7 @@
  */
 import { api } from '../core/api.js';
 import { el, clear, render } from '../core/dom.js';
-import { getSite, getSiteId, getSiteTimezone } from '../core/store.js';
+import { getSite, getSiteId, getSiteTimezone, toast } from '../core/store.js';
 import {
   formatCelsius,
   formatCount,
@@ -128,6 +128,43 @@ export async function mount({ root }) {
   render(root, layout);
 
   await loadData();
+
+  /** Reflect a programmatic period change in the segmented control. */
+  function setPeriodControl(id) {
+    const target = TIME_WINDOWS.find((entry) => entry.id === id);
+    if (!target) return false;
+    let matched = false;
+    for (const button of windowControl.querySelectorAll('button')) {
+      const isTarget = button.textContent.trim() === String(target.label).trim();
+      button.setAttribute('aria-pressed', String(isTarget));
+      matched = matched || isTarget;
+    }
+    state.windowId = id;
+    return matched;
+  }
+
+  /** Widen the period and select the first three available series, or explain why not. */
+  async function pickFirstThree() {
+    if (!lastItems || lastItems.length === 0) {
+      const current = TIME_WINDOWS.findIndex((entry) => entry.id === state.windowId);
+      const wider = TIME_WINDOWS[Math.min(current + 1, TIME_WINDOWS.length - 1)];
+      if (wider && wider.id !== state.windowId) {
+        setPeriodControl(wider.id);
+        await loadData();
+      }
+      if (!lastItems || lastItems.length === 0) {
+        toast({
+          variant: 'info',
+          title: t('view.coldchain.widened_empty_title'),
+          text: t('view.coldchain.widened_empty_text'),
+        });
+        return;
+      }
+    }
+    state.selected = new Set(lastItems.slice(0, 3).map((item) => item.sensor?.sensor_id).filter(Boolean));
+    renderSensors(lastItems, timeZone);
+    renderChart(lastItems, lastViolations, lastRange.since, lastRange.until);
+  }
 
   function currentWindow() {
     const selected = TIME_WINDOWS.find((windowOption) => windowOption.id === state.windowId) || TIME_WINDOWS[2];
@@ -309,9 +346,7 @@ export async function mount({ root }) {
               text: t('view.coldchain.select_first_three_sensors'),
               on: {
                 click: () => {
-                  state.selected = new Set(items.slice(0, 3).map((item) => item.sensor?.sensor_id).filter(Boolean));
-                  renderSensors(items, timeZone);
-                  renderChart(items, violations, since, until);
+                  void pickFirstThree();
                 },
               },
             }),

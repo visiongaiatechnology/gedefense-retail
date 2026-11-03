@@ -371,5 +371,7 @@ export default {
   "view.threat.correlation_file": "关联记录", "view.threat.event_timeline": "事件时间线", "view.threat.evidence": "证据", "view.threat.first_seen": "首次观测",
   "view.threat.last_seen": "最近观测", "view.threat.reference": "参考", "view.threat.rule": "规则", "view.threat.severity": "严重级别",
   "view.threat.source_p1": "来源：{p1}", "view.threat.threat_timeline": "威胁时间线", "view.threat.threats": "威胁", "view.threat.timestamp": "时间",
-  "view.threat.try_again": "重试", "view.coldchain.measurements_in_c_limit_band_from_policy_2": "°C 测量值 · 限值带来自策略", "view.overview.gateway_p1": "网关 {p1}", "view.site.runtime_per_read_only_adapter_2": "各只读适配器的运行状态"
+  "view.threat.try_again": "重试", "view.coldchain.measurements_in_c_limit_band_from_policy_2": "°C 测量值 · 限值带来自策略", "view.overview.gateway_p1": "网关 {p1}", "view.site.runtime_per_read_only_adapter_2": "各只读适配器的运行状态",
+  "gate.unavailable.title": "无法访问 Gate 服务", "gate.unavailable.text": "/api/v1/gate 的 Access Gate API 无响应。监控继续运行，管理通道保持关闭。", "gate.unavailable.hint": "请检查 retailgate 是否在运行，反向代理是否将 /api/v1/gate 转发到 Gate 服务。Gate API 是独立服务，不属于 retaild。", "gate.unavailable.retry": "重新检查",
+  "view.access.widened_empty_title": "时间范围已设为 7 天", "view.access.widened_empty_text": "过去 7 天内也未观测到维护访问或会话。", "view.coldchain.widened_empty_title": "时间范围已扩大", "view.coldchain.widened_empty_text": "即使扩大到 7 天也没有测量序列。请检查采集器与数据源。"
 };

@@ -37,6 +37,7 @@ export async function mount({ root, query }) {
     me: null,
     health: null,
     status: null,
+    unavailable: null,
     authMessage: '',
     loading: true,
     error: null,
@@ -130,7 +131,18 @@ export async function mount({ root, query }) {
 
   async function bootstrap() {
     state.loading = true;
+    state.unavailable = null;
     renderAll();
+    // The gate API is a separate service. Probe its public health endpoint first:
+    // a login mask is only correct when the gate is actually reachable.
+    try {
+      state.health = await gateApi.health();
+    } catch (error) {
+      state.loading = false;
+      state.unavailable = error;
+      renderUnavailable();
+      return;
+    }
     try {
       await refreshCore();
       state.loading = false;
@@ -147,6 +159,32 @@ export async function mount({ root, query }) {
       state.error = error;
       renderAll();
     }
+  }
+
+  function renderUnavailable() {
+    clear(headerHost);
+    headerHost.append(buildHeader(null));
+    clear(sessionHost);
+    clear(tabsHost);
+    clear(contentHost);
+    contentHost.append(
+      el('section', { class: 'plane plane--focus' }, [
+        errorState({
+          title: t('gate.unavailable.title'),
+          text: t('gate.unavailable.text'),
+          error: state.unavailable,
+          actions: [
+            el('button', {
+              type: 'button',
+              class: 'btn btn--primary',
+              text: t('gate.unavailable.retry'),
+              on: { click: () => void bootstrap() },
+            }),
+          ],
+        }),
+        el('p', { class: 'provenance', text: t('gate.unavailable.hint') }),
+      ])
+    );
   }
 
   function renderAuth() {
@@ -167,6 +205,10 @@ export async function mount({ root, query }) {
   }
 
   async function renderAll() {
+    if (state.unavailable) {
+      renderUnavailable();
+      return;
+    }
     if (!getGateToken()) {
       renderAuth();
       return;
@@ -293,11 +335,23 @@ export async function mount({ root, query }) {
     setGateUnauthorizedHandler(() => {});
   };
 
+  // Always probe the gate service first. Without this, a missing retailgate
+  // (or a missing reverse-proxy route) would present a login mask that cannot
+  // work and hides the real cause from the operator.
   if (getGateToken()) {
     await bootstrap();
   } else {
-    state.authMessage = t('gate.auth.prompt_mfa');
-    renderAuth();
+    state.loading = true;
+    try {
+      state.health = await gateApi.health();
+      state.loading = false;
+      state.authMessage = t('gate.auth.prompt_mfa');
+      renderAuth();
+    } catch (error) {
+      state.loading = false;
+      state.unavailable = error;
+      renderUnavailable();
+    }
   }
   return cleanup;
 }

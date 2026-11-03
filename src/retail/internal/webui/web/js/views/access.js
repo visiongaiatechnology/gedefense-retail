@@ -5,7 +5,7 @@
  */
 import { api } from '../core/api.js';
 import { el, clear, render, svg } from '../core/dom.js';
-import { getSiteId, getSiteTimezone } from '../core/store.js';
+import { getSiteId, getSiteTimezone, toast } from '../core/store.js';
 import {
   formatClock,
   formatDateTime,
@@ -38,6 +38,7 @@ export async function mount({ root }) {
 
   const timeZone = getSiteTimezone();
   const state = { windowId: '24h' };
+  let lastCounts = { windows: 0, sessions: 0, anomalies: 0 };
 
   const summaryHost = el('div');
   const axisHost = el('div');
@@ -110,6 +111,29 @@ export async function mount({ root }) {
 
   await loadData();
 
+  /** Reflect a programmatic period change in the segmented control. */
+  function setPeriodControl(id) {
+    const target = WINDOWS.find((entry) => entry.id === id);
+    if (!target) return;
+    for (const button of windowControl.querySelectorAll('button')) {
+      button.setAttribute('aria-pressed', String(button.textContent.trim() === String(target.label).trim()));
+    }
+    state.windowId = id;
+  }
+
+  /** Jump to a seven-day period and tell the operator when it is still empty. */
+  async function widenToSevenDays() {
+    setPeriodControl('7d');
+    await loadData();
+    if (lastCounts.windows === 0 && lastCounts.sessions === 0) {
+      toast({
+        variant: 'info',
+        title: t('view.access.widened_empty_title'),
+        text: t('view.access.widened_empty_text'),
+      });
+    }
+  }
+
   async function loadData() {
     const entry = WINDOWS.find((windowOption) => windowOption.id === state.windowId) || WINDOWS[1];
     const since = sinceIso(entry.hours);
@@ -138,6 +162,7 @@ export async function mount({ root }) {
   }
 
   function renderData({ windows, sessions, anomalies }, { since, until }) {
+    lastCounts = { windows: windows.length, sessions: sessions.length, anomalies: anomalies.length };
     const outsideWindow = sessions.filter((session) => session.in_window === false);
     renderSummary(windows, sessions, anomalies, outsideWindow);
     renderAxis({ windows, sessions, anomalies, since, until });
@@ -183,8 +208,7 @@ export async function mount({ root }) {
               text: t('view.access.set_time_window_to_7_days'),
               on: {
                 click: () => {
-                  state.windowId = '7d';
-                  void loadData();
+                  void widenToSevenDays();
                 },
               },
             }),

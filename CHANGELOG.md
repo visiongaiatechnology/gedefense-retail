@@ -3,6 +3,25 @@
 All notable changes to GeDefense Retail are documented here. The project follows semantic
 versioning; alpha releases may change behavior without notice and are **not production-ready**.
 
+## [0.2.0-alpha.7] — 2026-11-03
+
+### Fixed (operator review)
+
+- Gate view now probes the public gate health endpoint before showing a login form. If the separate
+  `retailgate` service or the reverse-proxy route `/api/v1/gate` is missing, the view explains the
+  cause, keeps monitoring running and offers a retry instead of a login mask that cannot work.
+- Empty-state actions in the cold-chain and access views no longer feel dead: "first three sensors"
+  widens the period automatically, the period control updates, and a localised toast explains when
+  the range is still empty. The same feedback is shown when "set to 7 days" finds no access records.
+- Added eight multilingual feedback strings (`gate.unavailable.*`,
+  `view.access.widened_empty_*`, `view.coldchain.widened_empty_*`) in all eight UI languages.
+
+### Notes
+
+- No authentication or authorization behaviour was weakened; the gate health endpoint is public by
+  design, tokens stay in the browser session storage, and no new external dependencies were added.
+- Alpha quality: the local demo gate credentials used during the review are not part of the release.
+
 ## [0.2.0-alpha.6] — 2026-11-03
 
 ### Release engineering / audit follow-up

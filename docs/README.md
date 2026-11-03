@@ -11,6 +11,7 @@ Infrastructure Security). The main entry point is the [README](../README.md).
 - [Architecture](ARCHITECTURE.md) — services, data flows, zones, storage, extension points
 - [HTTP API v1](API.md) — authentication, roles, monitoring/setup/gate endpoints, error format
 - [Security model and honest alpha limits](SECURITY-MODEL.md)
+- [Build and release, including release verification](BUILD-AND-RELEASE.md)
 - [Quickstart](../README.md#quickstart)
 
 ## Policies and legal
@@ -30,4 +31,4 @@ The README is available in English, German, French, Italian, Spanish, Japanese, 
 
 ## Status
 
-0.2.0-alpha.2 — experimental alpha, not production-ready and without compliance claims.
+0.2.0-alpha.3 — experimental alpha, not production-ready and without compliance claims.

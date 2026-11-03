@@ -263,7 +263,28 @@ func (c Config) validateCentral() error {
 			return fmt.Errorf("%w: central certificate path contains a NUL byte", ErrInvalidConfig)
 		}
 	}
+	// FIND-008: mTLS is mandatory for a real (non-loopback) central endpoint.
+	// require_mtls defaults to true; an explicit false is an audited opt-out.
+	if c.CentralRequiresMTLS() && u.Scheme == "https" {
+		if !certSet || !keySet {
+			return fmt.Errorf("%w: central mTLS requires central.client_cert_file and central.client_key_file (or explicit require_mtls=false)", ErrInvalidConfig)
+		}
+		if strings.TrimSpace(c.Central.CAFile) == "" {
+			return fmt.Errorf("%w: central mTLS requires central.ca_file for server authentication", ErrInvalidConfig)
+		}
+	}
 	return nil
+}
+
+// CentralRequiresMTLS reports the effective mTLS requirement (default true).
+func (c Config) CentralRequiresMTLS() bool {
+	if c.Central == nil {
+		return false
+	}
+	if c.Central.RequireMTLS != nil {
+		return *c.Central.RequireMTLS
+	}
+	return true
 }
 
 func (c Config) validatePolicy() error {

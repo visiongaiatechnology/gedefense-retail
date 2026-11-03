@@ -89,12 +89,17 @@ type AdapterConfig struct {
 
 // CentralConfig configures the optional outbound connection to the central
 // management plane. The MVP only ever connects outbound (no inbound WAN path).
+// RequireMTLS defaults to true (FIND-008): an https central connection must
+// present a client certificate and validate the central CA. Setting it to
+// false is an explicit, audited opt-out and should only be used for loopback
+// test endpoints.
 type CentralConfig struct {
 	URL            string `json:"url,omitempty"`
 	TimeoutS       int    `json:"timeout_s,omitempty"`
 	ClientCertFile string `json:"client_cert_file,omitempty"`
 	ClientKeyFile  string `json:"client_key_file,omitempty"`
 	CAFile         string `json:"ca_file,omitempty"`
+	RequireMTLS    *bool  `json:"require_mtls,omitempty"`
 	BatchSize      int    `json:"batch_size,omitempty"`
 	SpoolMaxMB     int64  `json:"spool_max_mb,omitempty"`
 }

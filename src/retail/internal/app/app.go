@@ -189,6 +189,11 @@ func Run(ctx context.Context, cfg config.Config, opts Options) error {
 		_ = httpServer.Close()
 	}
 	wg.Wait()
+	// FIND-010: flush the buffered audit trail before the process exits so a
+	// clean SIGTERM does not lose the last (up to 128) entries.
+	if err := g.audit.Flush(shutdownCtx); err != nil {
+		log.Warn("audit flush failed", "error", err.Error())
+	}
 	log.Info("gateway stopped")
 	return nil
 }

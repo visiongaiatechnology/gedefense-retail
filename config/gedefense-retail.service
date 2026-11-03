@@ -29,7 +29,7 @@ LockPersonality=yes
 MemoryDenyWriteExecute=yes
 RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
 SystemCallArchitectures=native
-# Konfigurationspfad wird ausschlieﬂlich per CLI uebergeben (--config).
+# Konfigurationspfad wird ausschlie√ülich per CLI uebergeben (--config).
 TimeoutStopSec=20s
 KillSignal=SIGTERM
 

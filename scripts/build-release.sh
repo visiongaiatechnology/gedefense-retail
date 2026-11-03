@@ -16,7 +16,17 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 MODULE="$ROOT/src/retail"
 VERSION="$(tr -d ' \r\n' < "$ROOT/VERSION")"
 COMMIT="${GEDEFENSE_COMMIT:-$(git -C "$ROOT" rev-parse --short HEAD 2>/dev/null || echo local)}"
-BUILD_DATE="${GEDEFENSE_BUILD_DATE:-$(date -u +%Y-%m-%dT%H:%M:%SZ)}"
+BUILD_DATE="${GEDEFENSE_BUILD_DATE:-}"
+if [ -z "$BUILD_DATE" ] && [ -n "${SOURCE_DATE_EPOCH:-}" ]; then
+  # FIND-009: reproducible builds honour SOURCE_DATE_EPOCH (seconds since epoch).
+  case "$SOURCE_DATE_EPOCH" in
+    ''|*[!0-9]*) echo "build-release: SOURCE_DATE_EPOCH must be a unix timestamp" >&2; exit 2 ;;
+  esac
+  BUILD_DATE="$(date -u -d "@${SOURCE_DATE_EPOCH}" +%Y-%m-%dT%H:%M:%SZ)"
+fi
+if [ -z "$BUILD_DATE" ]; then
+  BUILD_DATE="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+fi
 DIST="$ROOT/dist/$VERSION"
 BINARIES=(retaild retailgate retail-sim)
 TARGETS_DEFAULT="linux/amd64 linux/arm64 windows/amd64 windows/arm64"

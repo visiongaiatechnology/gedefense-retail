@@ -158,6 +158,20 @@ func (l *AuditLog) flushLocked() error {
 	return l.file.flush()
 }
 
+// Flush forces buffered audit entries to disk (fsync). It is called on a clean
+// shutdown (FIND-010) so that a stop signal cannot lose the last entries.
+func (l *AuditLog) Flush(ctx context.Context) error {
+	if err := ctx.Err(); err != nil {
+		return fmt.Errorf("store: flush audit log: %w", err)
+	}
+	l.mu.Lock()
+	defer l.mu.Unlock()
+	if l.closed {
+		return nil
+	}
+	return l.flushLocked()
+}
+
 // FirstSeq returns the sequence number of the oldest persisted entry (0 when
 // the log is empty).
 func (l *AuditLog) FirstSeq() uint64 {

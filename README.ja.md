@@ -24,7 +24,7 @@
 <a id="alpha-status"></a>
 ## アルファ版の状態
 
-> **0.2.0-alpha.2 — 実験的な段階であり、本番環境には適していません。**
+> **0.2.0-alpha.3 — 実験的な段階であり、本番環境には適していません。**
 > GeDefense Retail は初期のアルファ版です。店舗の実際の冷凍機器ではなく、ループバック上で
 > シミュレーションされたコントローラーとスーパーバイザーに対して検証されています。Access Gate
 > の独立したペネトレーションテストはまだ存在せず、コンプライアンスや認証に関する主張は行っていません。
@@ -162,23 +162,29 @@ GeDefense Retail は、スーパーマーケットの背後にあるインフラ
 <a id="download"></a>
 ## ダウンロード
 
-**ダウンロード — 最初のアルファリリースで提供予定。** アーカイブと SHA-256 チェックサムは GitHub
-リリースのアセットとして公開されます。リンクはリリースの公開後にここ ([release page](https://github.com/visiongaiatechnology/gedefense-retail/releases/tag/v0.2.0-alpha.2)) に
-挿入されます。
+**最新のアルファリリース: [v0.2.0-alpha.3](https://github.com/visiongaiatechnology/gedefense-retail/releases/tag/v0.2.0-alpha.3).**
+アセット: 4 つのアーカイブ、[SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS)、
+[SHA256SUMS.archives](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS.archives)、
+[SBOM.spdx.json](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SBOM.spdx.json)、
+cosign 署名 (`*.sig`/`*.pem`)。Windows バイナリは **NOT_SIGNED** (Authenticode、アルファ) です。ハッシュ/署名を使用してください。
 
-| プラットフォーム | リリースアセット（アーカイブ + `SHA256SUMS`） |
-|---|---|
-| Linux amd64 | [gedefense-retail-0.2.0-alpha.2-linux-amd64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/gedefense-retail-0.2.0-alpha.2-linux-amd64.tar.gz) · [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/SHA256SUMS) |
-| Linux arm64 | [gedefense-retail-0.2.0-alpha.2-linux-arm64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/gedefense-retail-0.2.0-alpha.2-linux-arm64.tar.gz) · [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/SHA256SUMS) |
-| Windows amd64 | [gedefense-retail-0.2.0-alpha.2-windows-amd64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/gedefense-retail-0.2.0-alpha.2-windows-amd64.zip) · [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/SHA256SUMS) |
-| Windows arm64 | [gedefense-retail-0.2.0-alpha.2-windows-arm64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/gedefense-retail-0.2.0-alpha.2-windows-arm64.zip) · [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/SHA256SUMS) |
+| プラットフォーム | アーカイブ | チェックサム |
+|---|---|---|
+| Linux amd64 | [gedefense-retail-0.2.0-alpha.3-linux-amd64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/gedefense-retail-0.2.0-alpha.3-linux-amd64.tar.gz) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS) · [アーカイブ](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS.archives) |
+| Linux arm64 | [gedefense-retail-0.2.0-alpha.3-linux-arm64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/gedefense-retail-0.2.0-alpha.3-linux-arm64.tar.gz) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS) · [アーカイブ](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS.archives) |
+| Windows amd64 | [gedefense-retail-0.2.0-alpha.3-windows-amd64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/gedefense-retail-0.2.0-alpha.3-windows-amd64.zip) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS) · [アーカイブ](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS.archives) |
+| Windows arm64 | [gedefense-retail-0.2.0-alpha.3-windows-arm64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/gedefense-retail-0.2.0-alpha.3-windows-arm64.zip) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS) · [アーカイブ](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS.archives) |
 
-インストール前に、必ず公開された `SHA256SUMS` に対してアーカイブを検証してください。
+**インストール前に検証:** 展開したバンドルで `sha256sum -c SHA256SUMS`、ダウンロードしたアーカイブに
+`sha256sum -c SHA256SUMS.archives`。アーカイブと `SHA256SUMS` は cosign keyless で署名されています。
+`cosign verify-blob --certificate <file>.pem --signature <file>.sig
+--certificate-oidc-issuer https://token.actions.githubusercontent.com
+--certificate-identity-regexp 'https://github.com/visiongaiatechnology/gedefense-retail/.github/workflows/release.yml@refs/tags/v.*' <file>` で検証します (正確な ID は
+[docs/BUILD-AND-RELEASE.md](docs/BUILD-AND-RELEASE.md))。`SBOM.spdx.json` は SPDX コンポーネント
+インベントリです。**署名ファイルがない場合は未署名として扱ってください。**
 
 各バンドルには `bin/`（バイナリ）、`config/`（設定例と systemd ユニット）、`docs/`、`README.md`、
 `LICENSE`、`VERSION`、`THIRD-PARTY-NOTICES.md`、インストーラースクリプト、`SHA256SUMS` が含まれます。
-リリースにはプラットフォーム別の `SHA256SUMS` エントリと、リリースルートの
-`SHA256SUMS.archives` も用意されます。
 
 <a id="install-linux"></a>
 ## インストール — Linux
@@ -210,7 +216,9 @@ sudo ./install.sh
 `/etc/gedefense-retail/`、`/var/lib/gedefense-retail/`、`/var/lib/gedefense-gate/`、
 `/var/log/gedefense-retail/` を準備して、監視サービスを初回起動セットアップの準備状態にします。
 **設定例**（`retail.example.json`、`gate.example.json`、`gate-policy.example.json`）のみをコピーし、
-既存のファイルを上書きすることはありません。運用者が例から本番設定を作成します。
+既存のファイルを上書きすることはありません。設定は `root:gedefense`（`0750` ディレクトリ、`0640`
+ファイル）でインストールされ、データディレクトリはサービスアカウントが所有します。権限設定に
+失敗した場合、インストーラーは中止します（fail-closed）。運用者が例から本番設定を作成します。
 
 ```bash
 sudo cp /etc/gedefense-retail/retail.example.json /etc/gedefense-retail/retail.json
@@ -314,9 +322,11 @@ Get-Service gedefense-retail
 .\bin\retaild.exe version
 ```
 
-**Windows の権限に関する注意 (アルファ版):** POSIX のファイルモードは NTFS ではアクセスを制限しません。
-専用のサービスアカウントでサービスを実行し、データディレクトリと設定ディレクトリに明示的な ACL を
-設定してください。継承された読み取り ACL のまま本番環境で実行しないでください。
+**Windows の権限 (アルファ):** インストーラーは両サービスを `NT AUTHORITY\LocalService` として実行し、
+継承を無効にした明示的な `icacls` DACL を設定します。`config\` は読み取り、
+`C:\ProgramData\GeDefense\Retail\` は変更、Administrators はフル、`Users` はアクセスなし。POSIX モード
+は NTFS を保護しません。継承 ACL を再有効化しないでください。アンインストールは以前の ACL を
+復元しません。
 
 **4. 任意: Access Gate**
 

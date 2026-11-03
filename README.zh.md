@@ -24,7 +24,7 @@
 <a id="alpha-status"></a>
 ## Alpha 状态
 
-> **0.2.0-alpha.2 — 实验性版本，尚未达到生产可用。**
+> **0.2.0-alpha.3 — 实验性版本，尚未达到生产可用。**
 > GeDefense Retail 是早期 Alpha 版本。验证仅在回环环境中针对模拟控制器和模拟管理器完成，并未
 > 针对门店中真实的制冷硬件进行。目前还没有针对 Access Gate 的独立渗透测试，也不作出任何合规或
 > 认证声明。请勿将其用作制冷设备唯一的安全、食品安全或监控控制手段。
@@ -142,21 +142,29 @@ GeDefense Retail 保护并记录超市背后的基础设施：制冷控制器、
 <a id="download"></a>
 ## 下载
 
-**下载 — 随首个 Alpha 版本提供。** 归档与 SHA-256 校验和将作为 GitHub Release 资源发布；链接将在发布后
-填入此处（[release page](https://github.com/visiongaiatechnology/gedefense-retail/releases/tag/v0.2.0-alpha.2)）。
+**最新 Alpha 版本：[v0.2.0-alpha.3](https://github.com/visiongaiatechnology/gedefense-retail/releases/tag/v0.2.0-alpha.3)。**
+资源：四个归档、[SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS)、
+[SHA256SUMS.archives](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS.archives)、
+[SBOM.spdx.json](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SBOM.spdx.json)
+以及 cosign 签名（`*.sig`/`*.pem`）。Windows 二进制为 **NOT_SIGNED**（Authenticode，Alpha）；请使用哈希/签名。
 
-| 平台 | 发布资源（归档 + `SHA256SUMS`） |
-|---|---|
-| Linux amd64 | [gedefense-retail-0.2.0-alpha.2-linux-amd64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/gedefense-retail-0.2.0-alpha.2-linux-amd64.tar.gz) · [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/SHA256SUMS) |
-| Linux arm64 | [gedefense-retail-0.2.0-alpha.2-linux-arm64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/gedefense-retail-0.2.0-alpha.2-linux-arm64.tar.gz) · [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/SHA256SUMS) |
-| Windows amd64 | [gedefense-retail-0.2.0-alpha.2-windows-amd64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/gedefense-retail-0.2.0-alpha.2-windows-amd64.zip) · [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/SHA256SUMS) |
-| Windows arm64 | [gedefense-retail-0.2.0-alpha.2-windows-arm64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/gedefense-retail-0.2.0-alpha.2-windows-arm64.zip) · [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/SHA256SUMS) |
+| 平台 | 归档 | 校验和 |
+|---|---|---|
+| Linux amd64 | [gedefense-retail-0.2.0-alpha.3-linux-amd64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/gedefense-retail-0.2.0-alpha.3-linux-amd64.tar.gz) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS) · [归档](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS.archives) |
+| Linux arm64 | [gedefense-retail-0.2.0-alpha.3-linux-arm64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/gedefense-retail-0.2.0-alpha.3-linux-arm64.tar.gz) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS) · [归档](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS.archives) |
+| Windows amd64 | [gedefense-retail-0.2.0-alpha.3-windows-amd64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/gedefense-retail-0.2.0-alpha.3-windows-amd64.zip) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS) · [归档](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS.archives) |
+| Windows arm64 | [gedefense-retail-0.2.0-alpha.3-windows-arm64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/gedefense-retail-0.2.0-alpha.3-windows-arm64.zip) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS) · [归档](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS.archives) |
 
-安装前请务必使用已发布的 `SHA256SUMS` 校验归档。
+**安装前校验：** 在解压包内执行 `sha256sum -c SHA256SUMS`，对下载的归档执行
+`sha256sum -c SHA256SUMS.archives`。归档和 `SHA256SUMS` 使用 cosign keyless 签名；使用
+`cosign verify-blob --certificate <file>.pem --signature <file>.sig
+--certificate-oidc-issuer https://token.actions.githubusercontent.com
+--certificate-identity-regexp 'https://github.com/visiongaiatechnology/gedefense-retail/.github/workflows/release.yml@refs/tags/v.*' <file>` 验证（确切身份见
+[docs/BUILD-AND-RELEASE.md](docs/BUILD-AND-RELEASE.md)）。`SBOM.spdx.json` 是 SPDX 组件清单。
+**若缺少签名文件，请将该下载视为未签名。**
 
 每个包包含 `bin/`（二进制文件）、`config/`（示例配置与 systemd 单元）、`docs/`、`README.md`、
-`LICENSE`、`VERSION`、`THIRD-PARTY-NOTICES.md`、安装脚本以及 `SHA256SUMS` 文件。发布还提供按平台的
-`SHA256SUMS` 条目以及发布根目录下的 `SHA256SUMS.archives` 文件。
+`LICENSE`、`VERSION`、`THIRD-PARTY-NOTICES.md`、安装脚本以及 `SHA256SUMS` 文件。
 
 <a id="install-linux"></a>
 ## 安装 — Linux
@@ -187,7 +195,8 @@ sudo ./install.sh
 `gedefense-retailgate.service`），准备 `/etc/gedefense-retail/`、`/var/lib/gedefense-retail/`、
 `/var/lib/gedefense-gate/` 和 `/var/log/gedefense-retail/`，并使监控服务准备好进行首次运行设置。
 它**仅复制示例配置**（`retail.example.json`、`gate.example.json`、`gate-policy.example.json`），
-绝不覆盖现有文件。运营方基于示例创建生产配置：
+绝不覆盖现有文件。配置以 `root:gedefense` 安装（`0750` 目录、`0640` 文件），数据目录归服务账户所有；
+若权限步骤失败，安装程序将中止（fail-closed）。运营方基于示例创建生产配置：
 
 ```bash
 sudo cp /etc/gedefense-retail/retail.example.json /etc/gedefense-retail/retail.json
@@ -286,8 +295,9 @@ Get-Service gedefense-retail
 .\bin\retaild.exe version
 ```
 
-**Windows 权限说明（Alpha）：** POSIX 文件模式在 NTFS 上并不限制访问。请使用专用服务账户运行服务，
-并为数据目录和配置目录设置显式 ACL；不要在生产环境中使用继承的读取 ACL 运行。
+**Windows 权限（Alpha）：** 安装程序以 `NT AUTHORITY\LocalService` 运行两个服务，并设置禁用继承的
+显式 `icacls` DACL：`config\` 为读取、`C:\ProgramData\GeDefense\Retail\` 为修改，Administrators 完全
+控制，`Users` 无访问权限。POSIX 模式不能保护 NTFS；不要重新启用继承 ACL。卸载不会恢复之前的 ACL。
 
 **4. 可选：Access Gate**
 

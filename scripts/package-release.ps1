@@ -21,12 +21,17 @@ $configs = @('retail.example.json', 'gate.example.json', 'gate-policy.example.js
     'gedefense-retail.service', 'gedefense-retailgate.service')
 $binaries = @('retaild', 'retailgate', 'retail-sim')
 
+# Write-LinesUtf8NoBom works on Windows PowerShell 5.1 and PowerShell 7.
+function Write-LinesUtf8NoBom([string]$path, [string[]]$content) {
+    [System.IO.File]::WriteAllLines($path, @($content), (New-Object System.Text.UTF8Encoding($false)))
+}
+
 function Write-BundleManifest([string]$bundle) {
     $lines = Get-ChildItem $bundle -Recurse -File | Sort-Object FullName | ForEach-Object {
         $rel = $_.FullName.Substring($bundle.Length + 1).Replace('\', '/')
         "{0}  {1}" -f (Get-FileHash -Algorithm SHA256 -Path $_.FullName).Hash.ToLowerInvariant(), $rel
     }
-    $lines | Set-Content (Join-Path $bundle 'SHA256SUMS') -Encoding utf8NoBOM
+    Write-LinesUtf8NoBom (Join-Path $bundle 'SHA256SUMS') @($lines)
 }
 
 function Copy-Common([string]$bundle) {
@@ -78,7 +83,9 @@ foreach ($targetDir in Get-ChildItem $dist -Directory | Sort-Object Name) {
 $lines = $archives | Sort-Object Name | ForEach-Object {
     "{0}  {1}" -f (Get-FileHash -Algorithm SHA256 -Path $_.FullName).Hash.ToLowerInvariant(), $_.Name
 }
-$lines | Set-Content (Join-Path $dist 'SHA256SUMS') -Encoding utf8NoBOM
-$lines | Set-Content (Join-Path $dist 'SHA256SUMS.archives') -Encoding utf8NoBOM
+Write-LinesUtf8NoBom (Join-Path $dist 'SHA256SUMS') @($lines)
+Write-LinesUtf8NoBom (Join-Path $dist 'SHA256SUMS.archives') @($lines)
 Write-Host 'PACKAGE_OK'
+# SBOM (FIND-004).
+& python (Join-Path $root 'scripts/generate-sbom.py') --dist $dist --version $Version
 $archives | Sort-Object Name | ForEach-Object { Write-Host ("  {0}  {1} B" -f $_.Name, $_.Length) }

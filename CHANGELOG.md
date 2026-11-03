@@ -3,6 +3,54 @@
 All notable changes to GeDefense Retail are documented here. The project follows semantic
 versioning; alpha releases may change behavior without notice and are **not production-ready**.
 
+## [0.2.0-alpha.3] — 2026-11-03
+
+Security remediation release after the VGT-100 deep audit (report: 2026-11-03, findings FIND-001…011).
+The release is published only after the fixes below pass the re-test; it remains an **experimental
+alpha**, not production-ready, without certification or compliance claims.
+
+### Security (VGT-100 audit remediation)
+
+- **FIND-001 / FIND-002 — installer hardening:** Windows services run as `NT AUTHORITY\LocalService`
+  with explicit `icacls` DACLs (inheritance disabled; config read, data modify, Administrators full,
+  Users none); Linux `/etc/gedefense-retail` is `root:gedefense` (`0750`) with config files `0640`,
+  data directories owned by the service users. Installers fail closed when ownership/permission
+  changes fail; uninstallers validate paths before deleting and do not restore previous ACLs.
+- **FIND-003 — release integrity:** each archive is published with `SHA256SUMS` and
+  `SHA256SUMS.archives`; archives, `SHA256SUMS`, `SHA256SUMS.archives` and `SBOM.spdx.json` are
+  signed with cosign keyless (`*.sig`/`*.pem`). Windows binaries are **NOT_SIGNED** (no Authenticode
+  certificate) and remain alpha.
+- **FIND-004 — SBOM:** `SBOM.spdx.json` (SPDX) is published as a release asset and lists bundled
+  components and hashes.
+- **FIND-005 — CI hardening:** least-privilege permissions per workflow job (`contents: write` and
+  `id-token: write` only where required), strict tag trigger and pinned actions (see
+  `docs/BUILD-AND-RELEASE.md`).
+- **FIND-006 — uninstaller path validation:** Linux and Windows uninstallers validate absolute
+  paths, expected prefixes and symlinks before removing anything.
+- **FIND-007 — token rotation:** rotate bearer tokens with
+  `retaild token rotate --user <id> [--role viewer|operator|admin]` or hash an existing token with
+  `retaild token hash --token <token>`; replace `token_sha256` in `users[]` and restart (no hot
+  reload; the old token stays valid until then). `retaild check` rejects empty, duplicate and
+  placeholder hashes.
+- **FIND-008 — central mTLS:** when `central` is configured, `require_mtls` defaults to true; an
+  `https://` URL requires client certificate, key and CA files. An explicit `require_mtls:false` is
+  a documented loopback/test opt-out; plain `http://` is loopback-only.
+- **FIND-009 — reproducible builds:** `SOURCE_DATE_EPOCH` (or `GEDEFENSE_BUILD_DATE`) pins the build
+  date; `-trimpath` and `-buildvcs=false` remain mandatory.
+- **FIND-010 — shutdown/audit flushing:** graceful shutdown flushes buffered setup/gate audit
+  entries; a hard kill can still lose the buffered tail (documented residual risk).
+- **FIND-011 — accepted:** TOTP uses RFC-6238 HMAC-SHA1; accepted for the alpha and documented.
+
+### Added
+
+- Release verification material: `SHA256SUMS.archives`, SPDX `SBOM.spdx.json`, cosign signatures,
+  `docs/DEPLOYMENT.md` hardening and rotation guidance, `docs/SECURITY-MODEL.md` signature status.
+
+### Known limitations
+
+- No real OT hardware, no independent Access Gate penetration test, no compliance or certification
+  claim; see `README.md` (honest alpha limits) and `docs/SECURITY-MODEL.md`.
+
 ## [0.2.0-alpha.2] — 2026-11-03
 
 ### Added
@@ -86,4 +134,5 @@ versioning; alpha releases may change behavior without notice and are **not prod
 - Product invariants: no OT write path, no active scanning, no plant control, fail-safe behavior.
 - Conditional release gate; Windows ACL and live-OT pilot items documented as open conditions.
 
+[0.2.0-alpha.3]: https://github.com/visiongaiatechnology/gedefense-retail/releases
 [0.2.0-alpha.2]: https://github.com/visiongaiatechnology/gedefense-retail/releases

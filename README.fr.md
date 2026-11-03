@@ -24,7 +24,7 @@ Surveillance OT passive et mise en œuvre du Default-Deny pour le chemin de gest
 <a id="alpha-status"></a>
 ## Statut alpha
 
-> **0.2.0-alpha.2 — expérimental, pas prêt pour la production.**
+> **0.2.0-alpha.3 — expérimental, pas prêt pour la production.**
 > GeDefense Retail est une alpha précoce. Il a été vérifié sur loopback avec des régulateurs et des
 > superviseurs simulés, et non contre du matériel frigorifique réel dans un magasin. Il n'existe pas
 > encore de test d'intrusion indépendant de l'Access Gate, et aucune allégation de conformité ou de
@@ -173,23 +173,31 @@ Il est livré sous forme de deux services distincts :
 <a id="download"></a>
 ## Téléchargement
 
-**Téléchargement — disponible avec la première version alpha.** Les archives et les sommes de contrôle
-SHA-256 sont publiées comme ressources de la GitHub release ; les liens seront insérés ici
-([release page](https://github.com/visiongaiatechnology/gedefense-retail/releases/tag/v0.2.0-alpha.2)) dès la publication de la release.
+**Dernière release alpha : [v0.2.0-alpha.3](https://github.com/visiongaiatechnology/gedefense-retail/releases/tag/v0.2.0-alpha.3).**
+Ressources : quatre archives, [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS),
+[SHA256SUMS.archives](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS.archives),
+[SBOM.spdx.json](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SBOM.spdx.json)
+et signatures cosign (`*.sig`/`*.pem`). Les binaires Windows sont **NOT_SIGNED** (Authenticode, alpha) ;
+utilisez les hachages/signatures.
 
-| Plateforme | Ressource de release (archive + `SHA256SUMS`) |
-|---|---|
-| Linux amd64 | [gedefense-retail-0.2.0-alpha.2-linux-amd64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/gedefense-retail-0.2.0-alpha.2-linux-amd64.tar.gz) · [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/SHA256SUMS) |
-| Linux arm64 | [gedefense-retail-0.2.0-alpha.2-linux-arm64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/gedefense-retail-0.2.0-alpha.2-linux-arm64.tar.gz) · [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/SHA256SUMS) |
-| Windows amd64 | [gedefense-retail-0.2.0-alpha.2-windows-amd64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/gedefense-retail-0.2.0-alpha.2-windows-amd64.zip) · [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/SHA256SUMS) |
-| Windows arm64 | [gedefense-retail-0.2.0-alpha.2-windows-arm64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/gedefense-retail-0.2.0-alpha.2-windows-arm64.zip) · [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/SHA256SUMS) |
+| Plateforme | Archive | Sommes de contrôle |
+|---|---|---|
+| Linux amd64 | [gedefense-retail-0.2.0-alpha.3-linux-amd64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/gedefense-retail-0.2.0-alpha.3-linux-amd64.tar.gz) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS) · [archives](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS.archives) |
+| Linux arm64 | [gedefense-retail-0.2.0-alpha.3-linux-arm64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/gedefense-retail-0.2.0-alpha.3-linux-arm64.tar.gz) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS) · [archives](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS.archives) |
+| Windows amd64 | [gedefense-retail-0.2.0-alpha.3-windows-amd64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/gedefense-retail-0.2.0-alpha.3-windows-amd64.zip) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS) · [archives](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS.archives) |
+| Windows arm64 | [gedefense-retail-0.2.0-alpha.3-windows-arm64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/gedefense-retail-0.2.0-alpha.3-windows-arm64.zip) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS) · [archives](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS.archives) |
 
-Vérifiez toujours l'archive par rapport au fichier `SHA256SUMS` publié avant l'installation.
+**Vérifiez avant installation :** `sha256sum -c SHA256SUMS` dans l'archive décompressée et
+`sha256sum -c SHA256SUMS.archives` pour les archives téléchargées. Les archives et `SHA256SUMS` sont
+signés avec cosign keyless ; vérifiez un fichier avec `cosign verify-blob --certificate <fichier>.pem
+--signature <fichier>.sig --certificate-oidc-issuer https://token.actions.githubusercontent.com
+--certificate-identity-regexp 'https://github.com/visiongaiatechnology/gedefense-retail/.github/workflows/release.yml@refs/tags/v.*' <fichier>` (identité exacte dans
+[docs/BUILD-AND-RELEASE.md](docs/BUILD-AND-RELEASE.md)). `SBOM.spdx.json` est l'inventaire SPDX.
+**Si un fichier de signature manque, traitez le téléchargement comme non signé.**
 
 Chaque archive contient `bin/` (binaires), `config/` (configuration d'exemple et unités systemd),
 `docs/`, `README.md`, `LICENSE`, `VERSION`, `THIRD-PARTY-NOTICES.md`, les scripts d'installation et un
-fichier `SHA256SUMS`. La release fournit en outre des entrées `SHA256SUMS` par plateforme et un fichier
-`SHA256SUMS.archives` à la racine de la release.
+fichier `SHA256SUMS`.
 
 <a id="install-linux"></a>
 ## Installation — Linux
@@ -221,7 +229,10 @@ L'installateur crée le ou les comptes de service, installe les unités systemd 
 `/var/lib/gedefense-retail/`, `/var/lib/gedefense-gate/` et `/var/log/gedefense-retail/`, et laisse le
 service de surveillance prêt pour le setup au premier lancement. Il ne copie que la **configuration
 d'exemple** (`retail.example.json`, `gate.example.json`, `gate-policy.example.json`) et n'écrase jamais
-les fichiers existants. L'exploitant crée la configuration de production à partir des exemples :
+les fichiers existants. La configuration est installée `root:gedefense` (répertoires `0750`, fichiers
+`0640`), les répertoires de données appartiennent aux comptes de service et l'installateur s'arrête
+si ces étapes de permissions échouent (fail-closed). L'exploitant crée la configuration de production
+à partir des exemples :
 
 ```bash
 sudo cp /etc/gedefense-retail/retail.example.json /etc/gedefense-retail/retail.json
@@ -327,10 +338,11 @@ Get-Service gedefense-retail
 .\bin\retaild.exe version
 ```
 
-**Remarque sur les permissions Windows (alpha) :** les modes de fichiers POSIX ne restreignent pas
-l'accès sur NTFS. Exécutez le service sous un compte de service dédié et définissez des ACL explicites
-pour les répertoires de données et de configuration ; ne l'exécutez pas en production avec des ACL de
-lecture héritées.
+**Permissions Windows (alpha) :** l'installateur exécute les deux services comme
+`NT AUTHORITY\LocalService` et applique des ACL `icacls` explicites sans héritage : `config\` en
+lecture, `C:\ProgramData\GeDefense\Retail\` en modification pour le service, Administrateurs en
+contrôle total, `Users` sans accès. Les modes POSIX ne protègent pas NTFS ; ne réactivez pas les ACL
+héritées. La désinstallation ne restaure pas les ACL précédentes.
 
 **4. Facultatif : Access Gate**
 

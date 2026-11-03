@@ -38,7 +38,7 @@ const validConfigJSON = `{
   "collectors": [
     {"adapter_id": "modbus.pool1", "enabled": true, "zone_id": "zone-ot", "options": {"address": "10.0.0.5:502"}}
   ],
-  "central": {"url": "https://central.example.invalid:8443/api", "timeout_s": 15, "batch_size": 50, "spool_max_mb": 256},
+  "central": {"url": "https://central.example.invalid:8443/api", "timeout_s": 15, "batch_size": 50, "spool_max_mb": 256, "client_cert_file": "/etc/gedefense-retail/client.crt", "client_key_file": "/etc/gedefense-retail/client.key", "ca_file": "/etc/gedefense-retail/ca.crt"},
   "simulation": {"enabled": true}
 }`
 
@@ -292,6 +292,11 @@ func TestValidateCentralRequiresTLS(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			cfg := baseConfig().WithDefaults()
 			cfg.Central = &CentralConfig{URL: tc.url}
+			if tc.ok && tc.url == "https://central.example.invalid/api" {
+				cfg.Central.ClientCertFile = "/etc/gedefense-retail/client.crt"
+				cfg.Central.ClientKeyFile = "/etc/gedefense-retail/client.key"
+				cfg.Central.CAFile = "/etc/gedefense-retail/ca.crt"
+			}
 			cfg = cfg.WithDefaults()
 			err := cfg.Validate()
 			if tc.ok && err != nil {

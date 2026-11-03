@@ -1,8 +1,9 @@
-# GeDefense Retail - cross-platform release builder (Windows host, PowerShell 7).
+# GeDefense Retail - cross-platform release builder (Windows host).
 #
 # Builds retaild, retailgate and retail-sim for linux/amd64, linux/arm64,
 # windows/amd64 and windows/arm64 with reproducible flags (trimpath,
 # buildvcs=false, CGO off), then optionally packages the release bundles.
+# Works on Windows PowerShell 5.1 and PowerShell 7.
 #
 # Usage:
 #   pwsh scripts/build-release.ps1 [-Package] [-Targets "linux/amd64 windows/amd64"]
@@ -14,6 +15,12 @@ param(
     [string]$Targets = "linux/amd64 linux/arm64 windows/amd64 windows/arm64"
 )
 
+# Write-LinesUtf8NoBom works on Windows PowerShell 5.1 and PowerShell 7 (the
+# older -Encoding utf8NoBOM value only exists in PS 6+).
+function Write-LinesUtf8NoBom([string]$path, [string[]]$content) {
+    [System.IO.File]::WriteAllLines($path, @($content), (New-Object System.Text.UTF8Encoding($false)))
+}
+
 $ErrorActionPreference = 'Stop'
 $root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
 $module = Join-Path $root 'src/retail'
@@ -23,7 +30,12 @@ $commit = if ($env:GEDEFENSE_COMMIT) { $env:GEDEFENSE_COMMIT } else {
 }
 if (-not $commit) { $commit = 'local' }
 $buildDate = if ($env:GEDEFENSE_BUILD_DATE) { $env:GEDEFENSE_BUILD_DATE } else {
-    (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")
+    if ($env:SOURCE_DATE_EPOCH -match '^\d+$') {
+        # FIND-009: reproducible builds honour SOURCE_DATE_EPOCH.
+        [DateTimeOffset]::FromUnixTimeSeconds([int64]$env:SOURCE_DATE_EPOCH).UtcDateTime.ToString("yyyy-MM-ddTHH:mm:ssZ")
+    } else {
+        (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")
+    }
 }
 $dist = Join-Path $root "dist/$version"
 $binaries = @('retaild', 'retailgate', 'retail-sim')
@@ -50,23 +62,30 @@ foreach ($target in $Targets.Split(' ', [System.StringSplitOptions]::RemoveEmpty
         if ($LASTEXITCODE -ne 0) { throw "go build ./cmd/$bin for $os/$arch failed (exit $LASTEXITCODE)" }
     }
     Remove-Item Env:CGO_ENABLED, Env:GOOS, Env:GOARCH -ErrorAction SilentlyContinue
-    Get-ChildItem $outdir -File | Sort-Object Name | ForEach-Object {
+    $sums = Get-ChildItem $outdir -File | Sort-Object Name | ForEach-Object {
         $hash = (Get-FileHash -Algorithm SHA256 -Path $_.FullName).Hash.ToLowerInvariant()
         "{0}  {1}" -f $hash, $_.Name
-    } | Set-Content (Join-Path $outdir 'SHA256SUMS') -Encoding utf8NoBOM
+    }
+    Write-LinesUtf8NoBom (Join-Path $outdir 'SHA256SUMS') @($sums)
+}
+
+# Write-LinesUtf8NoBom works on Windows PowerShell 5.1 and PowerShell 7 (the
+# older -Encoding utf8NoBOM value only exists in PS 6+).
+function Write-LinesUtf8NoBom([string]$path, [string[]]$content) {
+    [System.IO.File]::WriteAllLines($path, @($content), (New-Object System.Text.UTF8Encoding($false)))
 }
 
 # Overall checksum file over every built binary (relative paths, forward slashes).
-$lines = Get-ChildItem (Join-Path $dist '*') -Recurse -File |
+$built = Get-ChildItem $dist -Directory | ForEach-Object { Get-ChildItem $_.FullName -File -Recurse }
+$lines = $built |
     Where-Object { $_.Name -like 'retaild*' -or $_.Name -like 'retailgate*' -or $_.Name -like 'retail-sim*' } |
     Sort-Object FullName | ForEach-Object {
         $rel = $_.FullName.Substring($dist.Length + 1).Replace('\', '/')
         "{0}  {1}" -f (Get-FileHash -Algorithm SHA256 -Path $_.FullName).Hash.ToLowerInvariant(), $rel
     }
-$lines | Set-Content (Join-Path $dist 'SHA256SUMS.binaries') -Encoding utf8NoBOM
+Write-LinesUtf8NoBom (Join-Path $dist 'SHA256SUMS.binaries') @($lines)
 Write-Host "BUILD_OK $($lines.Count) binaries"
 
 if ($Package) {
-    & pwsh -NoProfile -File (Join-Path $root 'scripts/package-release.ps1') -Version $version
-    if ($LASTEXITCODE -ne 0) { throw "packaging failed (exit $LASTEXITCODE)" }
+    & (Join-Path $root 'scripts/package-release.ps1') -Version $version
 }

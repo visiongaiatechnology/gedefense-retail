@@ -24,6 +24,43 @@
   binding, lockout, short-lived sessions.
 - Setup wizard: available only from loopback and only until setup is completed.
 
+## Release integrity and signatures (0.2.0-alpha.3)
+
+- Archives, `SHA256SUMS`, `SHA256SUMS.archives` and `SBOM.spdx.json` are published with cosign
+  **keyless** signatures (`*.sig`/`*.pem`), together with `SHA256SUMS` / `SHA256SUMS.archives`;
+  `SBOM.spdx.json` (SPDX-2.3 JSON) lists the bundled components and hashes.
+- **Windows binaries are NOT_SIGNED** (no Authenticode certificate); SmartScreen may warn. Do not
+  treat Windows code signing as a security control in this alpha.
+- Verification steps are in [DEPLOYMENT.md](DEPLOYMENT.md) and
+  [BUILD-AND-RELEASE.md](BUILD-AND-RELEASE.md). **If a signature asset is missing, treat the
+  download as unsigned.**
+- cosign keyless relies on the CI OIDC identity; no long-lived signing key is stored in the
+  repository. Key custody and rotation rehearsal are **NOT_TESTED** in this alpha.
+- Signatures prove provenance/integrity only; they are **not** a compliance or certification claim.
+
+## Token rotation and central mTLS
+
+- Bearer tokens are stored only as hashes. Rotate with
+  `retaild token rotate --user <id> [--role viewer|operator|admin]` (or hash an existing token with
+  `retaild token hash --token <token>`), replace `token_sha256` in `retail.json` and **restart**;
+  there is no hot reload and the old token stays valid until the restart. `retaild check` rejects
+  empty, duplicate and placeholder hashes.
+- The optional central connection is outbound-only. When `central` is configured, `require_mtls`
+  defaults to true: an `https://` URL requires client certificate, client key and CA file. An
+  explicit `require_mtls:false` is a documented opt-out for loopback/test endpoints only; plain
+  `http://` is accepted only for loopback.
+- Client certificates/keys are rotated manually (replace files, restart); automatic rotation and
+  KMS/HSM integration are not implemented in the alpha.
+
+## Audit buffer and residual risk
+
+- Audit records are hash-chained and written before a write decision takes effect.
+- Graceful shutdown flushes buffered setup/gate audit entries (`store.AuditLog.Flush` after HTTP
+  shutdown); a `kill -9`/hard kill can lose the buffered tail (up to 128 entries on the affected
+  build). This is loss-of-last-evidence, not a tampering vector.
+- Operator duty: graceful service stops, maintenance windows, verify the audit chain on start. A
+  complete incident-response/forensics runbook is **not** part of this alpha.
+
 ## Known alpha limitations
 
 - Verified against fake controllers and supervisors on loopback, **not** against real store hardware.

@@ -114,3 +114,8 @@ print("PACKAGE_OK")
 for archive in archives:
     print(f"  {archive.name}  {archive.stat().st_size} B")
 PY
+
+# SBOM (FIND-004): SPDX-2.3 JSON next to the archives, created from SOURCE_DATE_EPOCH.
+if command -v python3 >/dev/null 2>&1; then
+  python3 "$ROOT/scripts/generate-sbom.py" --dist "$DIST" --version "$VERSION"
+fi

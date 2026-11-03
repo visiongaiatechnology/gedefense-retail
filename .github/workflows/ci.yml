@@ -1,4 +1,4 @@
-﻿name: ci
+name: ci
 
 on:
   push:
@@ -16,11 +16,15 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
     defaults:
       run:
         working-directory: src/retail
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: actions/setup-go@v5
         with:
           go-version-file: src/retail/go.mod
@@ -41,8 +45,12 @@ jobs:
     name: Loopback E2E (Linux)
     needs: go
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: actions/setup-go@v5
         with:
           go-version-file: src/retail/go.mod
@@ -51,3 +59,23 @@ jobs:
         run: python3 tests/e2e.py
       - name: e2e (retailgate)
         run: python3 tests/gate_e2e.py
+
+  scripts:
+    name: Release script syntax + SBOM
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: bash syntax
+        run: |
+          for script in scripts/*.sh packaging/linux/*.sh; do bash -n "$script"; done
+      - name: python syntax
+        run: python3 -m py_compile scripts/generate-sbom.py
+      - name: installer path validation (dry-run, must refuse unsafe prefixes)
+        run: |
+          if bash packaging/linux/uninstall.sh --prefix / --dry-run; then
+            echo "unsafe prefix was accepted"; exit 1
+          fi

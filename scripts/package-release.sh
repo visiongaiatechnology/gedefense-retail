@@ -31,10 +31,15 @@ rm -rf "$STAGE"
 mkdir -p "$STAGE"
 
 python3 - "$ROOT" "$DIST" "$STAGE" "$VERSION" "$PACKAGING" <<'PY'
-import os, sys, tarfile, zipfile, hashlib, shutil
+import os, sys, tarfile, zipfile, hashlib, shutil, gzip, time
 from pathlib import Path
 
 root, dist, stage, version, packaging = map(Path, sys.argv[1:6])
+# FIND-009: archive timestamps/ownership are normalized to SOURCE_DATE_EPOCH so
+# repeated builds (local and CI) produce byte-identical archives.
+EPOCH = int(os.environ.get("SOURCE_DATE_EPOCH", "0") or "0")
+if EPOCH <= 0:
+    EPOCH = int(time.time())
 common = ["README.md", "LICENSE", "VERSION", "THIRD-PARTY-NOTICES.md"]
 configs = ["retail.example.json", "gate.example.json", "gate-policy.example.json",
            "gedefense-retail.service", "gedefense-retailgate.service"]
@@ -54,6 +59,34 @@ def copy_common(bundle):
     for name in configs:
         shutil.copy2(root / "config" / name, bundle / "config" / name)
     shutil.copytree(root / "docs", bundle / "docs", dirs_exist_ok=True)
+
+def write_tar_gz(archive, bundle):
+    with open(archive, "wb") as raw:
+        with gzip.GzipFile(filename="", mode="wb", fileobj=raw, mtime=EPOCH, compresslevel=9) as gz:
+            with tarfile.open(fileobj=gz, mode="w", format=tarfile.GNU_FORMAT) as tar:
+                for path in sorted(bundle.rglob("*")):
+                    if not path.is_file():
+                        continue
+                    arcname = f"{bundle.name}/{path.relative_to(bundle).as_posix()}"
+                    info = tar.gettarinfo(str(path), arcname)
+                    info.mtime = EPOCH
+                    info.uid = info.gid = 0
+                    info.uname = info.gname = ""
+                    info.mode = 0o755 if os.access(path, os.X_OK) else 0o644
+                    with open(path, "rb") as fh:
+                        tar.addfile(info, fh)
+
+def write_zip(archive, bundle):
+    with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as zf:
+        for path in sorted(bundle.rglob("*")):
+            if not path.is_file():
+                continue
+            arcname = f"{bundle.name}/{path.relative_to(bundle).as_posix()}"
+            info = zipfile.ZipInfo(arcname, date_time=time.gmtime(EPOCH)[:6])
+            info.compress_type = zipfile.ZIP_DEFLATED
+            info.external_attr = (0o755 if os.access(path, os.X_OK) else 0o644) << 16
+            with open(path, "rb") as fh:
+                zf.writestr(info, fh.read())
 
 archives = []
 for target_dir in sorted(dist.iterdir()):
@@ -78,8 +111,7 @@ for target_dir in sorted(dist.iterdir()):
                 manifest.append(f"{sha256(path)}  {path.relative_to(bundle)}")
         (bundle / "SHA256SUMS").write_text("\n".join(manifest) + "\n", encoding="utf-8")
         archive = dist / f"{bundle.name}.tar.gz"
-        with tarfile.open(archive, "w:gz") as tar:
-            tar.add(bundle, arcname=bundle.name)
+        write_tar_gz(archive, bundle)
         archives.append(archive)
     elif os_name == "windows":
         bundle = stage / f"gedefense-retail-{version}-windows-{arch}"
@@ -97,10 +129,7 @@ for target_dir in sorted(dist.iterdir()):
                 manifest.append(f"{sha256(path)}  {path.relative_to(bundle)}")
         (bundle / "SHA256SUMS").write_text("\r\n".join(manifest) + "\r\n", encoding="utf-8")
         archive = dist / f"{bundle.name}.zip"
-        with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as zf:
-            for path in sorted(bundle.rglob("*")):
-                if path.is_file():
-                    zf.write(path, path.relative_to(stage))
+        write_zip(archive, bundle)
         archives.append(archive)
     else:
         continue

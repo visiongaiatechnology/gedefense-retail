@@ -65,7 +65,7 @@ SOURCE_DATE_EPOCH=1762290000 GEDEFENSE_COMMIT=<sha> bash scripts/build-release.s
 # BuildDate im Binary: 2025-11-04T21:00:00Z (aus dem Epoch abgeleitet)
 ```
 
-Zwei Builds mit demselben `SOURCE_DATE_EPOCH`, `GEDEFENSE_COMMIT` und derselben
+Release v0.2.0-alpha.3 verwendet `SOURCE_DATE_EPOCH=1762290000` (= `2025-11-04T21:00:00Z`); derselbe Wert ist im Release-Workflow fixiert. Zwei Builds mit demselben `SOURCE_DATE_EPOCH`, `GEDEFENSE_COMMIT` und derselben
 Go-Toolchain sind bit-identisch (Hashvergleich via `SHA256SUMS.binaries`).
 
 ```bash

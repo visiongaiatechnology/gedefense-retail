@@ -4,10 +4,15 @@ name: release
 # in the publish job. Third-party actions are pinned by major tag because this
 # repository cannot run an automated SHA pinning tool in this environment; the
 # release gate records this limitation and expects SHA pinning as a follow-up.
+#
+# FIND-009: the release build is reproducible. All release artifacts come from
+# ONE canonical build (build-linux) with a fixed SOURCE_DATE_EPOCH and the short
+# release commit, so local and CI artifacts are byte-identical. The Windows job
+# verifies Windows builds/E2E but does not produce a second artifact set.
 on:
   push:
     # Strict release trigger: v<major>.<minor>.<patch>[-prerelease].
-    tags: ["v[0-9]*"]
+    tags: ["v[0-9]+.[0-9]+.[0-9]+*"]
   workflow_dispatch:
 
 permissions:
@@ -15,7 +20,7 @@ permissions:
 
 jobs:
   build-linux:
-    name: Build + package (Linux)
+    name: Build + package + SBOM (canonical artifact set)
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -23,30 +28,36 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+          fetch-depth: 1
       - uses: actions/setup-go@v5
         with:
-          go-version-file: src/retail/go.mod
+          go-version: '1.27.1'
           cache: false
-      - name: Build matrix + package + SBOM
-        run: bash scripts/build-release.sh --package
+      - name: Build matrix + package + SBOM (reproducible)
+        run: |
+          export GEDEFENSE_COMMIT="$(git rev-parse --short HEAD)"
+          export SOURCE_DATE_EPOCH=1762290000
+          bash scripts/build-release.sh --package
       - name: Show release checksums
         run: |
           version="$(cat VERSION)"
           cat "dist/${version}/SHA256SUMS"
           cat "dist/${version}/SHA256SUMS.archives"
+          test -f "dist/${version}/SBOM.spdx.json"
       - uses: actions/upload-artifact@v4
         with:
-          name: release-linux
+          name: release-canonical
           path: |
             dist/**/*.tar.gz
+            dist/**/*.zip
             dist/**/SHA256SUMS
             dist/**/SHA256SUMS.archives
             dist/**/SHA256SUMS.binaries
             dist/**/SBOM.spdx.json
           if-no-files-found: error
 
-  build-windows:
-    name: Build + package (Windows)
+  verify-windows:
+    name: Verify Windows build/E2E (no duplicate release artifacts)
     runs-on: windows-latest
     permissions:
       contents: read
@@ -56,21 +67,24 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-go@v5
         with:
-          go-version-file: src/retail/go.mod
+          go-version: '1.27.1'
           cache: false
-      - name: Build matrix + package + SBOM
+      - name: Windows build/test
         shell: pwsh
-        run: ./scripts/build-release.ps1 -Package
-      - uses: actions/upload-artifact@v4
-        with:
-          name: release-windows
-          path: |
-            dist/**/*.zip
-          if-no-files-found: error
+        run: |
+          cd src/retail
+          go build ./...
+          go vet ./...
+          go test -count=1 ./...
+      - name: Windows E2E
+        shell: pwsh
+        run: |
+          python tests/e2e.py
+          python tests/gate_e2e.py
 
   publish:
     name: Sign + publish GitHub release
-    needs: [build-linux, build-windows]
+    needs: [build-linux, verify-windows]
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     environment: release
@@ -83,8 +97,8 @@ jobs:
           persist-credentials: false
       - uses: actions/download-artifact@v4
         with:
+          name: release-canonical
           path: release
-          merge-multiple: true
       - name: Validate tag and release layout
         run: |
           version="$(cat VERSION)"

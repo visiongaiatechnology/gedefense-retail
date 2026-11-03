@@ -31,4 +31,4 @@ The README is available in English, German, French, Italian, Spanish, Japanese, 
 
 ## Status
 
-0.2.0-alpha.3 — experimental alpha, not production-ready and without compliance claims.
+0.2.0-alpha.4 — experimental alpha, not production-ready and without compliance claims.

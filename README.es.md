@@ -24,7 +24,7 @@ Monitorización OT pasiva y un gate de aplicación Default-Deny para la ruta de 
 <a id="alpha-status"></a>
 ## Estado alfa
 
-> **0.2.0-alpha.3 — experimental, no listo para producción.**
+> **0.2.0-alpha.4 — experimental, no listo para producción.**
 > GeDefense Retail es un alfa temprano. Se ha verificado en loopback con reguladores y supervisores
 > simulados, no contra hardware frigorífico real en una tienda. Todavía no existe una prueba de
 > penetración independiente del Access Gate y no se formula ninguna declaración de conformidad ni de
@@ -171,19 +171,19 @@ Se distribuye como dos servicios independientes:
 <a id="download"></a>
 ## Descarga
 
-**Última release alfa: [v0.2.0-alpha.3](https://github.com/visiongaiatechnology/gedefense-retail/releases/tag/v0.2.0-alpha.3).**
-Recursos: cuatro archivos, [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS),
-[SHA256SUMS.archives](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS.archives),
-[SBOM.spdx.json](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SBOM.spdx.json)
+**Última release alfa: [v0.2.0-alpha.4](https://github.com/visiongaiatechnology/gedefense-retail/releases/tag/v0.2.0-alpha.4).**
+Recursos: cuatro archivos, [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.4/SHA256SUMS),
+[SHA256SUMS.archives](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.4/SHA256SUMS.archives),
+[SBOM.spdx.json](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.4/SBOM.spdx.json)
 y firmas cosign (`*.sig`/`*.pem`). Los binarios de Windows son **NOT_SIGNED** (Authenticode, alfa);
 use los hashes/firmas.
 
 | Plataforma | Archivo | Sumas de control |
 |---|---|---|
-| Linux amd64 | [gedefense-retail-0.2.0-alpha.3-linux-amd64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/gedefense-retail-0.2.0-alpha.3-linux-amd64.tar.gz) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS) · [archivos](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS.archives) |
-| Linux arm64 | [gedefense-retail-0.2.0-alpha.3-linux-arm64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/gedefense-retail-0.2.0-alpha.3-linux-arm64.tar.gz) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS) · [archivos](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS.archives) |
-| Windows amd64 | [gedefense-retail-0.2.0-alpha.3-windows-amd64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/gedefense-retail-0.2.0-alpha.3-windows-amd64.zip) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS) · [archivos](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS.archives) |
-| Windows arm64 | [gedefense-retail-0.2.0-alpha.3-windows-arm64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/gedefense-retail-0.2.0-alpha.3-windows-arm64.zip) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS) · [archivos](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.3/SHA256SUMS.archives) |
+| Linux amd64 | [gedefense-retail-0.2.0-alpha.4-linux-amd64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.4/gedefense-retail-0.2.0-alpha.4-linux-amd64.tar.gz) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.4/SHA256SUMS) · [archivos](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.4/SHA256SUMS.archives) |
+| Linux arm64 | [gedefense-retail-0.2.0-alpha.4-linux-arm64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.4/gedefense-retail-0.2.0-alpha.4-linux-arm64.tar.gz) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.4/SHA256SUMS) · [archivos](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.4/SHA256SUMS.archives) |
+| Windows amd64 | [gedefense-retail-0.2.0-alpha.4-windows-amd64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.4/gedefense-retail-0.2.0-alpha.4-windows-amd64.zip) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.4/SHA256SUMS) · [archivos](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.4/SHA256SUMS.archives) |
+| Windows arm64 | [gedefense-retail-0.2.0-alpha.4-windows-arm64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.4/gedefense-retail-0.2.0-alpha.4-windows-arm64.zip) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.4/SHA256SUMS) · [archivos](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.4/SHA256SUMS.archives) |
 
 **Verifique antes de instalar:** `sha256sum -c SHA256SUMS` dentro del paquete descomprimido y
 `sha256sum -c SHA256SUMS.archives` para los archivos descargados. Los archivos y `SHA256SUMS` están

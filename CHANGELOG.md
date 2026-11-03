@@ -3,6 +3,24 @@
 All notable changes to GeDefense Retail are documented here. The project follows semantic
 versioning; alpha releases may change behavior without notice and are **not production-ready**.
 
+## [0.2.0-alpha.4] — 2026-11-03
+
+### Security / release engineering
+
+- FIND-012 fixed: all release/install scripts are tracked as executable (100755); the
+  release pipeline now fails early if an executable bit is missing (`test -x`).
+- FIND-013 fixed: the release workflow pins `SOURCE_DATE_EPOCH=1762290000`, builds one
+  canonical artefact set on Linux (Go 1.27.1) and verifies on Windows; `SHA256SUMS.archives`
+  and `SBOM.spdx.json` are generated from that set.
+- Tag releases are signed with cosign keyless (OIDC) and publish `*.sig`/`*.pem` assets next to
+  the archives, checksums and SBOM.
+
+### Notes
+
+- This is the first release produced and signed by the CI tag pipeline; verify signatures with
+  `cosign verify-blob` (see README "Integrity and signatures").
+- Windows binaries remain **not Authenticode-signed** (NOT_SIGNED).
+
 ## [0.2.0-alpha.3] — 2026-11-03
 
 Security remediation release after the VGT-100 deep audit (report: 2026-11-03, findings FIND-001…011).

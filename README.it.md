@@ -173,15 +173,15 @@ Viene distribuito come due servizi separati:
 ## Download
 
 **Download — disponibile con la prima release alpha.** Gli archivi e i checksum SHA-256 vengono
-pubblicati come asset della GitHub release; i link saranno inseriti qui (`DOWNLOAD_PLACEHOLDER`) alla
+pubblicati come asset della GitHub release; i link saranno inseriti qui ([release page](https://github.com/visiongaiatechnology/gedefense-retail/releases/tag/v0.2.0-alpha.2)) alla
 pubblicazione della release.
 
 | Piattaforma | Asset della release (archivio + `SHA256SUMS`) |
 |---|---|
-| Linux amd64 | `DOWNLOAD_PLACEHOLDER` |
-| Linux arm64 | `DOWNLOAD_PLACEHOLDER` |
-| Windows amd64 | `DOWNLOAD_PLACEHOLDER` |
-| Windows arm64 | `DOWNLOAD_PLACEHOLDER` |
+| Linux amd64 | [gedefense-retail-0.2.0-alpha.2-linux-amd64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/gedefense-retail-0.2.0-alpha.2-linux-amd64.tar.gz) · [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/SHA256SUMS) |
+| Linux arm64 | [gedefense-retail-0.2.0-alpha.2-linux-arm64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/gedefense-retail-0.2.0-alpha.2-linux-arm64.tar.gz) · [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/SHA256SUMS) |
+| Windows amd64 | [gedefense-retail-0.2.0-alpha.2-windows-amd64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/gedefense-retail-0.2.0-alpha.2-windows-amd64.zip) · [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/SHA256SUMS) |
+| Windows arm64 | [gedefense-retail-0.2.0-alpha.2-windows-arm64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/gedefense-retail-0.2.0-alpha.2-windows-arm64.zip) · [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/SHA256SUMS) |
 
 Verifichi sempre l'archivio rispetto al file `SHA256SUMS` pubblicato prima dell'installazione.
 

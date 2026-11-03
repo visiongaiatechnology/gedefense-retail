@@ -143,14 +143,14 @@ GeDefense Retail 保护并记录超市背后的基础设施：制冷控制器、
 ## 下载
 
 **下载 — 随首个 Alpha 版本提供。** 归档与 SHA-256 校验和将作为 GitHub Release 资源发布；链接将在发布后
-填入此处（`DOWNLOAD_PLACEHOLDER`）。
+填入此处（[release page](https://github.com/visiongaiatechnology/gedefense-retail/releases/tag/v0.2.0-alpha.2)）。
 
 | 平台 | 发布资源（归档 + `SHA256SUMS`） |
 |---|---|
-| Linux amd64 | `DOWNLOAD_PLACEHOLDER` |
-| Linux arm64 | `DOWNLOAD_PLACEHOLDER` |
-| Windows amd64 | `DOWNLOAD_PLACEHOLDER` |
-| Windows arm64 | `DOWNLOAD_PLACEHOLDER` |
+| Linux amd64 | [gedefense-retail-0.2.0-alpha.2-linux-amd64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/gedefense-retail-0.2.0-alpha.2-linux-amd64.tar.gz) · [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/SHA256SUMS) |
+| Linux arm64 | [gedefense-retail-0.2.0-alpha.2-linux-arm64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/gedefense-retail-0.2.0-alpha.2-linux-arm64.tar.gz) · [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/SHA256SUMS) |
+| Windows amd64 | [gedefense-retail-0.2.0-alpha.2-windows-amd64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/gedefense-retail-0.2.0-alpha.2-windows-amd64.zip) · [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/SHA256SUMS) |
+| Windows arm64 | [gedefense-retail-0.2.0-alpha.2-windows-arm64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/gedefense-retail-0.2.0-alpha.2-windows-arm64.zip) · [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.2/SHA256SUMS) |
 
 安装前请务必使用已发布的 `SHA256SUMS` 校验归档。
 

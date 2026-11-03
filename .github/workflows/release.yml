@@ -125,6 +125,12 @@ jobs:
               --output-signature "${file}.sig" \
               --output-certificate "${file}.pem" \
               "$file"
+            # cosign v3 may write the certificate base64-encoded; normalise to PEM so
+            # `cosign verify-blob --certificate` works for consumers.
+            if ! head -c 5 "${file}.pem" | grep -q -- "-----"; then
+              base64 -d "${file}.pem" > "${file}.pem.dec"
+              mv "${file}.pem.dec" "${file}.pem"
+            fi
             test -s "${file}.sig" && test -s "${file}.pem"
           done
           ls -l *.sig *.pem

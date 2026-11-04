@@ -1,4 +1,4 @@
-# Retail Policy Reference — GeDefense Retail (Alpha 0.2.0-alpha.8)
+# Retail Policy Reference — GeDefense Retail (Alpha 0.3.0-alpha.1)
 
 **Status:** Referenz für Betreiber/Administratoren · **Stand:** 2026-11-03 · **Produkt:** GeDefense Retail 0.1.0 (ColdChain & Store Infrastructure Security)
 **Quellen:** `src/retail/internal/domain/policy.go` (bindend), `engineering contract` §5.4/§5.10, `data model` §4.7, `threat-model.md`, `safety-boundaries.md`
@@ -251,7 +251,7 @@ vertauscht (positiv) → **Validierungsfehler** bei Update/Reload.
    `POST /api/v1/policies/reload` (Rolle `admin`) ausführen.
    > **MVP-Grenze (P-1):** `policy.Manager.Update` existiert im Go-API, hat aber **keinen**
    > HTTP-Endpunkt in API v1. Der reguläre Weg im MVP ist Datei + `reload`. Ein UI-Editor für
-   > Policy ist nicht Teil von Alpha 0.2.0-alpha.8.
+   > Diese Referenz ist kein Bestandteil des Gate-API-Contracts; bindend bleiben `domain.Policy` und `Policy.Validate`.
 4. **Reload:** `Reload` liest die Datei, validiert (`Policy.Validate`), erzeugt eine neue Version
    (`policy-versions.jsonl`) und einen Audit-Eintrag (`action=policy.reload`, `object_type=policy`).
    Bei Validierungsfehler bleibt die alte Version aktiv.
@@ -301,7 +301,7 @@ dokumentierter Missbrauchspfad (vgl. Threat Model R-06).
 
 ---
 
-## 14. Werte, `value_scale` und Read-before-Write (Alpha 0.2.0-alpha.8)
+## 14. Werte, `value_scale` und Read-before-Write (Alpha 0.3.0-alpha.1)
 
 ### 14.1 Werte-Modell
 
@@ -341,3 +341,36 @@ dokumentierter Missbrauchspfad (vgl. Threat Model R-06).
 
 - HTTP(S)-Supervisor-Writes haben **keinen generischen Ist-Wert-Recheck**; URL-/Methoden-Allowlist
   und Wertbindung bleiben, `retailgate check` warnt bei fehlender Verifikation.
+
+---
+
+## 15. Setpoint-Integrität und Recovery (Alpha 0.3.0-alpha.1)
+
+- `gate.json` `integrity.references[]` benötigen `target_id`, `fc` (3), `register`, `unit_id`,
+  `value`, `scale` (Default 1.0) und optional `unit`/`note`/`recovery`.
+- `recovery` ist eine **explizite Freigabe pro Referenz**; nur `recovery: true` erlaubt dem Worker,
+  den Referenzwert per FC6 zu schreiben.
+- `integrity.recovery.enabled` ist **Default false**. Weitere Grenzen:
+  `max_actions_per_hour`, `max_actions_per_day`, `cooldown_s`,
+  `require_no_active_window` (Default aktiv).
+- Der Worker prüft per FC3, bestätigt Abweichungen (`confirm_reads`) und meldet
+  `gate.integrity.mismatch`. Recovery-Aktionen werden mit Read-back auditiert
+  (`gate.recovery.applied|failed|unknown`).
+- Referenzwerte müssen mit korrektem `scale` gepflegt werden; Dezimalwerte ohne `scale` sind
+  ungültig. Recovery ersetzt **keine** normale Plan-/Freigabe und ist kein Beweis über externe
+  Schreiber; TOCTOU bleibt bestehen.
+- HTTP-Writes liegen außerhalb der Integrity-Referenzen (kein generischer Ist-Wert-Recheck).
+
+### 15.6 Betreiber-Freigabe und Fail-safe-Regeln
+
+- `integrity.references[]`: `target_id` muss ein `modbus_tcp`-Target sein, `fc=3`, `register` im
+  `read_registers`-Fenster (40001…465536), `value` numerisch, `scale` so, dass der Rohwert in uint16
+  passt; doppelte `(target_id, unit_id, register)` sind unzulässig.
+- `integrity.enabled=true` benötigt mindestens eine Referenz; `poll_interval_s` 10–86400,
+  `confirm_reads` 1–5, `stale_after_s` > `poll_interval_s`.
+- `recovery.enabled` Default **false**; bei Aktivierung `max_actions_per_hour/day` ≥1 (Stunde ≤ Tag),
+  `cooldown_s` ≥60 und **`require_no_active_window=true` verpflichtend**.
+- Bei Gate-Fail-safe (`AllowWrite=false`): keine Reads/Recovery. Recovery nur mit Audit-Intent;
+  Audit-Fehler nach Write ⇒ `gate.recovery.unknown`, kein Retry.
+- Ein Versuch pro bestätigtem Mismatch; FC3-Re-Read vor FC6 ist nicht atomar (TOCTOU-Restfenster).
+- Kill-Switch `recovery.enabled=false`; `failed|unknown` eskalieren; nur Modbus FC3/FC6, HTTP nicht.

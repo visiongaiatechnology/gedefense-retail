@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "last_checked": "2026-11-03",
-  "generated_by": "ot-researcher / VGT GeDefense Retail (task-1)",
+  "generated_by": "VisionGaiaTechnology GeDefense Retail",
   "notes": "Maschinenlesbarer OT-Katalog fuer den Go-Dienst. Nur belegte Fakten; Unsicheres ist ueber confidence/verification markiert. Schema-Dokumentation: docs/retail/vendor-landscape.md Abschnitt 0. Keine erfundenen CVEs, OUIs oder Zertifizierungen.",
   "vendors": [
     {
@@ -12,7 +12,9 @@
       "role": "kaelte_supervisor_hersteller",
       "focus": "Store-/Verbundmanager (AK-System: AK-SM 800, AK-SM 800A, AK-SC 355), Kuehlstellenregler, Cloud-Monitoring",
       "source_url": "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
-      "additional_sources": ["https://www.cisa.gov/news-events/ics-advisories/icsa-25-140-03"],
+      "additional_sources": [
+        "https://www.cisa.gov/news-events/ics-advisories/icsa-25-140-03"
+      ],
       "confidence": "high",
       "verification": "fulltext_fetched",
       "last_checked": "2026-11-03"
@@ -25,7 +27,9 @@
       "role": "kaelte_supervisor_hersteller",
       "focus": "E2/E3/Site-Supervisor-Plattformen, XWEB-Supervisoren, Kaelte- und Gebaeudesteuerung",
       "source_url": "https://www.copeland.com/en-vn/products/controls-monitoring-systems/facility-controls-electronics/facility-and-system-controls/documents/supervisory-e3",
-      "additional_sources": ["https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/"],
+      "additional_sources": [
+        "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/"
+      ],
       "confidence": "high",
       "verification": "fulltext_fetched",
       "last_checked": "2026-11-03"
@@ -38,7 +42,9 @@
       "role": "kaelte_supervisor_hersteller",
       "focus": "XWEB-Supervisoren, Kuehlstellen- und Verbundregler",
       "source_url": "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
-      "additional_sources": ["https://dixell.fr/wp-content/uploads/2026/10/Recommandations-pour-une-utilisation-securisee-des-superviseurs-XWEB-v1.0.pdf"],
+      "additional_sources": [
+        "https://dixell.fr/wp-content/uploads/2026/10/Recommandations-pour-une-utilisation-securisee-des-superviseurs-XWEB-v1.0.pdf"
+      ],
       "confidence": "high",
       "verification": "fulltext_fetched",
       "last_checked": "2026-11-03"
@@ -154,14 +160,21 @@
       "vendor_id": "danfoss",
       "name": "AK-SM 800",
       "category": "store_supervisor",
-      "protocols": ["http_https_management"],
-      "ports": [80, 443],
+      "protocols": [
+        "http_https_management"
+      ],
+      "ports": [
+        80,
+        443
+      ],
       "management_interface": "eingebetteter Webserver, UI 'StoreView'",
       "firmware_update": "kein Update mehr (End-of-Life seit Mai 2021)",
       "lifecycle": "eol_2021_05",
       "notes": "Im Oktober-2026-Vorfall betroffene Serie; Danfoss nennt fehlende Software-/Security-Updates.",
       "source_url": "https://thehackernews.com/2026/10/attackers-heat-french-supermarket.html",
-      "additional_sources": ["https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/"],
+      "additional_sources": [
+        "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/"
+      ],
       "confidence": "medium",
       "verification": "secondary_reported",
       "last_checked": "2026-11-03"
@@ -171,14 +184,21 @@
       "vendor_id": "danfoss",
       "name": "AK-SC 355",
       "category": "store_supervisor",
-      "protocols": ["http_https_management"],
-      "ports": [80, 443],
+      "protocols": [
+        "http_https_management"
+      ],
+      "ports": [
+        80,
+        443
+      ],
       "management_interface": "Web-Management (Supervisor)",
       "firmware_update": "kein Update mehr (2016 ausgelaufen)",
       "lifecycle": "eol_2016",
       "notes": "Von CERT-FR als betroffene Serie gelistet.",
       "source_url": "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
-      "additional_sources": ["https://thehackernews.com/2026/10/attackers-heat-french-supermarket.html"],
+      "additional_sources": [
+        "https://thehackernews.com/2026/10/attackers-heat-french-supermarket.html"
+      ],
       "confidence": "high",
       "verification": "fulltext_fetched",
       "last_checked": "2026-11-03"
@@ -188,8 +208,13 @@
       "vendor_id": "danfoss",
       "name": "AK-SM 800A",
       "category": "store_supervisor",
-      "protocols": ["http_https_management"],
-      "ports": [80, 443],
+      "protocols": [
+        "http_https_management"
+      ],
+      "ports": [
+        80,
+        443
+      ],
       "management_interface": "eingebetteter Webserver mit nginx-Proxy, CGI (xml.cgi) und interner Applikation",
       "firmware_update": "signierte .spk-Pakete; Upgrade 3.x -> 4.x -> 5.3.x; kein Downgrade ab 5.3.x; 'Strict Session Control' (HTTPS Pflicht) ab 4.0",
       "lifecycle": "current",
@@ -224,7 +249,9 @@
       ],
       "notes": "Schwachstellen 2025 gepatcht; laut vorlaeufiger Einschaetzung NICHT der Einstiegsvektor der Oktober-2026-Angriffe (unbestaetigt).",
       "source_url": "https://claroty.com/team82/research/freeze-the-controller-defrost-the-food-uncovering-vulnerabilities-in-danfoss-refrigeration-controllers",
-      "additional_sources": ["https://www.cisa.gov/news-events/ics-advisories/icsa-25-140-03"],
+      "additional_sources": [
+        "https://www.cisa.gov/news-events/ics-advisories/icsa-25-140-03"
+      ],
       "confidence": "high",
       "verification": "fulltext_fetched",
       "last_checked": "2026-11-03"
@@ -234,7 +261,9 @@
       "vendor_id": "copeland",
       "name": "Copeland XWEB",
       "category": "store_supervisor",
-      "protocols": ["http_https_management"],
+      "protocols": [
+        "http_https_management"
+      ],
       "management_interface": "Web-Management (Supervisor)",
       "firmware_update": "Hersteller-Security-Update-Advisories (Inhalt dieser Recherche nicht geprueft)",
       "lifecycle": "unknown",
@@ -249,13 +278,17 @@
       "vendor_id": "dixell",
       "name": "Dixell XWEB",
       "category": "store_supervisor",
-      "protocols": ["http_https_management"],
+      "protocols": [
+        "http_https_management"
+      ],
       "management_interface": "Web-Management (Supervisor)",
       "firmware_update": "Hersteller-Hardening-Leitfaden 10/2026 (durch CERT-FR verlinkt)",
       "lifecycle": "unknown",
       "notes": "Von CERT-FR offiziell als betroffenes System gelistet.",
       "source_url": "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
-      "additional_sources": ["https://dixell.fr/wp-content/uploads/2026/10/Recommandations-pour-une-utilisation-securisee-des-superviseurs-XWEB-v1.0.pdf"],
+      "additional_sources": [
+        "https://dixell.fr/wp-content/uploads/2026/10/Recommandations-pour-une-utilisation-securisee-des-superviseurs-XWEB-v1.0.pdf"
+      ],
       "confidence": "high",
       "verification": "fulltext_fetched",
       "last_checked": "2026-11-03"
@@ -265,7 +298,11 @@
       "vendor_id": "copeland",
       "name": "E2 / Site Supervisor",
       "category": "store_supervisor",
-      "protocols": ["bacnet_mstp", "soap_xml", "http_https_management"],
+      "protocols": [
+        "bacnet_mstp",
+        "soap_xml",
+        "http_https_management"
+      ],
       "management_interface": "Supervisor-Konsole/Web, E-Mail-/SMS-Alarme",
       "firmware_update": "Firmware/Application per USB (ADF-Datei); Release Notes je Version; Security-Update-Advisories",
       "lifecycle": "legacy_but_supported",
@@ -280,7 +317,11 @@
       "vendor_id": "copeland",
       "name": "E3 Supervisory Control",
       "category": "store_supervisor",
-      "protocols": ["bacnet_mstp", "soap_xml", "http_https_management"],
+      "protocols": [
+        "bacnet_mstp",
+        "soap_xml",
+        "http_https_management"
+      ],
       "management_interface": "Supervisor-Konsole/Web-Display, E-Mail-/SMS-Alarme",
       "firmware_update": "Firmware/Application per USB (ADF); Versionen 2.2xF01 bis 2.33F01/02 als Release Notes dokumentiert",
       "lifecycle": "current",
@@ -323,7 +364,9 @@
       "vendor_id": "carel",
       "name": "RED optimise / RED control / tERA",
       "category": "cloud_monitoring",
-      "protocols": ["http_https_management"],
+      "protocols": [
+        "http_https_management"
+      ],
       "management_interface": "Digitalplattform/App/Remote-Monitoring-Service, IoT-Gateway",
       "firmware_update": "n/a (Cloud-Service)",
       "lifecycle": "current",
@@ -484,8 +527,15 @@
       "vendor_id": null,
       "model": "Direkte Internet-Exposition der Management-Oberflaeche",
       "description": "Supervisor-Panel (z. B. StoreView, XWEB) ist ueber Portfreigabe/NAT direkt aus dem Internet erreichbar.",
-      "typical_components": ["store_supervisor_web_ui", "router_nat_port_forwarding"],
-      "risks": ["ungefilterter Zugriff", "Auth-Bypass/Default-Credentials", "Scan-Auffindbarkeit"],
+      "typical_components": [
+        "store_supervisor_web_ui",
+        "router_nat_port_forwarding"
+      ],
+      "risks": [
+        "ungefilterter Zugriff",
+        "Auth-Bypass/Default-Credentials",
+        "Scan-Auffindbarkeit"
+      ],
       "source_url": "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
       "confidence": "high",
       "verification": "fulltext_fetched",
@@ -496,8 +546,15 @@
       "vendor_id": null,
       "model": "IP-Whitelisting fuer Kaeltefachbetrieb",
       "description": "Firewall-Regel erlaubt nur Quell-IPs des Dienstleisters; von CERT-FR nur als Notloesung, nicht dauerhaft empfohlen.",
-      "typical_components": ["firewall_rule", "static_provider_ip"],
-      "risks": ["Scheinsicherheit bei IP-Wechsel", "geteilte Provider-IPs", "kein Audit der Sitzung"],
+      "typical_components": [
+        "firewall_rule",
+        "static_provider_ip"
+      ],
+      "risks": [
+        "Scheinsicherheit bei IP-Wechsel",
+        "geteilte Provider-IPs",
+        "kein Audit der Sitzung"
+      ],
       "source_url": "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
       "confidence": "high",
       "verification": "fulltext_fetched",
@@ -508,8 +565,15 @@
       "vendor_id": null,
       "model": "VPN-Zugang des Dienstleisters ins Filialnetz",
       "description": "Dienstleister baut VPN auf und erhaelt danach Netzwerkzugriff; von CERT-FR als Mindestloesung genannt.",
-      "typical_components": ["ipsec_or_ssl_vpn", "provider_account"],
-      "risks": ["laterale Bewegung ohne Segmentierung", "geteilte Accounts", "keine Sitzungszuordnung"],
+      "typical_components": [
+        "ipsec_or_ssl_vpn",
+        "provider_account"
+      ],
+      "risks": [
+        "laterale Bewegung ohne Segmentierung",
+        "geteilte Accounts",
+        "keine Sitzungszuordnung"
+      ],
       "source_url": "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
       "confidence": "medium",
       "verification": "fulltext_fetched",
@@ -520,8 +584,15 @@
       "vendor_id": null,
       "model": "Always-on Vendor-VPN",
       "description": "Permanenter Fernwartungstunnel ohne Sitzungsmonitoring; von Claroty als Retail-Problem benannt.",
-      "typical_components": ["persistent_vpn_tunnel", "vendor_managed_gateway"],
-      "risks": ["unueberwachter Dauerzugang", "schwer widerrufbar", "keine Wartungsfensterbindung"],
+      "typical_components": [
+        "persistent_vpn_tunnel",
+        "vendor_managed_gateway"
+      ],
+      "risks": [
+        "unueberwachter Dauerzugang",
+        "schwer widerrufbar",
+        "keine Wartungsfensterbindung"
+      ],
       "source_url": "https://claroty.com/commercial-cybersecurity/retail",
       "confidence": "medium",
       "verification": "fulltext_fetched",
@@ -532,8 +603,17 @@
       "vendor_id": "carel",
       "model": "Hersteller-Cloud-Portal / Remote-Monitoring-Service",
       "description": "Supervisor sendet Telemetrie an Herstellerportal; Wartung erfolgt ueber Portal (z. B. Carel RED optimise/tERA).",
-      "typical_components": ["iot_gateway", "cloud_portal", "service_account"],
-      "risks": ["Drittparteirisiko", "Account-Kompromittierung", "Datenabfluss", "unklare Mandantentrennung"],
+      "typical_components": [
+        "iot_gateway",
+        "cloud_portal",
+        "service_account"
+      ],
+      "risks": [
+        "Drittparteirisiko",
+        "Account-Kompromittierung",
+        "Datenabfluss",
+        "unklare Mandantentrennung"
+      ],
       "source_url": "https://www.carel.com/reducing-energy-consumption-and-operational-costs-in-buildings",
       "confidence": "medium",
       "verification": "fulltext_fetched",
@@ -544,8 +624,16 @@
       "vendor_id": null,
       "model": "Mobilfunk-/4G-Router als Fernwartungsbruecke",
       "description": "Mobilfunkrouter im Schaltschrank stellt Fernwartungszugang bereit (NAT, Portfreigaben, Default-Zugangsdaten).",
-      "typical_components": ["cellular_router", "sim_card", "port_forwarding"],
-      "risks": ["Default-Credentials", "ungepatchte Router-Firmware", "Exposition ohne Betreiberwissen"],
+      "typical_components": [
+        "cellular_router",
+        "sim_card",
+        "port_forwarding"
+      ],
+      "risks": [
+        "Default-Credentials",
+        "ungepatchte Router-Firmware",
+        "Exposition ohne Betreiberwissen"
+      ],
       "confidence": "low",
       "verification": "secondary_reported",
       "last_checked": "2026-11-03",

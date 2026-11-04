@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "last_checked": "2026-11-03",
-  "generated_by": "ot-researcher / VGT GeDefense Retail Access Gate (task-11)",
+  "generated_by": "VisionGaiaTechnology GeDefense Retail",
   "notes": "Schreibflaechen-Katalog fuer die Default-Deny-Policy des Access Gate. Grundsatz: KEINE erfundenen Registeradressen, Objekt-IDs oder URL-Pfade. Belegt sind Aenderungsklassen und Protokoll-Schreibfunktionen sowie einzelne dokumentierte HTTP-Aktionen. Was nicht belegt ist, steht als confidence=low / verification=search_result_only bzw. secondary_reported drin. Schema-Dokumentation: docs/retail/access-gate-vendor-workflows.md Abschnitt 0 und docs/retail/vendor-landscape.md Abschnitt 0.",
   "principles": [
     "Default-Deny: jede Schreiboperation ist verboten, solange kein freigegebener Write-Plan exakt Ziel, Operation und Wert bindet.",

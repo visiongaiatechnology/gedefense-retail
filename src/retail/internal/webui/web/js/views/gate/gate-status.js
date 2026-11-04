@@ -11,6 +11,7 @@ import { panel } from '../../components/panel.js';
 import { emptyState, errorState, banner, partialBanner, skeletonPage } from '../../components/states.js';
 import { icon } from '../../core/icons.js';
 import { t } from '../../i18n/index.js';
+import { buildIntegrityPanel } from './gate-integrity.js';
 
 let loadSeq = 0;
 
@@ -29,6 +30,7 @@ async function load(host, contentHost, ctx) {
     gateApi.status(),
     gateApi.getPolicy(),
     gateApi.getAudit({ limit: 20 }),
+    gateApi.getIntegrity(),
   ]);
   if (sequence !== loadSeq) return;
 
@@ -36,6 +38,8 @@ async function load(host, contentHost, ctx) {
   const status = results[1].status === 'fulfilled' ? results[1].value : null;
   const policy = results[2].status === 'fulfilled' ? results[2].value : null;
   const audit = results[3].status === 'fulfilled' ? results[3].value : null;
+  const integrity = results[4] && results[4].status === 'fulfilled' ? results[4].value : null;
+  const integrityError = results[4] && results[4].status === 'rejected' ? results[4].reason : null;
 
   clear(contentHost);
   if (!health && !status) {
@@ -95,6 +99,8 @@ async function load(host, contentHost, ctx) {
       ])
     );
   }
+
+  contentHost.append(buildIntegrityPanel(integrity, integrityError, () => void load(host, contentHost, ctx)));
 
   const grid = el('div', { class: 'gate-status__grid' });
 

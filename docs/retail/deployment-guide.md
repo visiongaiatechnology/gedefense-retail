@@ -1,4 +1,4 @@
-# Deployment Guide — GeDefense Retail (Alpha 0.2.0-alpha.8)
+# Deployment Guide — GeDefense Retail (Alpha 0.3.0-alpha.1)
 
 **Status:** Installations- und Betriebsvorbereitung für den Pilot · **Stand:** 2026-11-03
 **Produkt:** GeDefense Retail 0.1.0 — ColdChain & Store Infrastructure Security (VisionGaiaTechnology)
@@ -430,7 +430,7 @@ read-only-Konto; Health/Logs/Fehler geben die Werte **nie** aus (Redaction-Test)
 ## 7. Updates und Rollback
 
 **MVP-Realität:** Es gibt **keinen** automatischen Updater und **keine** signierte Selbst-Update-Funktion
-in `retaild`; ein implementierter Update-/Recovery-Mechanismus ist **nicht** Teil von Alpha 0.2.0-alpha.8 (0.2).
+in `retaild`; ein allgemeiner Update-/Recovery-Mechanismus ist **nicht** Teil dieser Alpha; das 0.3-Recovery betrifft ausschließlich konfigurierte Setpoint-Referenzen.
 Update = kontrollierter Betreiberprozess mit geprüftem Artefakt.
 
 ### 7.1 Update (in freigegebenem Wartungsfenster)
@@ -488,7 +488,7 @@ Update = kontrollierter Betreiberprozess mit geprüftem Artefakt.
 
 ---
 
-## 12. Vendor-Katalog im Paket (Alpha 0.2.0-alpha.8)
+## 12. Vendor-Katalog im Paket (Alpha 0.3.0-alpha.1)
 
 - Das Release-Bundle enthält `data/ot-catalog/` (`vendors.json`, `write-surface.json`,
   `regulatory-context.json`).
@@ -498,3 +498,79 @@ Update = kontrollierter Betreiberprozess mit geprüftem Artefakt.
   Geräte bleiben unbekannt.
 - Neue API-Endpunkte: `/api/v1/vendors*`, `/api/v1/regulatory-context` (siehe `../API.md`).
 - Keine Secrets im Katalog; regulatorischer Kontext ist ein Hinweis, keine Compliance-Aussage.
+
+---
+
+## 13. Netzwerk-Enforcement, Setpoint-Integrität und Bypass (Alpha 0.3.0-alpha.1)
+
+### 13.1 `retailgate netpolicy`
+
+`retailgate netpolicy --config gate.json --format nftables|iptables --gate-source <CIDR>
+[--out FILE] [--check] [--apply] [--rollback]`
+
+- Akzeptiert neue Verbindungen zu Reglern nur von den `--gate-source`-CIDR(s); andere neue
+  Verbindungen werden verworfen und geloggt. Eigene Table/Chain; `--check` prüft ohne Apply,
+  `--out` schreibt das Regelset, `--apply`/`--rollback` verwalten es.
+- **Voraussetzung:** Routing/NAT/Bridge und Segmentierung müssen am Gate-Host bereits funktionieren;
+  das Tool ist **kein Router** und wirkt nur auf dem Gate-Host. Bypass-Pfade außerhalb bleiben
+  Betreiberaufgabe. Regeln vor `--apply` prüfen und einen Out-of-band-Rollback vorhalten.
+
+### 13.2 Setpoint-Integrität + Automatic Recovery
+
+```json
+"integrity": {
+  "enabled": true, "poll_interval_s": 60, "confirm_reads": 3, "stale_after_s": 180,
+  "references": [{"target_id":"aksm-1","fc":3,"register":40002,"unit_id":1,
+                  "value":"4.0","scale":0.1,"unit":"celsius",
+                  "note":"Sollwert Fleischraum","recovery":true}],
+  "recovery": {"enabled": false, "max_actions_per_hour": 3, "max_actions_per_day": 10,
+               "cooldown_s": 300, "require_no_active_window": true}
+}
+```
+
+- Worker pollt Referenzen zyklisch per FC3, bestätigt Abweichungen (`confirm_reads`) und meldet
+  `gate.integrity.mismatch`; `stale_after` markiert fehlende/veraltete Werte.
+- **Recovery ist opt-in, Default aus.** Nur Referenzen mit `"recovery": true` werden per FC6
+  geschrieben (ohne Plan/Session), begrenzt durch Stunden-/Tageslimit, Cooldown und
+  `require_no_active_window`; Read-back prüft das Ergebnis, Audit `gate.recovery.applied|failed|unknown`.
+- API `GET /api/v1/gate/integrity`, SSE `gate_integrity`.
+- **Grenzen:** Recovery beweist nicht, wer außerhalb des Gates geschrieben hat, und beseitigt das
+  Read→Write-TOCTOU-Fenster nicht; HTTP-Writes haben keinen generischen Ist-Wert-Recheck.
+
+### 13.3 Bypass-Erkennung in `retaild`
+
+```json
+"bypass": {"enabled": true, "gate_source_cidrs": ["10.10.40.0/24", "10.10.50.10/32"]}
+```
+
+- `bypass.gate_source_cidrs`: CIDR/Einzel-IP (nur IPv4/IPv6, max. 64, keine normalisierten Duplikate,
+  keine IPv6-Zonen); Validierung auch bei `enabled=false`, unbekannte Felder ⇒ Konfigurationsfehler.
+  `enabled=true` ohne gültige Liste ⇒ Start verweigert (`retaild check` Exit ≠ 0), kein stilles
+  Abschalten.
+- Passive Schreibversuche (`write_attempt`) von Quellen außerhalb `gate_source_cidrs` erzeugen
+  `retail.bypass-suspected` (critical, Kategorie `access`, Rule-Version 1); Gate-Quellen/Reads nicht.
+  Alert mit Evidence/Fakten/Hypothese/Prüfempfehlungen, Dedup
+  `retail.bypass-suspected|<site>|<source>|<target>|<register>`, normale Alert-Engine/Incident-Kette.
+- **Grenze:** belegt sind nur Schreibversuch und Quelle außerhalb der Gate-CIDRs — nicht Urheber,
+  Freigabe oder bewiesene Segmentierungslücke; mit Geräte-Logs/Betreiber-Evidenz verifizieren. Die
+  Regel ist eine Adapter-/Gate-Signal-Regel, nicht Teil des passiven Rule-Packs (15 Regeln).
+
+### 13.4 Betreiber-Checkliste Setpoint-Integrität & Automatic Recovery
+
+- **Config-Felder:** `integrity.enabled`, `poll_interval_s` (10–86400), `confirm_reads` (1–5),
+  `stale_after_s` (> poll_interval_s), `references[]` (`target_id`, `fc=3`, `register` im
+  Read-Window `40001…465536`, `value`, `scale`, `unit`, `note`, `recovery`),
+  `recovery.enabled` (Default **false**), `max_actions_per_hour/day`, `cooldown_s` (≥60),
+  `require_no_active_window` (bei Recovery **true verpflichtend**).
+- **Validierung:** Referenz-Target muss `modbus_tcp` sein, `fc=3`, Register im
+  `read_registers`-Fenster, `value` numerisch und über `scale` in uint16 passend, keine doppelten
+  `(target_id, unit_id, register)`; `enabled=true` braucht mindestens eine Referenz.
+- **Fail-safe:** bei `AllowWrite=false` keine Integrity-Reads/Recovery.
+- **Audit-fail-closed:** ohne Audit-Intent kein Recovery-Write; Audit-Fehler nach dem Write ⇒
+  `gate.recovery.unknown`, **kein Retry**.
+- **Ein Versuch pro bestätigtem Mismatch**, keine Flapping-Schleife; FC3-Re-Read kurz vor FC6, aber
+  **nicht atomar** (TOCTOU-Restfenster).
+- **Kill-Switch:** `integrity.recovery.enabled=false` + Reload/Restart; Rate-Limit/Cooldown und
+  `require_no_active_window` nicht umgehen; `gate.recovery.failed|unknown` eskalieren.
+- **Grenze:** Referenzwerte sind Betreiber-Freigabe, kein HACCP-/Compliance-Beweis; nur Modbus
+  FC3/FC6, HTTP ohne Integrity/Recovery.

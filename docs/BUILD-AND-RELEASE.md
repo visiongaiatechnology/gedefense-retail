@@ -1,7 +1,7 @@
 # GeDefense Retail — Build & Release (Cross-Platform)
 
 **Produkt:** GeDefense Retail — ColdChain & Store Infrastructure Security (VisionGaiaTechnology)
-**Version:** siehe `VERSION` (aktuell `0.2.0-alpha.8`)
+**Version:** siehe `VERSION` (aktuell `0.3.0-alpha.1`)
 **Status:** ALPHA — nicht produktionsfreigegeben.
 
 Dieses Dokument beschreibt den reproduzierbaren Cross-Platform-Build, die
@@ -56,7 +56,7 @@ Binary. `Version/Commit/BuildDate` erscheinen in `retaild version` und in
 `GET /api/v1/meta`/`/health`. Ohne gesetzte Umgebung wird der Commit aus Git
 gelesen (Fallback `local`), das Build-Datum ist die aktuelle UTC-Zeit.
 
-**FIND-009 — Reproduzierbarkeit:** `SOURCE_DATE_EPOCH` (Unix-Sekunden) wird
+** — Reproduzierbarkeit:** `SOURCE_DATE_EPOCH` (Unix-Sekunden) wird
 respektiert; `GEDEFENSE_BUILD_DATE` bleibt als explizite Überschreibung
 unterstützt (Vorrang). Für einen reproduzierbaren Vergleich:
 
@@ -113,7 +113,7 @@ dist/<version>/
 ├── SHA256SUMS              # Release-Asset: Prüfsummen aller Archive
 ├── SHA256SUMS.archives     # identisch zu SHA256SUMS (Release-Asset)
 ├── SHA256SUMS.binaries     # Prüfsummen aller Binaries (Build-Matrix)
-├── SBOM.spdx.json          # SPDX-2.3-SBOM (FIND-004)
+├── SBOM.spdx.json          # SPDX-2.3-SBOM
 └── (Release: *.sig + *.pem je Archiv/SHA256SUMS/SHA256SUMS.archives/SBOM)
 ```
 
@@ -177,7 +177,7 @@ Konfiguration durch den Dienst-User und ruft bei vorhandener `retail.json`
 Deinstallation: `sudo ./uninstall.sh` (Daten bleiben); `--purge` löscht
 zusätzlich Konfiguration/Daten/Logs. Der Uninstaller verweigert unsichere Pfade
 (root, `/`, `..`, Symlinks) und verlangt die Marker-Datei
-`.gedefense-retail-install`; `--dry-run` zeigt die Aktionen nur an (FIND-006).
+`.gedefense-retail-install`; `--dry-run` zeigt die Aktionen nur an.
 
 **Erster Start:** Der Erststart öffnet den Dashboard-Setup-Wizard. Sicherheit
 ist fail-closed: `security.require_whitelist` default `true`, daher
@@ -202,7 +202,7 @@ Der Installer kopiert Binaries/Konfiguration und legt die Dienste
 `NT AUTHORITY\LocalService`** (nicht LocalSystem). Config/Data erhalten
 explizite DACLs via `icacls` (`/inheritance:r`): SYSTEM + Administratoren full,
 LocalService Read (Config) bzw. Modify (Data), keine Users-Vererbung;
-`icacls`-Fehler brechen die Installation ab (FIND-001). Firewall-Regeln werden
+`icacls`-Fehler brechen die Installation ab. Firewall-Regeln werden
 **nicht** automatisch gesetzt (bewusster Default-Deny); nur die
 Management-Netze auf die konfigurierten Ports zulassen. Deinstallation:
 `.\uninstall-windows.ps1 [-Purge] [-DryRun]` (validiert Pfade/Marker; setzt die
@@ -256,7 +256,7 @@ Referenzmatrix des Release-Laufs (2026-11-03, 0.2.0-alpha.2):
 `.github/workflows/ci.yml` — bei Push/PR: Go build/vet/gofmt/test/race auf
 ubuntu-latest **und** windows-latest, Loopback-E2E auf Linux, Skript-/SBOM-
 Syntax und Uninstaller-Pfadvalidierung. Alle Checkouts mit
-`persist-credentials: false`, `permissions: contents: read` je Job (FIND-005).
+`persist-credentials: false`, `permissions: contents: read` je Job.
 
 `.github/workflows/release.yml` — strikter Tag-Trigger
 `v<major>.<minor>.<patch>[-pre]`; Build+Paketierung+SBOM auf Linux und Windows;
@@ -286,7 +286,7 @@ Secrets/CDNs.
 
 ---
 
-## 8. Token-Rotation & sauberer Stopp (FIND-007/FIND-010)
+## 8. Token-Rotation & sauberer Stopp (/)
 
 **Token-Rotation (ohne Neuaufbau):**
 
@@ -302,11 +302,11 @@ Laufzeit-Reload; der alte Token bleibt bis zum Restart gültig (dokumentierte
 Grenze). Doppelte oder leere `token_sha256`-Werte lehnt `retaild check` ab.
 
 **Sauberer Stopp:** `retaild`/`retailgate` behandeln SIGTERM und flushen den
-Audit-Puffer vor dem Exit (FIND-010). `TimeoutStopSec=20s` in den Units;
+Audit-Puffer vor dem Exit. `TimeoutStopSec=20s` in den Units;
 `kill -TERM <pid>` bzw. `systemctl stop` verwenden, kein `kill -9`, damit die
 letzten Audit-Einträge persistiert werden.
 
-**Zentrale Anbindung (FIND-008):** `central.require_mtls` ist Default `true`;
+**Zentrale Anbindung:** `central.require_mtls` ist Default `true`;
 bei `https`-URL sind `client_cert_file`, `client_key_file` und `ca_file`
 Pflicht, sonst verweigert `retaild check`/`serve` den Start. Ein explizites
 `require_mtls: false` ist ein dokumentierter Opt-out (nur für Loopback-Tests).

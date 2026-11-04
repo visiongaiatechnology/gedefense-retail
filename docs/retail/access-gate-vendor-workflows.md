@@ -2,7 +2,7 @@
 
 **Produktlinie:** VisionGaiaTechnology · GeDefense Retail **Access Gate (0.2)**
 **Dokumenttyp:** G0-Research (Punkt 5): realistische Kalibrierung der Default-Deny-Policy
-**Stand / Abrufdatum:** **2026-11-03** · **Autor:** ot-researcher (task-11)
+**Stand / Abrufdatum:** **2026-11-03** · **Quelle:** GeDefense Retail research
 **Zweck:** Belegen, **was** an Kälte-Supervisoren real geändert wird, **wer** es tut, **über welchen Weg** — damit die Policy weder zu eng (Betrieb blockiert) noch zu weit (Enforcement wertlos) wird. **Keine Schreibautomatik.**
 
 ---
@@ -62,7 +62,7 @@
 | # | Weg | Beleg | Belegstatus | Gate-Relevanz |
 |---|---|---|---|---|
 | W-01 | **Direkte Web-UI des Supervisors** (StoreView/XWEB) aus dem Filialnetz | Claroty: eingebetteter Webserver, Fernwartung üblich; CERT-FR: Exposition war Kernproblem | `BELEGT` | **Hauptpfad** — HTTP(S)-Proxy (Plan Punkt 10) |
-| W-02 | **Direkte Web-UI aus dem Internet** (Portfreigabe/NAT) | 1.825 sichtbare StoreView-Panels in FR (Censys); CERT-FR verlangt Entfernung | `BELEGT` | **verboten** — Bypass (Blueprint N-05) |
+| W-02 | **Direkte Web-UI aus dem Internet** (Portfreigabe/NAT) | 1.825 sichtbare StoreView-Panels in FR (Censys); CERT-FR verlangt Entfernung | `BELEGT` | **verboten** — Bypass (Netzwerk-Bypass) |
 | W-03 | **Dienstleister-VPN** ins Filialnetz, danach breiter Zugriff | CERT-FR: Zugriff nur über VPN; Claroty: „unmonitored, always-on vendor VPNs" als Problem | `BELEGT` | Ziel: Terminierung am Gate, nicht am Netz |
 | W-04 | **IP-Whitelisting** der Dienstleister-IPs | CERT-FR nennt es ausdrücklich als Notlösung, **nicht dauerhaft** | `BELEGT` | nur Übergang, kein Zielzustand |
 | W-05 | **Hersteller-Cloud-Portal / Remote-Monitoring** (z. B. Carel RED optimise/tERA; Danfoss-Portale) | Carel: RED optimise, RED control, tERA, IoT-Gateway belegt | `BELEGT` (Existenz), `OFFEN` (Datenfluss/Rechte) | außerhalb Gate; Betreiber muss bewerten (Blueprint B-04) |

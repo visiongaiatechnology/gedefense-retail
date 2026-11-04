@@ -90,6 +90,30 @@ func Check(cfg gateconfig.Config, configPath string) (Report, error) {
 		}
 	}
 
+	if cfg.Integrity != nil && cfg.Integrity.Enabled {
+		eff := cfg.EffectiveIntegrity()
+		rep.Checks = append(rep.Checks, CheckResult{
+			ID: "INT-01", Name: "Setpoint-Integrity konfiguriert", OK: len(eff.References) > 0,
+			Detail: "mindestens eine explizite modbus_tcp-Referenz ist erforderlich",
+		})
+		recoveryRefs := 0
+		for _, ref := range eff.References {
+			if ref.Recovery {
+				recoveryRefs++
+			}
+		}
+		if eff.Recovery.Enabled && recoveryRefs == 0 {
+			rep.Warnings = append(rep.Warnings,
+				"integrity.recovery.enabled ist aktiv, aber keine Referenz hat recovery=true (keine automatische Wiederherstellung)")
+		}
+		if eff.Recovery.Enabled {
+			rep.Warnings = append(rep.Warnings,
+				"Automatic Recovery ist aktiv: schreibt ausschliesslich den Referenz-Rohwert per FC6, begrenzt durch Cooldown/Stunden-/Tageslimit, kein Retry bei unklarem Ausgang")
+		}
+	} else if cfg.Integrity != nil && cfg.Integrity.Recovery.Enabled {
+		rep.Warnings = append(rep.Warnings,
+			"integrity.recovery.enabled ist gesetzt, aber integrity.enabled=false (Recovery ist inaktiv)")
+	}
 	master := false
 	for _, u := range cfg.Users {
 		if u.HasRole(domain.GateRoleMasterAdmin) && u.Status == domain.GateUserActive {

@@ -25,6 +25,11 @@ const (
 	IDIntegrityChange         = domain.RuleID("retail.integrity.change")
 	IDDeviceNewAsset          = domain.RuleID("retail.device.new-asset")
 	IDAssetLifecycleExposed   = domain.RuleID("retail.asset.lifecycle-exposed")
+	// IDBypassSuspected is emitted by the retaild bypass adapter (task-44) when a
+	// passive write attempt is observed outside the configured Gate sources. It is
+	// not part of the passive rule pack catalogue: the signal comes from the gate
+	// bypass package, not from EvaluateEvent.
+	IDBypassSuspected = domain.RuleID("retail.bypass-suspected")
 )
 
 // Version is the rule-pack version stored in every alert. A change to the

@@ -131,6 +131,19 @@ type SetupState struct {
 	Language    string `json:"language"`
 }
 
+// BypassConfig wires the passive bypass detection of the Access Gate into the
+// retaild monitoring pipeline. It is optional and disabled by default.
+//
+// GateSourceCIDRs are the addresses/CIDRs from which writes are expected to
+// arrive over the Gate data path; a passive write attempt from any other source
+// raises the critical monitoring alert retail.bypass-suspected. Validation is
+// fail-closed: enabled requires at least one valid, unique IPv4/IPv6 entry, and
+// the gateway refuses to start otherwise (it never silently disables the check).
+type BypassConfig struct {
+	Enabled         bool     `json:"enabled"`
+	GateSourceCIDRs []string `json:"gate_source_cidrs,omitempty"`
+}
+
 // Config is the complete runtime configuration of one gateway.
 type Config struct {
 	Listen     string            `json:"listen"`
@@ -145,6 +158,7 @@ type Config struct {
 	WebDir     string            `json:"web_dir,omitempty"`
 	Security   *SecurityConfig   `json:"security,omitempty"`
 	Setup      *SetupState       `json:"setup,omitempty"`
+	Bypass     *BypassConfig     `json:"bypass,omitempty"`
 }
 
 // SetupLanguages is the allowlist of wizard languages (contract �2/�5).

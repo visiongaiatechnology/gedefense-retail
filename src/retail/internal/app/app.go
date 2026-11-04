@@ -201,6 +201,16 @@ func Run(ctx context.Context, cfg config.Config, opts Options) error {
 
 // newGateway opens storage, the registry and the detection/alert/API stack.
 func newGateway(cfg config.Config, log *slog.Logger, clock ports.Clock, configPath, listenAddr string) (*gateway, error) {
+	// The bypass engine is built before any store is opened: a misconfigured
+	// bypass block must refuse startup without leaking partially opened stores.
+	bypassEngine, err := newBypassEngine(cfg.Bypass, clock)
+	if err != nil {
+		return nil, fmt.Errorf("app: bypass: %w", err)
+	}
+	if cfg.Bypass != nil && cfg.Bypass.Enabled {
+		log.Info("bypass detection enabled", "gate_sources", len(cfg.Bypass.GateSourceCIDRs))
+	}
+
 	dataDir := cfg.EffectiveDataDir()
 	if err := os.MkdirAll(dataDir, 0o700); err != nil {
 		return nil, fmt.Errorf("app: create data dir: %w", err)
@@ -323,6 +333,7 @@ func newGateway(cfg config.Config, log *slog.Logger, clock ports.Clock, configPa
 		Correlate: corr,
 		Alerts:    alertEngine,
 		Discovery: disc,
+		Bypass:    bypassEngine,
 		Spool:     spoolPort,
 		Hub:       hub,
 		SiteID:    site.SiteID,

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # GeDefense Retail - Linux uninstaller.
 # Removes services and binaries; configuration and data are kept unless --purge.
-# Refuses unsafe prefixes (FIND-006): absolute path, marker file, no symlink.
+# Refuses unsafe prefixes: absolute path, marker file, no symlink.
 # Usage: sudo ./uninstall.sh [--purge] [--prefix /opt/gedefense-retail] [--dry-run]
 set -euo pipefail
 
@@ -20,7 +20,7 @@ while [ $# -gt 0 ]; do
   shift
 done
 
-# Validate before any filesystem mutation (FIND-006).
+# Validate before any filesystem mutation.
 validate_prefix() {
   local raw="$1"
   case "$raw" in

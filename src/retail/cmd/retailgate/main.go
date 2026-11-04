@@ -43,6 +43,8 @@ func run(args []string) int {
 		return cmdHashPassword(args[1:])
 	case "gen-totp":
 		return cmdGenTOTP()
+	case "netpolicy":
+		return cmdNetPolicy(args[1:])
 	case "version":
 		return cmdVersion()
 	case "help", "-h", "--help":
@@ -63,6 +65,9 @@ Usage:
   retailgate check         --config <gate.json>
   retailgate hash-password [--password <plain>]   (stdin if omitted)
   retailgate gen-totp
+  retailgate netpolicy  --config <gate.json> --format nftables|iptables \
+                        --gate-source <CIDR> [--gate-source ...] [--out <file>]
+                        [--apply] [--rollback] [--check] [--print-topology]
   retailgate version
 `, version.Version)
 }

@@ -3,6 +3,58 @@
 All notable changes to GeDefense Retail are documented here. The project follows semantic
 versioning; alpha releases may change behavior without notice and are **not production-ready**.
 
+## [0.3.0-alpha.1] — 2026-11-04
+
+### Added
+
+- **Setpoint integrity + automatic recovery (opt-in):** new `gate.json` `integrity` block with
+  references (`target_id`, `fc`, `register`, `unit_id`, `value`, `scale`, `unit`, `note`,
+  `recovery`), polling (`poll_interval`, `confirm_reads`, `stale_after`) and recovery controls
+  (`max_actions_per_hour`, `max_actions_per_day`, `cooldown_s`, `require_no_active_window`;
+  recovery disabled by default). The worker checks references cyclically per FC3 and confirms a
+  mismatch; recovery writes the reference value per FC6 only for explicitly approved references,
+  without an active plan/session, with rate limit/cooldown, read-back and audit events
+  `gate.integrity.mismatch` and `gate.recovery.applied|failed|unknown`. New API
+  `GET /api/v1/gate/integrity` and SSE `gate_integrity`.
+- **Network enforcement (`retailgate netpolicy`):** generates/applies nftables/iptables rules so new
+  connections to controllers are accepted only from `--gate-source` CIDRs (otherwise drop + log),
+  using its own table/chain; options `--out`, `--apply`, `--rollback`, `--check`; requires routing/
+  NAT/bridge at the gate host and is not a router itself.
+- **Bypass integration:** `retaild` config `bypass: {enabled, gate_source_cidrs}` (CIDR/single IP,
+  IPv4/IPv6, max. 64, normalized-duplicate/zoning validation; entries validated even when disabled;
+  `enabled:true` without a valid list refuses to start — fail-closed). Passive `write_attempt` events
+  from non-gate sources raise `retail.bypass-suspected` (critical, category `access`, rule version 1)
+  with evidence/facts/hypothesis/recommendations and dedup
+  `retail.bypass-suspected|<site>|<source>|<target>|<register>`; gate sources and reads are excluded.
+  The rule is an adapter/gate-signal rule (passive rule pack stays at 15) and feeds the normal alert
+  engine/correlation/incidents.
+- Documentation: 8-language READMEs, API, SECURITY-MODEL, DEPLOYMENT, operations runbook, policy
+  reference, deployment guide, Access Gate API contract, protocol matrix and docs index updated;
+  explicit operator section for setpoint integrity/automatic recovery (defaults, fail-safe/
+  `AllowWrite`, audit fail-closed/no-retry, one attempt per mismatch, TOCTOU, Modbus-only, kill
+  switch) added; `config/gate.example.json` (public and product) now contains a safe `integrity`
+  block (`enabled:false`, empty references, `recovery.enabled:false`); release notes added.
+
+### Security
+
+- Automatic recovery is **opt-in**, only for explicitly marked references, rate-limited/cooldown,
+  read-back and audited; it does not replace plan approval for normal writes, and `failed`/`unknown`
+  recovery stays a manual operator decision.
+- `netpolicy` is host-level defense in depth: it only enforces on the gate host, requires correct
+  routing/segmentation, and makes no claim to close bypass paths elsewhere.
+- The bypass alert is a detection signal based on passive events; it does not prove attribution.
+
+### Known limitations
+
+- Recovery is opt-in and does **not** prove that nobody wrote outside the gate; the read→write
+  (TOCTOU) window remains; HTTP writes have no generic value re-check.
+- `netpolicy` only enforces on the gate host; operators must still remove bypass paths (service
+  laptops, legacy VPNs, vendor portals).
+- Bypass detection is passive and cannot attribute writes definitively; it proves only the write
+  attempt and a source outside the gate CIDRs, not an actor, approval or a segmentation gap. Verify
+  with device logs and operator evidence.
+- Alpha quality; no compliance/certification claim.
+
 ## [0.2.0-alpha.8] — 2026-11-04
 
 ### Fixed (operator-confirmed release packaging defect)
@@ -68,9 +120,9 @@ versioning; alpha releases may change behavior without notice and are **not prod
 
 ### Release engineering / audit follow-up
 
-- FIND-014 (LOW): release pipeline adds a post-publish `cosign verify-blob` smoke test for
+- Release hardening (low): release pipeline adds a post-publish `cosign verify-blob` smoke test for
   `SHA256SUMS`, `SHA256SUMS.archives` and `SBOM.spdx.json`; certificates are normalised to PEM.
-- FIND-015 (INFO): `SOURCE_DATE_EPOCH` corrected to `1793664000` (`2026-11-03T00:00:00Z`), so SBOM and
+- Release hardening (info): `SOURCE_DATE_EPOCH` corrected to `1793664000` (`2026-11-03T00:00:00Z`), so SBOM and
   archive timestamps match the actual release date.
 - Third-party GitHub Actions are pinned by commit SHA (checkout, setup-go, upload/download-artifact,
   cosign-installer); the CI workflow now fails fast if a release script loses its executable bit.
@@ -93,9 +145,9 @@ versioning; alpha releases may change behavior without notice and are **not prod
 
 ### Security / release engineering
 
-- FIND-012 fixed: all release/install scripts are tracked as executable (100755); the
+- Release hardening: all release/install scripts are tracked as executable (100755); the
   release pipeline now fails early if an executable bit is missing (`test -x`).
-- FIND-013 fixed: the release workflow pins `SOURCE_DATE_EPOCH=1762290000`, builds one
+- Release hardening: the release workflow pins `SOURCE_DATE_EPOCH=1762290000`, builds one
   canonical artefact set on Linux (Go 1.27.1) and verifies on Windows; `SHA256SUMS.archives`
   and `SBOM.spdx.json` are generated from that set.
 - Tag releases are signed with cosign keyless (OIDC) and publish `*.sig`/`*.pem` assets next to
@@ -109,41 +161,41 @@ versioning; alpha releases may change behavior without notice and are **not prod
 
 ## [0.2.0-alpha.3] — 2026-11-03
 
-Security remediation release after the VGT-100 deep audit (report: 2026-11-03, findings FIND-001…011).
+Security remediation release after an independent release-pipeline audit.
 The release is published only after the fixes below pass the re-test; it remains an **experimental
 alpha**, not production-ready, without certification or compliance claims.
 
-### Security (VGT-100 audit remediation)
+### Security remediation
 
-- **FIND-001 / FIND-002 — installer hardening:** Windows services run as `NT AUTHORITY\LocalService`
+- **Installer hardening:** Windows services run as `NT AUTHORITY\LocalService`
   with explicit `icacls` DACLs (inheritance disabled; config read, data modify, Administrators full,
   Users none); Linux `/etc/gedefense-retail` is `root:gedefense` (`0750`) with config files `0640`,
   data directories owned by the service users. Installers fail closed when ownership/permission
   changes fail; uninstallers validate paths before deleting and do not restore previous ACLs.
-- **FIND-003 — release integrity:** each archive is published with `SHA256SUMS` and
+- **Release integrity:** each archive is published with `SHA256SUMS` and
   `SHA256SUMS.archives`; archives, `SHA256SUMS`, `SHA256SUMS.archives` and `SBOM.spdx.json` are
   signed with cosign keyless (`*.sig`/`*.pem`). Windows binaries are **NOT_SIGNED** (no Authenticode
   certificate) and remain alpha.
-- **FIND-004 — SBOM:** `SBOM.spdx.json` (SPDX) is published as a release asset and lists bundled
+- **SBOM:** `SBOM.spdx.json` (SPDX) is published as a release asset and lists bundled
   components and hashes.
-- **FIND-005 — CI hardening:** least-privilege permissions per workflow job (`contents: write` and
+- **CI hardening:** least-privilege permissions per workflow job (`contents: write` and
   `id-token: write` only where required), strict tag trigger and pinned actions (see
   `docs/BUILD-AND-RELEASE.md`).
-- **FIND-006 — uninstaller path validation:** Linux and Windows uninstallers validate absolute
+- **Uninstaller path validation:** Linux and Windows uninstallers validate absolute
   paths, expected prefixes and symlinks before removing anything.
-- **FIND-007 — token rotation:** rotate bearer tokens with
+- **Token rotation:** rotate bearer tokens with
   `retaild token rotate --user <id> [--role viewer|operator|admin]` or hash an existing token with
   `retaild token hash --token <token>`; replace `token_sha256` in `users[]` and restart (no hot
   reload; the old token stays valid until then). `retaild check` rejects empty, duplicate and
   placeholder hashes.
-- **FIND-008 — central mTLS:** when `central` is configured, `require_mtls` defaults to true; an
+- **Central mTLS:** when `central` is configured, `require_mtls` defaults to true; an
   `https://` URL requires client certificate, key and CA files. An explicit `require_mtls:false` is
   a documented loopback/test opt-out; plain `http://` is loopback-only.
-- **FIND-009 — reproducible builds:** `SOURCE_DATE_EPOCH` (or `GEDEFENSE_BUILD_DATE`) pins the build
+- **Reproducible builds:** `SOURCE_DATE_EPOCH` (or `GEDEFENSE_BUILD_DATE`) pins the build
   date; `-trimpath` and `-buildvcs=false` remain mandatory.
-- **FIND-010 — shutdown/audit flushing:** graceful shutdown flushes buffered setup/gate audit
+- **Shutdown/audit flushing:** graceful shutdown flushes buffered setup/gate audit
   entries; a hard kill can still lose the buffered tail (documented residual risk).
-- **FIND-011 — accepted:** TOTP uses RFC-6238 HMAC-SHA1; accepted for the alpha and documented.
+- **TOTP (accepted):** TOTP uses RFC-6238 HMAC-SHA1; accepted for the alpha and documented.
 
 ### Added
 

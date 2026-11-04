@@ -35,7 +35,7 @@ import os, sys, tarfile, zipfile, hashlib, shutil, gzip, time, re
 from pathlib import Path
 
 root, dist, stage, version, packaging = map(Path, sys.argv[1:6])
-# FIND-009: archive timestamps/ownership are normalized to SOURCE_DATE_EPOCH so
+# archive timestamps/ownership are normalized to SOURCE_DATE_EPOCH so
 # repeated builds (local and CI) produce byte-identical archives.
 EPOCH = int(os.environ.get("SOURCE_DATE_EPOCH", "0") or "0")
 if EPOCH <= 0:
@@ -52,7 +52,7 @@ def sha256(path):
             h.update(chunk)
     return h.hexdigest()
 
-# F-A8-03: only explicitly public docs may enter a release bundle.
+# public-docs allowlist: only explicitly public docs may enter a release bundle.
 DENY_DOC_PATTERN = re.compile(
     r"(security-(audit|review|assumptions|scan)|audit_matrix|"
     r"public-release-hygiene|release-report|architecture-gap|reuse-matrix|"
@@ -218,7 +218,7 @@ for archive in archives:
     print(f"  {archive.name}  {archive.stat().st_size} B")
 PY
 
-# SBOM (FIND-004): SPDX-2.3 JSON next to the archives, created from SOURCE_DATE_EPOCH.
+# SBOM: SPDX-2.3 JSON next to the archives, created from SOURCE_DATE_EPOCH.
 if command -v python3 >/dev/null 2>&1; then
   python3 "$ROOT/scripts/generate-sbom.py" --dist "$DIST" --version "$VERSION"
 fi

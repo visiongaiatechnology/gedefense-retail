@@ -2,7 +2,7 @@
 
 **Produktlinie:** VisionGaiaTechnology · GeDefense Retail
 **Zweck:** Belegte Geräte-, Protokoll- und Fernwartungslandschaft für Katalog, Discovery-Klassifizierung und Advisory-Zuordnung
-**Recherchestand / Abrufdatum:** **2026-11-03** · **Autor:** ot-researcher (task-1)
+**Recherchestand / Abrufdatum:** **2026-11-03** · **Autor:** GeDefense Retail research
 
 ---
 
@@ -215,7 +215,7 @@ Für eine MAC-basierte Herstellererkennung wären IEEE-OUI-Zuordnungen nötig. I
 
 ---
 
-## 9. Laufzeit-Katalog (Alpha 0.2.0-alpha.8)
+## 9. Laufzeit-Katalog (Alpha 0.3.0-alpha.1)
 
 - `data/ot-catalog/` ist Paketbestandteil (`vendors.json`, `write-surface.json`,
   `regulatory-context.json`).

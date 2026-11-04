@@ -31,7 +31,7 @@ $commit = if ($env:GEDEFENSE_COMMIT) { $env:GEDEFENSE_COMMIT } else {
 if (-not $commit) { $commit = 'local' }
 $buildDate = if ($env:GEDEFENSE_BUILD_DATE) { $env:GEDEFENSE_BUILD_DATE } else {
     if ($env:SOURCE_DATE_EPOCH -match '^\d+$') {
-        # FIND-009: reproducible builds honour SOURCE_DATE_EPOCH.
+        # reproducible builds honour SOURCE_DATE_EPOCH.
         [DateTimeOffset]::FromUnixTimeSeconds([int64]$env:SOURCE_DATE_EPOCH).UtcDateTime.ToString("yyyy-MM-ddTHH:mm:ssZ")
     } else {
         (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")

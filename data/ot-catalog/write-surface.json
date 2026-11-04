@@ -1,26 +1,45 @@
 {
   "schema_version": "1.0",
   "last_checked": "2026-11-03",
-  "generated_by": "ot-researcher / VGT GeDefense Retail Access Gate (task-11)",
+  "generated_by": "VisionGaiaTechnology GeDefense Retail",
   "notes": "Schreibflaechen-Katalog fuer die Default-Deny-Policy des Access Gate. Grundsatz: KEINE erfundenen Registeradressen, Objekt-IDs oder URL-Pfade. Belegt sind Aenderungsklassen und Protokoll-Schreibfunktionen sowie einzelne dokumentierte HTTP-Aktionen. Was nicht belegt ist, steht als confidence=low / verification=search_result_only bzw. secondary_reported drin. Schema-Dokumentation: docs/retail/access-gate-vendor-workflows.md Abschnitt 0 und docs/retail/vendor-landscape.md Abschnitt 0.",
-  "principles": ["Default-Deny: jede Schreiboperation ist verboten, solange kein freigegebener Write-Plan exakt Ziel, Operation und Wert bindet.", "Wertebindung: current_value und new_value sind Pflicht; das Gate liest den Ist-Wert unmittelbar vor Ausfuehrung erneut und verweigert bei Abweichung.", "Keine Register-/Objekt-Defaults: Allowlists werden bei Inbetriebnahme herstellerdokumentiert befuellt, nicht geraten.", "Firmware, Werksreset und Cloud-Portal-Aenderungen sind NICHT ueber das Gate automatisierbar (Hersteller-/Betreiberprozess).", "Lesen ist erlaubt (read-only), Schreiben ist der Ausnahmefall mit Freigabe."],
+  "principles": [
+    "Default-Deny: jede Schreiboperation ist verboten, solange kein freigegebener Write-Plan exakt Ziel, Operation und Wert bindet.",
+    "Wertebindung: current_value und new_value sind Pflicht; das Gate liest den Ist-Wert unmittelbar vor Ausfuehrung erneut und verweigert bei Abweichung.",
+    "Keine Register-/Objekt-Defaults: Allowlists werden bei Inbetriebnahme herstellerdokumentiert befuellt, nicht geraten.",
+    "Firmware, Werksreset und Cloud-Portal-Aenderungen sind NICHT ueber das Gate automatisierbar (Hersteller-/Betreiberprozess).",
+    "Lesen ist erlaubt (read-only), Schreiben ist der Ausnahmefall mit Freigabe."
+  ],
   "change_classes": [
     {
       "id": "C-01",
       "name": "Sollwerte und Temperaturschwellen",
-      "examples": ["Temperatur-Sollwert", "Grenzwert-Alarme (hoch/tief)"],
+      "examples": [
+        "Temperatur-Sollwert",
+        "Grenzwert-Alarme (hoch/tief)"
+      ],
       "criticality": "critical",
-      "evidence": {"source_url": "https://claroty.com/team82/research/freeze-the-controller-defrost-the-food-uncovering-vulnerabilities-in-danfoss-refrigeration-controllers", "confidence": "high", "verification": "fulltext_fetched"},
+      "evidence": {
+        "source_url": "https://claroty.com/team82/research/freeze-the-controller-defrost-the-food-uncovering-vulnerabilities-in-danfoss-refrigeration-controllers",
+        "confidence": "high",
+        "verification": "fulltext_fetched"
+      },
       "notes": "Claroty dokumentiert 'Configure temperature thresholds' als Funktion der AK-SM-800A-Management-UI."
     },
     {
       "id": "C-02",
       "name": "Abtau-/Defrost-Zeiten und -Plaene",
-      "examples": ["Deguivrage-/Defrost-Zeitfenster", "Dauer-Abtau", "Abtau-Intervall"],
+      "examples": [
+        "Deguivrage-/Defrost-Zeitfenster",
+        "Dauer-Abtau",
+        "Abtau-Intervall"
+      ],
       "criticality": "critical",
       "evidence": {
         "source_url": "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
-        "additional_sources": ["https://blog.barracuda.com/2026/10/30/what-managed-service-providers-can-learn-from-the-2026-french-su"],
+        "additional_sources": [
+          "https://blog.barracuda.com/2026/10/30/what-managed-service-providers-can-learn-from-the-2026-french-su"
+        ],
         "confidence": "high",
         "verification": "fulltext_fetched"
       },
@@ -29,19 +48,32 @@
     {
       "id": "C-03",
       "name": "Betriebs- und Zeitplaene",
-      "examples": ["Schedules", "Betriebsmodi-Zeitplan"],
+      "examples": [
+        "Schedules",
+        "Betriebsmodi-Zeitplan"
+      ],
       "criticality": "high",
-      "evidence": {"source_url": "https://claroty.com/team82/research/freeze-the-controller-defrost-the-food-uncovering-vulnerabilities-in-danfoss-refrigeration-controllers", "confidence": "high", "verification": "fulltext_fetched"},
+      "evidence": {
+        "source_url": "https://claroty.com/team82/research/freeze-the-controller-defrost-the-food-uncovering-vulnerabilities-in-danfoss-refrigeration-controllers",
+        "confidence": "high",
+        "verification": "fulltext_fetched"
+      },
       "notes": "Claroty: 'Adjust operating schedules'."
     },
     {
       "id": "C-04",
       "name": "Alarm- und Benachrichtigungskonfiguration",
-      "examples": ["Alarmgrenzen", "Alarm-zu-Mail/SMTP-Ziele", "Notification Services"],
+      "examples": [
+        "Alarmgrenzen",
+        "Alarm-zu-Mail/SMTP-Ziele",
+        "Notification Services"
+      ],
       "criticality": "high",
       "evidence": {
         "source_url": "https://www.cisa.gov/news-events/ics-advisories/icsa-25-140-03",
-        "additional_sources": ["https://claroty.com/team82/research/freeze-the-controller-defrost-the-food-uncovering-vulnerabilities-in-danfoss-refrigeration-controllers"],
+        "additional_sources": [
+          "https://claroty.com/team82/research/freeze-the-controller-defrost-the-food-uncovering-vulnerabilities-in-danfoss-refrigeration-controllers"
+        ],
         "confidence": "high",
         "verification": "fulltext_fetched"
       },
@@ -50,11 +82,17 @@
     {
       "id": "C-05",
       "name": "Benutzer, Rollen, Secrets",
-      "examples": ["Benutzerkonten", "Passwoerter/Secrets", "Berechtigungen"],
+      "examples": [
+        "Benutzerkonten",
+        "Passwoerter/Secrets",
+        "Berechtigungen"
+      ],
       "criticality": "critical",
       "evidence": {
         "source_url": "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
-        "additional_sources": ["https://claroty.com/team82/research/freeze-the-controller-defrost-the-food-uncovering-vulnerabilities-in-danfoss-refrigeration-controllers"],
+        "additional_sources": [
+          "https://claroty.com/team82/research/freeze-the-controller-defrost-the-food-uncovering-vulnerabilities-in-danfoss-refrigeration-controllers"
+        ],
         "confidence": "high",
         "verification": "fulltext_fetched"
       },
@@ -63,11 +101,16 @@
     {
       "id": "C-06",
       "name": "Sicherheitsmodus und Webserver-Konfiguration",
-      "examples": ["Strict Session Control / HTTPS-Pflicht", "nginx-Konfiguration durch Hersteller-UI"],
+      "examples": [
+        "Strict Session Control / HTTPS-Pflicht",
+        "nginx-Konfiguration durch Hersteller-UI"
+      ],
       "criticality": "high",
       "evidence": {
         "source_url": "https://www.cisa.gov/news-events/ics-advisories/icsa-25-140-03",
-        "additional_sources": ["https://thehackernews.com/2026/10/attackers-heat-french-supermarket.html"],
+        "additional_sources": [
+          "https://thehackernews.com/2026/10/attackers-heat-french-supermarket.html"
+        ],
         "confidence": "high",
         "verification": "fulltext_fetched"
       },
@@ -76,11 +119,16 @@
     {
       "id": "C-07",
       "name": "Firmware-Update",
-      "examples": ["Danfoss .spk-Paket", "Copeland ADF per USB"],
+      "examples": [
+        "Danfoss .spk-Paket",
+        "Copeland ADF per USB"
+      ],
       "criticality": "critical",
       "evidence": {
         "source_url": "https://www.cisa.gov/news-events/ics-advisories/icsa-25-140-03",
-        "additional_sources": ["https://www.copeland.com/en-vn/products/controls-monitoring-systems/facility-controls-electronics/facility-and-system-controls/documents/supervisory-e3"],
+        "additional_sources": [
+          "https://www.copeland.com/en-vn/products/controls-monitoring-systems/facility-controls-electronics/facility-and-system-controls/documents/supervisory-e3"
+        ],
         "confidence": "high",
         "verification": "fulltext_fetched"
       },
@@ -89,33 +137,63 @@
     {
       "id": "C-08",
       "name": "Netzwerk- und Verbindungskonfiguration",
-      "examples": ["IP/DNS", "Cloud-Ziel", "Header-Konfiguration", "Zertifikate"],
+      "examples": [
+        "IP/DNS",
+        "Cloud-Ziel",
+        "Header-Konfiguration",
+        "Zertifikate"
+      ],
       "criticality": "high",
-      "evidence": {"source_url": "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/", "confidence": "high", "verification": "fulltext_fetched"},
+      "evidence": {
+        "source_url": "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
+        "confidence": "high",
+        "verification": "fulltext_fetched"
+      },
       "notes": "CERT-FR: Geraet vollstaendig neu konfigurieren. Kanaele fuer Persistenz und Bypass."
     },
     {
       "id": "C-09",
       "name": "Werksreset / Neustart",
-      "examples": ["Reset Factory", "Reboot"],
+      "examples": [
+        "Reset Factory",
+        "Reboot"
+      ],
       "criticality": "high",
-      "evidence": {"source_url": "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/", "confidence": "high", "verification": "fulltext_fetched"},
+      "evidence": {
+        "source_url": "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
+        "confidence": "high",
+        "verification": "fulltext_fetched"
+      },
       "notes": "CERT-FR: Reset als Kompromittierungs-Massnahme; bei EOL-Geraeten nicht ausreichend. Nicht Gate-Scope."
     },
     {
       "id": "C-10",
       "name": "Sensor-Kalibrierung / Offset",
-      "examples": ["Temperatur-Offset", "Sensor-Abgleich"],
+      "examples": [
+        "Temperatur-Offset",
+        "Sensor-Abgleich"
+      ],
       "criticality": "high",
-      "evidence": {"source_url": "", "confidence": "low", "verification": "search_result_only"},
+      "evidence": {
+        "source_url": "",
+        "confidence": "low",
+        "verification": "search_result_only"
+      },
       "notes": "KOENNTE existieren, in dieser Recherche nicht geraetespezifisch belegt. Nicht als Fakt verwenden; bei Inbetriebnahme pruefen."
     },
     {
       "id": "C-11",
       "name": "Uhrzeit / Zeitzone",
-      "examples": ["Systemzeit", "NTP-Konfiguration"],
+      "examples": [
+        "Systemzeit",
+        "NTP-Konfiguration"
+      ],
       "criticality": "medium",
-      "evidence": {"source_url": "", "confidence": "low", "verification": "search_result_only"},
+      "evidence": {
+        "source_url": "",
+        "confidence": "low",
+        "verification": "search_result_only"
+      },
       "notes": "Plausibel, nicht belegt. Zeitmanipulation ist im allgemeinen Threat Model relevant."
     }
   ],
@@ -128,15 +206,39 @@
       "transport": "tcp",
       "port": 502,
       "operations": [
-        {"kind": "read", "function_code": "0x01", "name": "Read Coils", "decision": "allow"},
-        {"kind": "read", "function_code": "0x02", "name": "Read Discrete Inputs", "decision": "allow"},
-        {"kind": "read", "function_code": "0x03", "name": "Read Holding Registers", "decision": "allow"},
-        {"kind": "read", "function_code": "0x04", "name": "Read Input Registers", "decision": "allow"}
+        {
+          "kind": "read",
+          "function_code": "0x01",
+          "name": "Read Coils",
+          "decision": "allow"
+        },
+        {
+          "kind": "read",
+          "function_code": "0x02",
+          "name": "Read Discrete Inputs",
+          "decision": "allow"
+        },
+        {
+          "kind": "read",
+          "function_code": "0x03",
+          "name": "Read Holding Registers",
+          "decision": "allow"
+        },
+        {
+          "kind": "read",
+          "function_code": "0x04",
+          "name": "Read Input Registers",
+          "decision": "allow"
+        }
       ],
       "target_pattern": "freigegebene Register-/Unit-ID-Allowlist pro Asset",
       "critical_change_classes": [],
       "enforcement": "gate",
-      "evidence": {"source_url": "https://libmodbus.org/reference/modbus_write_register/", "confidence": "high", "verification": "fulltext_fetched"},
+      "evidence": {
+        "source_url": "https://libmodbus.org/reference/modbus_write_register/",
+        "confidence": "high",
+        "verification": "fulltext_fetched"
+      },
       "notes": "Lesen ist Default-Allow im Gate (Plan Abschnitt 4), aber nur auf freigegebene Register."
     },
     {
@@ -147,19 +249,57 @@
       "transport": "tcp",
       "port": 502,
       "operations": [
-        {"kind": "write", "function_code": "0x05", "name": "Write Single Coil", "decision": "deny_by_default"},
-        {"kind": "write", "function_code": "0x06", "name": "Write Single Register", "decision": "deny_by_default"},
-        {"kind": "write", "function_code": "0x0F", "name": "Write Multiple Coils", "decision": "deny_by_default"},
-        {"kind": "write", "function_code": "0x10", "name": "Write Multiple Registers", "decision": "deny_by_default"},
-        {"kind": "write", "function_code": "0x16", "name": "Mask Write Register", "decision": "deny_by_default"},
-        {"kind": "write", "function_code": "0x17", "name": "Read/Write Multiple Registers", "decision": "deny_by_default"}
+        {
+          "kind": "write",
+          "function_code": "0x05",
+          "name": "Write Single Coil",
+          "decision": "deny_by_default"
+        },
+        {
+          "kind": "write",
+          "function_code": "0x06",
+          "name": "Write Single Register",
+          "decision": "deny_by_default"
+        },
+        {
+          "kind": "write",
+          "function_code": "0x0F",
+          "name": "Write Multiple Coils",
+          "decision": "deny_by_default"
+        },
+        {
+          "kind": "write",
+          "function_code": "0x10",
+          "name": "Write Multiple Registers",
+          "decision": "deny_by_default"
+        },
+        {
+          "kind": "write",
+          "function_code": "0x16",
+          "name": "Mask Write Register",
+          "decision": "deny_by_default"
+        },
+        {
+          "kind": "write",
+          "function_code": "0x17",
+          "name": "Read/Write Multiple Registers",
+          "decision": "deny_by_default"
+        }
       ],
       "target_pattern": "nur exakt freigegebenes Register UND Wert (Plan-Hash)",
-      "critical_change_classes": ["C-01", "C-02", "C-03", "C-09"],
+      "critical_change_classes": [
+        "C-01",
+        "C-02",
+        "C-03",
+        "C-09"
+      ],
       "enforcement": "gate",
       "evidence": {
         "source_url": "https://libmodbus.org/reference/modbus_write_register/",
-        "additional_sources": ["https://libmodbus.org/reference/modbus_write_bits/", "https://libmodbus.org/reference/modbus_write_registers/"],
+        "additional_sources": [
+          "https://libmodbus.org/reference/modbus_write_bits/",
+          "https://libmodbus.org/reference/modbus_write_registers/"
+        ],
         "confidence": "high",
         "verification": "fulltext_fetched"
       },
@@ -173,20 +313,64 @@
       "transport": "tcp",
       "port": 443,
       "operations": [
-        {"kind": "auth", "target": "xml.cgi?action=getauth", "decision": "allow_only_via_gate_login"},
-        {"kind": "write_config", "target": "Temperatur-/Alarm-Schwellen (UI-Formulare)", "decision": "deny_by_default", "change_class": "C-01"},
-        {"kind": "write_config", "target": "Betriebs-/Zeitplaene (UI)", "decision": "deny_by_default", "change_class": "C-03"},
-        {"kind": "write_config", "target": "Alarm-/SMTP-Benachrichtigungsfelder", "decision": "deny_by_default", "change_class": "C-04"},
-        {"kind": "write_config", "target": "Benutzer/Berechtigungen", "decision": "deny_by_default", "change_class": "C-05"},
-        {"kind": "write_config", "target": "nginx-Header-Konfiguration (load_nginx_headers)", "decision": "deny_by_default", "change_class": "C-06"},
-        {"kind": "firmware_update", "target": ".spk-Paket-Upload", "decision": "deny", "change_class": "C-07"}
+        {
+          "kind": "auth",
+          "target": "xml.cgi?action=getauth",
+          "decision": "allow_only_via_gate_login"
+        },
+        {
+          "kind": "write_config",
+          "target": "Temperatur-/Alarm-Schwellen (UI-Formulare)",
+          "decision": "deny_by_default",
+          "change_class": "C-01"
+        },
+        {
+          "kind": "write_config",
+          "target": "Betriebs-/Zeitplaene (UI)",
+          "decision": "deny_by_default",
+          "change_class": "C-03"
+        },
+        {
+          "kind": "write_config",
+          "target": "Alarm-/SMTP-Benachrichtigungsfelder",
+          "decision": "deny_by_default",
+          "change_class": "C-04"
+        },
+        {
+          "kind": "write_config",
+          "target": "Benutzer/Berechtigungen",
+          "decision": "deny_by_default",
+          "change_class": "C-05"
+        },
+        {
+          "kind": "write_config",
+          "target": "nginx-Header-Konfiguration (load_nginx_headers)",
+          "decision": "deny_by_default",
+          "change_class": "C-06"
+        },
+        {
+          "kind": "firmware_update",
+          "target": ".spk-Paket-Upload",
+          "decision": "deny",
+          "change_class": "C-07"
+        }
       ],
       "target_pattern": "URL-Aktion + Formularfeld-Allowlist; keine Wildcards",
-      "critical_change_classes": ["C-01", "C-02", "C-03", "C-04", "C-05", "C-06"],
+      "critical_change_classes": [
+        "C-01",
+        "C-02",
+        "C-03",
+        "C-04",
+        "C-05",
+        "C-06"
+      ],
       "enforcement": "gate",
       "evidence": {
         "source_url": "https://claroty.com/team82/research/freeze-the-controller-defrost-the-food-uncovering-vulnerabilities-in-danfoss-refrigeration-controllers",
-        "additional_sources": ["https://www.cisa.gov/news-events/ics-advisories/icsa-25-140-03", "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/"],
+        "additional_sources": [
+          "https://www.cisa.gov/news-events/ics-advisories/icsa-25-140-03",
+          "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/"
+        ],
         "confidence": "high",
         "verification": "fulltext_fetched"
       },
@@ -200,19 +384,32 @@
       "transport": "tcp",
       "port": 443,
       "operations": [
-        {"kind": "write_config", "target": "Konfigurationsoberflaeche (Sollwerte, Abtauplaene, Konten)", "decision": "deny_by_default", "change_class": "C-01"}
+        {
+          "kind": "write_config",
+          "target": "Konfigurationsoberflaeche (Sollwerte, Abtauplaene, Konten)",
+          "decision": "deny_by_default",
+          "change_class": "C-01"
+        }
       ],
       "target_pattern": "nur Gate-Proxy; EOL -> kein Schreib-Support, Ersatz empfohlen",
-      "critical_change_classes": ["C-01", "C-02", "C-05"],
+      "critical_change_classes": [
+        "C-01",
+        "C-02",
+        "C-05"
+      ],
       "enforcement": "gate",
       "evidence": {
         "source_url": "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
-        "additional_sources": ["https://thehackernews.com/2026/10/attackers-heat-french-supermarket.html"],
+        "additional_sources": [
+          "https://thehackernews.com/2026/10/attackers-heat-french-supermarket.html"
+        ],
         "confidence": "medium",
         "verification": "secondary_reported"
       },
       "notes": "EOL seit 2021 bzw. 2016. Konkrete UI-Pfade nicht belegt. Gate kann nur Zugriff kontrollieren, nicht Sicherheit des EOL-Geraets herstellen.",
-      "additional_family_ids": ["danfoss_ak_sc_355"]
+      "additional_family_ids": [
+        "danfoss_ak_sc_355"
+      ]
     },
     {
       "id": "ws_http_copeland_xweb",
@@ -222,14 +419,26 @@
       "transport": "tcp",
       "port": 443,
       "operations": [
-        {"kind": "write_config", "target": "Supervisor-Konfiguration (Sollwerte, Alarme, Konten)", "decision": "deny_by_default", "change_class": "C-01"}
+        {
+          "kind": "write_config",
+          "target": "Supervisor-Konfiguration (Sollwerte, Alarme, Konten)",
+          "decision": "deny_by_default",
+          "change_class": "C-01"
+        }
       ],
       "target_pattern": "Gate-Proxy + URL-/Feld-Allowlist; Pfade unbekannt",
-      "critical_change_classes": ["C-01", "C-02", "C-04", "C-05"],
+      "critical_change_classes": [
+        "C-01",
+        "C-02",
+        "C-04",
+        "C-05"
+      ],
       "enforcement": "gate",
       "evidence": {
         "source_url": "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
-        "additional_sources": ["https://dixell.fr/wp-content/uploads/2026/10/Recommandations-pour-une-utilisation-securisee-des-superviseurs-XWEB-v1.0.pdf"],
+        "additional_sources": [
+          "https://dixell.fr/wp-content/uploads/2026/10/Recommandations-pour-une-utilisation-securisee-des-superviseurs-XWEB-v1.0.pdf"
+        ],
         "confidence": "medium",
         "verification": "fulltext_fetched"
       },
@@ -243,12 +452,26 @@
       "transport": "tcp",
       "port": 443,
       "operations": [
-        {"kind": "write_config", "target": "Supervisor-Konfiguration", "decision": "deny_by_default", "change_class": "C-01"}
+        {
+          "kind": "write_config",
+          "target": "Supervisor-Konfiguration",
+          "decision": "deny_by_default",
+          "change_class": "C-01"
+        }
       ],
       "target_pattern": "Gate-Proxy + Allowlist",
-      "critical_change_classes": ["C-01", "C-02", "C-04", "C-05"],
+      "critical_change_classes": [
+        "C-01",
+        "C-02",
+        "C-04",
+        "C-05"
+      ],
       "enforcement": "gate",
-      "evidence": {"source_url": "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/", "confidence": "medium", "verification": "fulltext_fetched"},
+      "evidence": {
+        "source_url": "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
+        "confidence": "medium",
+        "verification": "fulltext_fetched"
+      },
       "notes": "Betroffen laut CERT-FR. Keine geprueften UI-Details."
     },
     {
@@ -259,15 +482,35 @@
       "transport": "tcp",
       "port": 80,
       "operations": [
-        {"kind": "write_config", "target": "Supervisor-Einstellungen ueber Web-/SOAP-Schnittstelle", "decision": "deny_by_default", "change_class": "C-01"},
-        {"kind": "firmware_update", "target": "ADF-Datei per USB", "decision": "deny", "change_class": "C-07"}
+        {
+          "kind": "write_config",
+          "target": "Supervisor-Einstellungen ueber Web-/SOAP-Schnittstelle",
+          "decision": "deny_by_default",
+          "change_class": "C-01"
+        },
+        {
+          "kind": "firmware_update",
+          "target": "ADF-Datei per USB",
+          "decision": "deny",
+          "change_class": "C-07"
+        }
       ],
       "target_pattern": "Gate-Proxy; SOAP-Operation-Allowlist (nicht implementiert, bis Pilotbedarf)",
-      "critical_change_classes": ["C-01", "C-03", "C-04"],
+      "critical_change_classes": [
+        "C-01",
+        "C-03",
+        "C-04"
+      ],
       "enforcement": "gate",
-      "evidence": {"source_url": "https://www.copeland.com/en-vn/products/controls-monitoring-systems/facility-controls-electronics/facility-and-system-controls/documents/supervisory-e3", "confidence": "medium", "verification": "fulltext_fetched"},
+      "evidence": {
+        "source_url": "https://www.copeland.com/en-vn/products/controls-monitoring-systems/facility-controls-electronics/facility-and-system-controls/documents/supervisory-e3",
+        "confidence": "medium",
+        "verification": "fulltext_fetched"
+      },
       "notes": "SOAP-Installationsdokument und Firmware-/Application-Update per USB belegt (Dokumenttitel). Konkrete SOAP-Operationen fuer Schreiben NICHT belegt.",
-      "additional_family_ids": ["copeland_e2_site_supervisor"]
+      "additional_family_ids": [
+        "copeland_e2_site_supervisor"
+      ]
     },
     {
       "id": "ws_http_carel_platform",
@@ -277,14 +520,28 @@
       "transport": "tcp",
       "port": 443,
       "operations": [
-        {"kind": "write_config", "target": "Regler-/Rack-Parameter ueber Hersteller-/Servicewerkzeuge", "decision": "deny_by_default", "change_class": "C-01"}
+        {
+          "kind": "write_config",
+          "target": "Regler-/Rack-Parameter ueber Hersteller-/Servicewerkzeuge",
+          "decision": "deny_by_default",
+          "change_class": "C-01"
+        }
       ],
       "target_pattern": "nicht spezifiziert - vor Implementierung klaeren",
-      "critical_change_classes": ["C-01", "C-02"],
+      "critical_change_classes": [
+        "C-01",
+        "C-02"
+      ],
       "enforcement": "gate",
-      "evidence": {"source_url": "https://www.carel.com/reducing-energy-consumption-and-operational-costs-in-buildings", "confidence": "low", "verification": "search_result_only"},
+      "evidence": {
+        "source_url": "https://www.carel.com/reducing-energy-consumption-and-operational-costs-in-buildings",
+        "confidence": "low",
+        "verification": "search_result_only"
+      },
       "notes": "Carel-Portfolio belegt, aber keine gepruefte Aussage zu konkreten Schreib-Pfaden/Protokollen. Luecke, nicht raten.",
-      "additional_family_ids": ["carel_rack_and_store"]
+      "additional_family_ids": [
+        "carel_rack_and_store"
+      ]
     },
     {
       "id": "ws_http_carel_cloud",
@@ -294,12 +551,23 @@
       "transport": "tcp",
       "port": 443,
       "operations": [
-        {"kind": "write_config", "target": "Parameter-/Konfigurationsaenderungen ueber Hersteller-Cloud (RED optimise/tERA)", "decision": "not_gate_scope"}
+        {
+          "kind": "write_config",
+          "target": "Parameter-/Konfigurationsaenderungen ueber Hersteller-Cloud (RED optimise/tERA)",
+          "decision": "not_gate_scope"
+        }
       ],
       "target_pattern": "ausgehender Cloud-Verkehr",
-      "critical_change_classes": ["C-01", "C-03"],
+      "critical_change_classes": [
+        "C-01",
+        "C-03"
+      ],
       "enforcement": "operator",
-      "evidence": {"source_url": "https://www.carel.com/reducing-energy-consumption-and-operational-costs-in-buildings", "confidence": "low", "verification": "search_result_only"},
+      "evidence": {
+        "source_url": "https://www.carel.com/reducing-energy-consumption-and-operational-costs-in-buildings",
+        "confidence": "low",
+        "verification": "search_result_only"
+      },
       "notes": "Existenz der Cloud-Plattform belegt; Schreibrechte und Datenfluss NICHT. WICHTIG: Wenn Hersteller ueber Portal schreiben kann, umgeht das die Gate-Policy vollstaendig -> Betreiber muss Cloud-Anbindung bewerten/deaktivieren."
     },
     {
@@ -310,17 +578,49 @@
       "transport": "udp",
       "port": 47808,
       "operations": [
-        {"kind": "write", "service": "WriteProperty", "decision": "deny_by_default"},
-        {"kind": "write", "service": "WritePropertyMultiple", "decision": "deny_by_default"},
-        {"kind": "write", "service": "CreateObject", "decision": "deny_by_default"},
-        {"kind": "write", "service": "DeleteObject", "decision": "deny_by_default"},
-        {"kind": "control", "service": "ReinitializeDevice", "decision": "deny"},
-        {"kind": "control", "service": "DeviceCommunicationControl", "decision": "deny"}
+        {
+          "kind": "write",
+          "service": "WriteProperty",
+          "decision": "deny_by_default"
+        },
+        {
+          "kind": "write",
+          "service": "WritePropertyMultiple",
+          "decision": "deny_by_default"
+        },
+        {
+          "kind": "write",
+          "service": "CreateObject",
+          "decision": "deny_by_default"
+        },
+        {
+          "kind": "write",
+          "service": "DeleteObject",
+          "decision": "deny_by_default"
+        },
+        {
+          "kind": "control",
+          "service": "ReinitializeDevice",
+          "decision": "deny"
+        },
+        {
+          "kind": "control",
+          "service": "DeviceCommunicationControl",
+          "decision": "deny"
+        }
       ],
       "target_pattern": "Objekt-Allowlist (Objekt-ID + Property + Wertebereich)",
-      "critical_change_classes": ["C-01", "C-03", "C-09"],
+      "critical_change_classes": [
+        "C-01",
+        "C-03",
+        "C-09"
+      ],
       "enforcement": "gate",
-      "evidence": {"source_url": "https://bacnet.org/", "confidence": "medium", "verification": "secondary_reported"},
+      "evidence": {
+        "source_url": "https://bacnet.org/",
+        "confidence": "medium",
+        "verification": "secondary_reported"
+      },
       "notes": "BACnet-Standard definiert Write- und Kontroll-Dienste; konkrete Service-Liste hier nicht primaerquelllich verifiziert (Standard kostenpflichtig). Gilt fuer BACnet-Geraete allgemein, nicht nur Copeland."
     },
     {
@@ -331,12 +631,23 @@
       "transport": "tcp",
       "port": 1883,
       "operations": [
-        {"kind": "write", "target": "PUB auf Kommando-Topics", "decision": "deny_by_default"}
+        {
+          "kind": "write",
+          "target": "PUB auf Kommando-Topics",
+          "decision": "deny_by_default"
+        }
       ],
       "target_pattern": "Topic-Allowlist + Payload-Schema-Validierung",
-      "critical_change_classes": ["C-01", "C-03"],
+      "critical_change_classes": [
+        "C-01",
+        "C-03"
+      ],
       "enforcement": "gate",
-      "evidence": {"source_url": "", "confidence": "low", "verification": "search_result_only"},
+      "evidence": {
+        "source_url": "",
+        "confidence": "low",
+        "verification": "search_result_only"
+      },
       "notes": "Generisches Muster; keine belegten herstellerspezifischen Kommando-Topics fuer Retail-Kaelte. Phase 3, nur nach Pilotbedarf."
     },
     {
@@ -347,13 +658,25 @@
       "transport": "udp",
       "port": 161,
       "operations": [
-        {"kind": "write", "function": "SET", "decision": "deny_always"},
-        {"kind": "read", "function": "GET/GETNEXT/GETBULK", "decision": "allow_read_normalized"}
+        {
+          "kind": "write",
+          "function": "SET",
+          "decision": "deny_always"
+        },
+        {
+          "kind": "read",
+          "function": "GET/GETNEXT/GETBULK",
+          "decision": "allow_read_normalized"
+        }
       ],
       "target_pattern": "read-only View",
       "critical_change_classes": [],
       "enforcement": "gate",
-      "evidence": {"source_url": "", "confidence": "low", "verification": "search_result_only"},
+      "evidence": {
+        "source_url": "",
+        "confidence": "low",
+        "verification": "search_result_only"
+      },
       "notes": "SET ist im Gate dauerhaft verboten (kein MVP-Use-Case)."
     },
     {
@@ -364,12 +687,22 @@
       "transport": "tcp",
       "port": 443,
       "operations": [
-        {"kind": "firmware_update", "target": ".spk-Paket (R4.2 / R4.3.1 / 5.3.x)", "decision": "deny"}
+        {
+          "kind": "firmware_update",
+          "target": ".spk-Paket (R4.2 / R4.3.1 / 5.3.x)",
+          "decision": "deny"
+        }
       ],
       "target_pattern": "kein Update-Pfad im Gate",
-      "critical_change_classes": ["C-07"],
+      "critical_change_classes": [
+        "C-07"
+      ],
       "enforcement": "manufacturer_process",
-      "evidence": {"source_url": "https://www.cisa.gov/news-events/ics-advisories/icsa-25-140-03", "confidence": "high", "verification": "fulltext_fetched"},
+      "evidence": {
+        "source_url": "https://www.cisa.gov/news-events/ics-advisories/icsa-25-140-03",
+        "confidence": "high",
+        "verification": "fulltext_fetched"
+      },
       "notes": "CISA verlinkt Upgrade-Prozess; Danfoss nennt .spk-Pakete. Update bleibt Hersteller-/Betreiberprozess mit eigener Freigabe."
     },
     {
@@ -380,12 +713,22 @@
       "transport": "usb",
       "port": null,
       "operations": [
-        {"kind": "firmware_update", "target": "ADF-Datei per USB", "decision": "deny"}
+        {
+          "kind": "firmware_update",
+          "target": "ADF-Datei per USB",
+          "decision": "deny"
+        }
       ],
       "target_pattern": "physischer Zugang",
-      "critical_change_classes": ["C-07"],
+      "critical_change_classes": [
+        "C-07"
+      ],
       "enforcement": "operator_physical",
-      "evidence": {"source_url": "https://www.copeland.com/en-vn/products/controls-monitoring-systems/facility-controls-electronics/facility-and-system-controls/documents/supervisory-e3", "confidence": "medium", "verification": "fulltext_fetched"},
+      "evidence": {
+        "source_url": "https://www.copeland.com/en-vn/products/controls-monitoring-systems/facility-controls-electronics/facility-and-system-controls/documents/supervisory-e3",
+        "confidence": "medium",
+        "verification": "fulltext_fetched"
+      },
       "notes": "Dokument 'ADF Upload for E3 Using a USB Drive' belegt. Ausserhalb Gate-Scope."
     },
     {
@@ -396,51 +739,109 @@
       "transport": "local",
       "port": null,
       "operations": [
-        {"kind": "control", "target": "Reset Factory / Neustart", "decision": "deny"}
+        {
+          "kind": "control",
+          "target": "Reset Factory / Neustart",
+          "decision": "deny"
+        }
       ],
       "target_pattern": "physischer/lokaler Service",
-      "critical_change_classes": ["C-09"],
+      "critical_change_classes": [
+        "C-09"
+      ],
       "enforcement": "operator",
-      "evidence": {"source_url": "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/", "confidence": "high", "verification": "fulltext_fetched"},
+      "evidence": {
+        "source_url": "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
+        "confidence": "high",
+        "verification": "fulltext_fetched"
+      },
       "notes": "CERT-FR beschreibt Reset als Incident-Massnahme. Kein Gate-Pfad."
     }
   ],
   "protocol_defaults": {
     "modbus_tcp": {
-      "read_fc_allowed": ["0x01", "0x02", "0x03", "0x04"],
-      "write_fc_denied": ["0x05", "0x06", "0x0F", "0x10", "0x16", "0x17"],
+      "read_fc_allowed": [
+        "0x01",
+        "0x02",
+        "0x03",
+        "0x04"
+      ],
+      "write_fc_denied": [
+        "0x05",
+        "0x06",
+        "0x0F",
+        "0x10",
+        "0x16",
+        "0x17"
+      ],
       "source_url": "https://libmodbus.org/reference/modbus_write_register/",
       "confidence": "high",
       "verification": "fulltext_fetched"
     },
     "http_https_management": {
-      "read_methods_allowed": ["GET", "HEAD", "OPTIONS"],
-      "write_methods_denied_by_default": ["POST", "PUT", "PATCH", "DELETE"],
+      "read_methods_allowed": [
+        "GET",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "write_methods_denied_by_default": [
+        "POST",
+        "PUT",
+        "PATCH",
+        "DELETE"
+      ],
       "source_url": "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
       "confidence": "medium",
       "verification": "secondary_reported"
     },
     "bacnet_ip": {
-      "read_services_allowed": ["ReadProperty", "ReadPropertyMultiple"],
-      "write_services_denied": ["WriteProperty", "WritePropertyMultiple", "CreateObject", "DeleteObject", "ReinitializeDevice", "DeviceCommunicationControl"],
+      "read_services_allowed": [
+        "ReadProperty",
+        "ReadPropertyMultiple"
+      ],
+      "write_services_denied": [
+        "WriteProperty",
+        "WritePropertyMultiple",
+        "CreateObject",
+        "DeleteObject",
+        "ReinitializeDevice",
+        "DeviceCommunicationControl"
+      ],
       "source_url": "https://bacnet.org/",
       "confidence": "medium",
       "verification": "secondary_reported"
     },
     "mqtt": {
-      "read_allowed": ["SUBSCRIBE auf Read-Topics"],
-      "write_denied_by_default": ["PUBLISH auf Command-Topics"],
+      "read_allowed": [
+        "SUBSCRIBE auf Read-Topics"
+      ],
+      "write_denied_by_default": [
+        "PUBLISH auf Command-Topics"
+      ],
       "source_url": "",
       "confidence": "low",
       "verification": "search_result_only"
     },
     "snmp": {
-      "read_allowed": ["GET", "GETNEXT", "GETBULK"],
-      "write_denied_always": ["SET"],
+      "read_allowed": [
+        "GET",
+        "GETNEXT",
+        "GETBULK"
+      ],
+      "write_denied_always": [
+        "SET"
+      ],
       "source_url": "",
       "confidence": "low",
       "verification": "search_result_only"
     }
   },
-  "coverage_gaps": ["Keine belegten Modbus-Registeradressen oder BACnet-Objekt-IDs fuer Kaelte-Supervisoren (Danfoss/Copeland/Carel). Allowlists muessen bei Inbetriebnahme herstellerdokumentiert befuellt werden.", "Keine belegten HTTP-URL-Pfade ausser den von Claroty genannten Aktionen (xml.cgi, load_nginx_headers) sowie den SMTP-Konfigurationsfeldern.", "Keine belegten MQTT-Kommando-Topics fuer Retail-Kaelte.", "Carel-Schreibpfade (lokal/Cloud) unbelegt.", "Sensor-Kalibrierung und Uhrzeit als Aenderungsklasse unbelegt.", "Firmware-Update-Formate nur fuer Danfoss (.spk) und Copeland E2/E3 (ADF/USB) belegt; andere Hersteller offen."]
+  "coverage_gaps": [
+    "Keine belegten Modbus-Registeradressen oder BACnet-Objekt-IDs fuer Kaelte-Supervisoren (Danfoss/Copeland/Carel). Allowlists muessen bei Inbetriebnahme herstellerdokumentiert befuellt werden.",
+    "Keine belegten HTTP-URL-Pfade ausser den von Claroty genannten Aktionen (xml.cgi, load_nginx_headers) sowie den SMTP-Konfigurationsfeldern.",
+    "Keine belegten MQTT-Kommando-Topics fuer Retail-Kaelte.",
+    "Carel-Schreibpfade (lokal/Cloud) unbelegt.",
+    "Sensor-Kalibrierung und Uhrzeit als Aenderungsklasse unbelegt.",
+    "Firmware-Update-Formate nur fuer Danfoss (.spk) und Copeland E2/E3 (ADF/USB) belegt; andere Hersteller offen."
+  ]
 }

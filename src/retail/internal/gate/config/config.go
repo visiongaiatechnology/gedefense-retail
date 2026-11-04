@@ -105,6 +105,39 @@ type Notify struct {
 	Escalation []EscalationStep `json:"escalation,omitempty"`
 }
 
+// IntegrityReference is one explicit setpoint reference watched by the integrity
+// worker. Value/Scale map the operator-facing value to the raw register value.
+type IntegrityReference struct {
+	TargetID domain.TargetID `json:"target_id"`
+	FC       int             `json:"fc"`
+	Register int             `json:"register"`
+	UnitID   int             `json:"unit_id,omitempty"`
+	Value    string          `json:"value"`
+	Scale    float64         `json:"scale,omitempty"`
+	Unit     string          `json:"unit,omitempty"`
+	Note     string          `json:"note,omitempty"`
+	Recovery bool            `json:"recovery,omitempty"`
+}
+
+// RecoveryConfig is the global automatic-recovery opt-in (default disabled).
+type RecoveryConfig struct {
+	Enabled               bool  `json:"enabled"`
+	MaxActionsPerHour     int   `json:"max_actions_per_hour,omitempty"`
+	MaxActionsPerDay      int   `json:"max_actions_per_day,omitempty"`
+	CooldownS             int   `json:"cooldown_s,omitempty"`
+	RequireNoActiveWindow *bool `json:"require_no_active_window,omitempty"`
+}
+
+// IntegrityConfig configures the setpoint integrity worker and recovery.
+type IntegrityConfig struct {
+	Enabled       bool                 `json:"enabled"`
+	PollIntervalS int                  `json:"poll_interval_s,omitempty"`
+	ConfirmReads  int                  `json:"confirm_reads,omitempty"`
+	StaleAfterS   int                  `json:"stale_after_s,omitempty"`
+	References    []IntegrityReference `json:"references,omitempty"`
+	Recovery      RecoveryConfig       `json:"recovery"`
+}
+
 // Config is the complete gate configuration.
 type Config struct {
 	Listen         Listen            `json:"listen"`
@@ -117,6 +150,49 @@ type Config struct {
 	SourceCIDRs    []string          `json:"source_cidrs"`
 	Users          []domain.GateUser `json:"users"`
 	Notify         Notify            `json:"notify"`
+	Integrity      *IntegrityConfig  `json:"integrity,omitempty"`
+}
+
+// EffectiveIntegrity resolves the integrity defaults. Automatic recovery is
+// disabled unless explicitly enabled; its limits/cooldown are bounded defaults.
+func (c Config) EffectiveIntegrity() IntegrityConfig {
+	if c.Integrity == nil {
+		return IntegrityConfig{}
+	}
+	out := *c.Integrity
+	if out.PollIntervalS <= 0 {
+		out.PollIntervalS = 60
+	}
+	if out.ConfirmReads <= 0 {
+		out.ConfirmReads = 2
+	}
+	if out.StaleAfterS <= 0 {
+		out.StaleAfterS = out.PollIntervalS * 3
+	}
+	recovery := out.Recovery
+	if recovery.MaxActionsPerHour <= 0 {
+		recovery.MaxActionsPerHour = 3
+	}
+	if recovery.MaxActionsPerDay <= 0 {
+		recovery.MaxActionsPerDay = 10
+	}
+	if recovery.CooldownS <= 0 {
+		recovery.CooldownS = 600
+	}
+	if recovery.RequireNoActiveWindow == nil {
+		required := true
+		recovery.RequireNoActiveWindow = &required
+	}
+	out.Recovery = recovery
+	refs := make([]IntegrityReference, len(out.References))
+	copy(refs, out.References)
+	for i := range refs {
+		if refs[i].Scale <= 0 {
+			refs[i].Scale = 1
+		}
+	}
+	out.References = refs
+	return out
 }
 
 // Load reads, strictly decodes, defaults and validates the gate configuration.

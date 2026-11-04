@@ -3,6 +3,7 @@ package config
 import (
 	"crypto/rand"
 	"fmt"
+	"math"
 	"net"
 	"net/url"
 	"strconv"
@@ -49,6 +50,9 @@ func (c Config) Validate() error {
 		return err
 	}
 	if err := c.validateNotify(); err != nil {
+		return err
+	}
+	if err := c.validateIntegrity(); err != nil {
 		return err
 	}
 	return nil
@@ -379,4 +383,89 @@ func RandomSecret(bytesCount int) (string, error) {
 		return "", fmt.Errorf("gate config: generate secret: %w", err)
 	}
 	return fmt.Sprintf("%x", raw), nil
+}
+
+// validateIntegrity enforces the setpoint-integrity/recovery configuration.
+// Only explicit modbus_tcp register references inside the target read window are
+// allowed; automatic recovery is opt-in and bounded.
+func (c Config) validateIntegrity() error {
+	if c.Integrity == nil || !c.Integrity.Enabled {
+		return nil
+	}
+	eff := c.EffectiveIntegrity()
+	if len(eff.References) == 0 {
+		return fmt.Errorf("%w: integrity.enabled requires at least one reference", ErrInvalidConfig)
+	}
+	if eff.PollIntervalS < 10 || eff.PollIntervalS > 86400 {
+		return fmt.Errorf("%w: integrity.poll_interval_s must be between 10 and 86400", ErrInvalidConfig)
+	}
+	if eff.ConfirmReads < 1 || eff.ConfirmReads > 5 {
+		return fmt.Errorf("%w: integrity.confirm_reads must be between 1 and 5", ErrInvalidConfig)
+	}
+	if eff.StaleAfterS <= eff.PollIntervalS {
+		return fmt.Errorf("%w: integrity.stale_after_s must be greater than poll_interval_s", ErrInvalidConfig)
+	}
+	targets := make(map[domain.TargetID]Target, len(c.Targets))
+	for _, target := range c.Targets {
+		targets[target.TargetID] = target
+	}
+	seen := make(map[string]struct{}, len(eff.References))
+	for i, ref := range eff.References {
+		target, ok := targets[ref.TargetID]
+		if !ok {
+			return fmt.Errorf("%w: integrity.references[%d]: target %q does not exist", ErrInvalidConfig, i, ref.TargetID)
+		}
+		if target.Protocol != "modbus_tcp" {
+			return fmt.Errorf("%w: integrity.references[%d]: target %q is not modbus_tcp", ErrInvalidConfig, i, ref.TargetID)
+		}
+		if ref.FC != 3 {
+			return fmt.Errorf("%w: integrity.references[%d]: only fc=3 (holding register) is supported", ErrInvalidConfig, i)
+		}
+		if ref.Register < 40001 || ref.Register > 465536 {
+			return fmt.Errorf("%w: integrity.references[%d]: register %d is outside 40001..465536", ErrInvalidConfig, i, ref.Register)
+		}
+		rawRegister := ref.Register - 40001
+		if rawRegister > 65535 {
+			return fmt.Errorf("%w: integrity.references[%d]: register %d exceeds the wire address space", ErrInvalidConfig, i, ref.Register)
+		}
+		window := target.ReadRegisters
+		if window == nil || window.FC != 3 || rawRegister < window.Start || rawRegister+1 > window.Start+window.Count {
+			return fmt.Errorf("%w: integrity.references[%d]: register %d is outside the target read_registers window", ErrInvalidConfig, i, ref.Register)
+		}
+		display, err := strconv.ParseFloat(strings.TrimSpace(ref.Value), 64)
+		if err != nil || math.IsNaN(display) || math.IsInf(display, 0) {
+			return fmt.Errorf("%w: integrity.references[%d]: value %q is not numeric", ErrInvalidConfig, i, ref.Value)
+		}
+		scale := ref.Scale
+		if scale <= 0 {
+			scale = 1
+		}
+		if scale > 1_000_000 {
+			return fmt.Errorf("%w: integrity.references[%d]: scale must be <= 1000000", ErrInvalidConfig, i)
+		}
+		rawValue := math.Round(display / scale)
+		if rawValue < 0 || rawValue > 65535 {
+			return fmt.Errorf("%w: integrity.references[%d]: value/scale does not fit uint16", ErrInvalidConfig, i)
+		}
+		key := fmt.Sprintf("%s|%d|%d", ref.TargetID, ref.UnitID, ref.Register)
+		if _, dup := seen[key]; dup {
+			return fmt.Errorf("%w: integrity.references[%d]: duplicate reference %s", ErrInvalidConfig, i, key)
+		}
+		seen[key] = struct{}{}
+	}
+	if eff.Recovery.Enabled {
+		if c.Integrity.Recovery.RequireNoActiveWindow != nil && !*c.Integrity.Recovery.RequireNoActiveWindow {
+			return fmt.Errorf("%w: integrity.recovery.require_no_active_window=false is not allowed while recovery is enabled (fail-closed)", ErrInvalidConfig)
+		}
+		if eff.Recovery.MaxActionsPerHour < 1 || eff.Recovery.MaxActionsPerDay < 1 {
+			return fmt.Errorf("%w: integrity.recovery limits must be >= 1", ErrInvalidConfig)
+		}
+		if eff.Recovery.MaxActionsPerHour > eff.Recovery.MaxActionsPerDay {
+			return fmt.Errorf("%w: integrity.recovery.max_actions_per_hour must not exceed max_actions_per_day", ErrInvalidConfig)
+		}
+		if eff.Recovery.CooldownS < 60 {
+			return fmt.Errorf("%w: integrity.recovery.cooldown_s must be >= 60", ErrInvalidConfig)
+		}
+	}
+	return nil
 }

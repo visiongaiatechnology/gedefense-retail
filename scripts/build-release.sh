@@ -18,7 +18,7 @@ VERSION="$(tr -d ' \r\n' < "$ROOT/VERSION")"
 COMMIT="${GEDEFENSE_COMMIT:-$(git -C "$ROOT" rev-parse --short HEAD 2>/dev/null || echo local)}"
 BUILD_DATE="${GEDEFENSE_BUILD_DATE:-}"
 if [ -z "$BUILD_DATE" ] && [ -n "${SOURCE_DATE_EPOCH:-}" ]; then
-  # FIND-009: reproducible builds honour SOURCE_DATE_EPOCH (seconds since epoch).
+  # reproducible builds honour SOURCE_DATE_EPOCH (seconds since epoch).
   case "$SOURCE_DATE_EPOCH" in
     ''|*[!0-9]*) echo "build-release: SOURCE_DATE_EPOCH must be a unix timestamp" >&2; exit 2 ;;
   esac

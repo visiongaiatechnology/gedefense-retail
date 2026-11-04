@@ -21,7 +21,7 @@ $configs = @('retail.example.json', 'gate.example.json', 'gate-policy.example.js
     'gedefense-retail.service', 'gedefense-retailgate.service')
 $binaries = @('retaild', 'retailgate', 'retail-sim')
 
-# F-A8-03: explicit public-docs allowlist; missing/denied entries fail closed.
+# public-docs allowlist: explicit public-docs allowlist; missing/denied entries fail closed.
 $manifestPath = Join-Path $root 'docs/PUBLIC-DOCS.manifest'
 if (-not (Test-Path $manifestPath)) { throw 'package-release: docs/PUBLIC-DOCS.manifest is missing (fail-closed)' }
 $denyDocPattern = [regex]::new('(security-(audit|review|assumptions|scan)|audit_matrix|public-release-hygiene|release-report|architecture-gap|reuse-matrix|access-gate-review|access-gate-threat-model|review-findings|alpha-report)', 'IgnoreCase')
@@ -54,7 +54,7 @@ function Copy-Common([string]$bundle) {
     $configOut = Join-Path $bundle 'config'
     New-Item -ItemType Directory -Path $configOut -Force | Out-Null
     foreach ($name in $configs) { Copy-Item (Join-Path $root "config/$name") (Join-Path $configOut $name) }
-    # F-A8-03: copy only the explicit public-docs allowlist, never the whole
+    # public-docs allowlist: copy only the explicit public-docs allowlist, never the whole
     # product docs tree (internal audits/reviews must not leak).
     foreach ($rel in $publicDocs) {
         $relative = $rel.Substring(5) # strip "docs/"
@@ -121,7 +121,7 @@ foreach ($archive in $archives) {
         try { $names = $zip.Entries | ForEach-Object { $_.FullName } } finally { $zip.Dispose() }
     }
     # Compress-Archive stores entries with backslashes; normalise before matching
-    # so the deny/required checks are reliable (F-A8-09).
+    # so the deny/required checks are reliable (post-copy verification).
     $names = @($names | ForEach-Object { $_.Replace('\', '/') })
     $joined = ($names -join "`n")
     foreach ($name in $names) {
@@ -138,6 +138,6 @@ $lines = $archives | Sort-Object Name | ForEach-Object {
 Write-LinesUtf8NoBom (Join-Path $dist 'SHA256SUMS') @($lines)
 Write-LinesUtf8NoBom (Join-Path $dist 'SHA256SUMS.archives') @($lines)
 Write-Host 'PACKAGE_OK'
-# SBOM (FIND-004).
+# SBOM.
 & python (Join-Path $root 'scripts/generate-sbom.py') --dist $dist --version $Version
 $archives | Sort-Object Name | ForEach-Object { Write-Host ("  {0}  {1} B" -f $_.Name, $_.Length) }

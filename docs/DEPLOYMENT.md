@@ -87,7 +87,88 @@ Do not treat HTTP writes as equivalent to Modbus read-before-write.
 **Vendor catalog:** `data/ot-catalog/` is shipped in the bundle and used for discovery/API/UI/gate
 advisory. It never grants write access or whitelist admission (no auto-allow).
 
-## Permissions and service accounts (0.2.0-alpha.8)
+## Setpoint integrity and automatic recovery (0.3.0-alpha.1)
+
+Configure the optional `integrity` block in `gate.json`:
+
+```json
+"integrity": {
+  "enabled": true, "poll_interval_s": 60, "confirm_reads": 3, "stale_after_s": 180,
+  "references": [{"target_id":"aksm-1","fc":3,"register":40002,"unit_id":1,
+                  "value":"4.0","scale":0.1,"unit":"celsius",
+                  "note":"meat room setpoint","recovery":true}],
+  "recovery": {"enabled": false, "max_actions_per_hour": 3, "max_actions_per_day": 10,
+               "cooldown_s": 300, "require_no_active_window": true}
+}
+```
+
+- Integrity monitoring polls references via FC3 and confirms deviations (`confirm_reads`) before
+  reporting `gate.integrity.mismatch`; `stale_after` flags missing data. `GET
+  /api/v1/gate/integrity` exposes state; SSE event `gate_integrity`.
+- **Recovery is opt-in and off by default.** Only references with `"recovery": true` are written
+  (FC6, no plan/session), subject to hourly/daily limits, cooldown and
+  `require_no_active_window`; a read-back verifies the result and events
+  `gate.recovery.applied|failed|unknown` are audited. `failed`/`unknown` require manual action.
+- Recovery is **not** proof that nobody wrote outside the gate; read→write TOCTOU remains.
+
+
+**Operator requirements (fail-safe, audit, TOCTOU):**
+
+- **Fail-safe:** while the gate fail-safe status has `AllowWrite=false` (audit store failure/full,
+  clock jump, unreadable policy/plan/session store, network split, gate core down), the integrity
+  worker performs **no reads and no recovery**. Do not expect or force recovery in that state.
+- **Audit fail-closed:** recovery requires an audit intent. Without a successful audit intent no
+  recovery write is performed; if the audit append fails **after** the write, the result is
+  `gate.recovery.unknown` and there is **no automatic retry**.
+- **One attempt per confirmed mismatch:** each confirmed mismatch triggers at most one recovery
+  attempt; no flapping loop. A persistent mismatch needs operator triage.
+- **TOCTOU:** recovery re-reads shortly before the FC6 write, but read and write are **not atomic**;
+  a residual read→write window remains.
+- **Scope:** references are operator-approved values and **not** a HACCP/compliance proof. This
+  version supports only Modbus `modbus_tcp` FC3 reads and FC6 recovery writes; HTTP targets have no
+  integrity monitoring or recovery.
+- **Kill switch / escalation:** set `integrity.recovery.enabled=false` (then reload/restart the gate)
+  to stop automatic recovery. Respect `max_actions_per_hour/day`, `cooldown_s` and
+  `require_no_active_window` (mandatory true when recovery is enabled). Escalate
+  `gate.recovery.failed|unknown` to the operator; audit events:
+  `gate.integrity.mismatch`, `gate.recovery.applied|failed|unknown`.
+
+## Network enforcement (`retailgate netpolicy`, 0.3.0-alpha.1)
+
+`retailgate netpolicy --config gate.json --format nftables|iptables --gate-source <CIDR>
+[--out FILE] [--check] [--apply] [--rollback]`
+
+- Accepts new connections to controllers only from the given gate-source CIDR(s); other new
+  connections are dropped and logged. Rules are placed in a dedicated table/chain; `--check` validates
+  without applying, `--out` writes the ruleset, `--apply`/`--rollback` manage it.
+- **Precondition:** routing/NAT/bridge and segmentation must already work on the gate host; the tool
+  is not a router. It only enforces on that host — bypass paths elsewhere remain operator duty.
+- Review the generated rules before `--apply`; keep an out-of-band rollback path.
+
+## Bypass detection in `retaild` (0.3.0-alpha.1)
+
+```json
+"bypass": {"enabled": true, "gate_source_cidrs": ["10.10.40.0/24", "10.10.50.10/32"]}
+```
+
+- `bypass.gate_source_cidrs` accepts CIDR or single-IP entries (IPv4/IPv6 only, max. 64, normalized
+  duplicates rejected, no IPv6 zones). Entries are validated even when `enabled:false`; unknown fields
+  are configuration errors. `enabled:true` without a valid list **refuses to start** (fail-closed;
+  `retaild check` exits non-zero).
+- Passive write attempts (`write_attempt`) whose source is outside `gate_source_cidrs` raise the
+  monitoring alert `retail.bypass-suspected` (critical, category `access`, rule version 1). Gate
+  sources produce no bypass alert; reads/non-write events do not either. The alert carries
+  evidence/facts/hypothesis/recommendations from the gate-bypass alert and is deduplicated as
+  `retail.bypass-suspected|<site>|<source>|<target>|<register>` (one open alert per source/target/
+  register; write storms do not create alert floods).
+- The rule is an adapter/gate-signal rule (not part of the passive rule pack, which stays at 15
+  rules). It feeds the normal alert engine, correlation and incident chains.
+- **Limit:** passive observation proves only the write attempt and that the source is outside the
+  gate CIDRs — **not** the actor, an approval, or a proven segmentation gap. The alert states this
+  as a hypothesis; verify with device logs/operator evidence. This is a visibility control, not
+  prevention.
+
+## Permissions and service accounts (0.3.0-alpha.1)
 
 **Linux (installer)**
 
@@ -115,7 +196,7 @@ advisory. It never grants write access or whitelist admission (no auto-allow).
   and does **not** restore previous ACLs. Verify with `sc.exe qc gedefense-retail` and
   `icacls "C:\Program Files\GeDefense\Retail\config"`.
 
-## Token rotation (FIND-007)
+## Token rotation (token rotation)
 
 Bearer tokens are stored only as SHA-256 hashes; the plaintext token is printed once. Rotation:
 
@@ -130,7 +211,7 @@ Bearer tokens are stored only as SHA-256 hashes; the plaintext token is printed 
 4. Rotate gate passwords/TOTP secrets and the HMAC webhook secret separately. There is no KMS/HSM
    integration in the alpha; document where secrets are stored.
 
-## Central mTLS (FIND-008)
+## Central mTLS (mTLS)
 
 The optional central connection is outbound-only. When `central` is configured, `require_mtls`
 defaults to true: an `https://` URL requires `central.client_cert_file`, `central.client_key_file`
@@ -141,7 +222,7 @@ There is no inbound WAN path and no remote control.
 
 ## Release verification (checksums, signatures, SBOM)
 
-For release `v0.2.0-alpha.8`:
+For release `v0.3.0-alpha.1`:
 
 1. `sha256sum -c SHA256SUMS` inside the unpacked bundle; `sha256sum -c SHA256SUMS.archives` for the
    downloaded archives.
@@ -155,7 +236,7 @@ For release `v0.2.0-alpha.8`:
 4. Windows binaries are **NOT_SIGNED** with Authenticode (alpha); rely on SHA-256 and cosign assets.
    If a signature asset is missing, treat the download as unsigned and report it.
 
-## Graceful shutdown and audit flush (FIND-010)
+## Graceful shutdown and audit flush (shutdown flush)
 
 Stop services with `systemctl stop` / `Stop-Service` so setup/gate audit buffers are flushed. Avoid a
 hard kill: the last buffered entries (up to 128 setup-trail entries on the affected version) can be

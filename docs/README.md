@@ -17,6 +17,13 @@ Infrastructure Security). The main entry point is the [README](../README.md).
 - [Build and release, including release verification](BUILD-AND-RELEASE.md)
 - [Quickstart](../README.md#quickstart)
 
+## 0.3.0-alpha.1 — integrity, netpolicy, bypass
+
+- [HTTP API](API.md) — `GET /api/v1/gate/integrity`, `gate_integrity` SSE and config fields
+- [Deployment](DEPLOYMENT.md) — setpoint integrity/recovery, `retailgate netpolicy`,
+  `retaild` bypass detection
+- [Security model](SECURITY-MODEL.md) — recovery/netpolicy/bypass properties and honest limits
+
 ## Vendor & pilot documentation
 
 - [Vendor and device landscape (DE/EU)](retail/vendor-landscape.md) — vendors, protocols, remote-access models
@@ -53,4 +60,4 @@ The README is available in English, German, French, Italian, Spanish, Japanese, 
 
 ## Status
 
-0.2.0-alpha.8 — experimental alpha, not production-ready and without compliance claims.
+0.3.0-alpha.1 — experimental alpha, not production-ready and without compliance claims.

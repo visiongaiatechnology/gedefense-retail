@@ -1,8 +1,8 @@
-# GeDefense Retail — Protokollmatrix (Alpha 0.2.0-alpha.8)
+# GeDefense Retail — Protokollmatrix (Alpha 0.3.0-alpha.1)
 
 **Produktlinie:** VisionGaiaTechnology · GeDefense Retail
 **Zweck:** Verbindliche Entscheidungsgrundlage für Read-only-Adapter, passive Erkennung und Simulator-Tests
-**Recherchestand / Abrufdatum:** **2026-11-03** · **Autor:** ot-researcher (task-1)
+**Recherchestand / Abrufdatum:** **2026-11-03** · **Autor:** GeDefense Retail research
 
 ---
 
@@ -183,7 +183,7 @@
 
 ---
 
-## 8. Durchsetzungssemantik im Access Gate (Alpha 0.2.0-alpha.8)
+## 8. Durchsetzungssemantik im Access Gate (Alpha 0.3.0-alpha.1)
 
 ### 8.1 Modbus TCP — Read-before-Write
 
@@ -226,3 +226,12 @@
   ist **kein Auto-Allow**.
 - Schreibzugriffe bleiben plan- und freigabebasiert; der Katalog beeinflusst nur Klassifikation,
   Hinweise und Darstellung.
+
+### 8.5 Setpoint-Integrität (FC3/FC6)
+
+- Referenzen werden zyklisch per **FC3** gelesen; Abweichungen werden erst nach `confirm_reads`
+  gemeldet (`gate.integrity.mismatch`). `stale_after` markiert fehlende Werte.
+- Recovery schreibt den Referenzwert per **FC6**, ausschließlich für explizit freigegebene
+  Referenzen (`recovery: true`), ohne aktive Freigabe/Session, mit Rate-Limit/Cooldown/Read-back.
+- Recovery ist Default aus, kein Beweis über externe Schreiber und kein Ersatz für
+  Read-before-Write/TOCTOU-Schutz.

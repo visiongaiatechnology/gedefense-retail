@@ -126,6 +126,8 @@ def main() -> int:
         ("state-empty-gate", f"http://127.0.0.1:{PORT}/mock/?state=empty&lang=de#/gate", 1440, 900),
         ("state-error-gate", f"http://127.0.0.1:{PORT}/mock/?state=error&lang=de#/gate", 1440, 900),
         ("state-offline-gate", f"http://127.0.0.1:{PORT}/mock/?state=offline&lang=de#/gate", 1440, 900),
+    ("desktop-gate-integrity", f"{base}#/gate?tab=status", 1440, 1200),
+    ("state-empty-gate-integrity", f"http://127.0.0.1:{PORT}/mock/?state=empty&lang=de#/gate?tab=status", 1440, 900),
         # First-run setup: 8 languages, 6 steps, completion and mobile
     *[
         (f"setup-lang-{code}", f"http://127.0.0.1:{PORT}/mock/?state=normal&lang={code}#/setup", 1440, 950)

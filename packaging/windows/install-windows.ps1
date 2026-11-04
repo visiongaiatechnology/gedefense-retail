@@ -1,7 +1,7 @@
 # GeDefense Retail - Windows installer (inside the release bundle).
 #
 # Installs the binaries and example configuration and creates two Windows
-# services. Hardened for FIND-001: the services run as NT AUTHORITY\LocalService
+# services. Hardened for the services run as NT AUTHORITY\LocalService
 # (never LocalSystem) and config/data get explicit DACLs (SYSTEM/Administrators
 # only, LocalService read for config and modify for data, no inherited Users
 # access). icacls failures are fail-closed. Requires an elevated PowerShell.
@@ -67,7 +67,7 @@ foreach ($cfg in @('retail.example.json', 'gate.example.json', 'gate-policy.exam
 }
 Set-Content -Path (Join-Path $InstallDir $marker) -Value ("version=" + (Get-Content (Join-Path $bundle 'VERSION') -Raw).Trim()) -Encoding ASCII
 
-# Explicit DACLs (FIND-001). /inheritance:r removes inherited ACEs.
+# Explicit DACLs. /inheritance:r removes inherited ACEs.
 Assert-Icacls @($InstallDir, '/inheritance:r', '/grant:r', "${sidSystem}:(OI)(CI)F",
     "${sidAdmins}:(OI)(CI)F", "${sidUsers}:(OI)(CI)RX", "${sidLocalService}:(OI)(CI)RX")
 Assert-Icacls @($configDir, '/inheritance:r', '/grant:r', "${sidSystem}:(OI)(CI)F",
@@ -98,7 +98,7 @@ foreach ($svc in $services) {
     & sc.exe create $svc.Name binPath= $binPath start= $svc.Start DisplayName= $svc.Display | Out-Null
     if ($LASTEXITCODE -ne 0) { throw "install-windows: sc.exe create $($svc.Name) failed" }
     & sc.exe description $svc.Name $svc.Desc | Out-Null
-    # FIND-001: dedicated low-privilege service account instead of LocalSystem.
+    # dedicated low-privilege service account instead of LocalSystem.
     & sc.exe config $svc.Name obj= $serviceAccount | Out-Null
     if ($LASTEXITCODE -ne 0) { throw "install-windows: sc.exe config obj= for $($svc.Name) failed" }
     $qc = (& sc.exe qc $svc.Name) -join "`n"

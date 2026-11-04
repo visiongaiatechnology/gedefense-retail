@@ -77,6 +77,7 @@ func (s *Server) routes() []route {
 		{method: http.MethodPost, segs: routeSegs("/api/v1/gate/auth/logout"), handler: s.handleLogout},
 
 		{method: http.MethodGet, segs: routeSegs("/api/v1/gate/status"), roles: readRoles, handler: s.handleStatus},
+		{method: http.MethodGet, segs: routeSegs("/api/v1/gate/integrity"), roles: readRoles, handler: s.handleIntegrity},
 		{method: http.MethodGet, segs: routeSegs("/api/v1/gate/plans"), roles: allRead, handler: s.handlePlans},
 		{method: http.MethodGet, segs: routeSegs("/api/v1/gate/plans/:plan_id"), roles: allRead, handler: s.handlePlan},
 		{method: http.MethodPost, segs: routeSegs("/api/v1/gate/plans"), roles: requester, idempotent: true, handler: s.handleCreatePlan},

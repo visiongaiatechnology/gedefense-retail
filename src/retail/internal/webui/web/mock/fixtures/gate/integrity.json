@@ -1,0 +1,79 @@
+{
+  "enabled": true,
+  "interval_s": 60,
+  "references": [
+    {
+      "target_id": "aksm-1",
+      "fc": 6,
+      "register": 40001,
+      "unit": "celsius",
+      "reference": "4.0",
+      "current": "4.0",
+      "state": "ok",
+      "last_read_at": "2026-11-04T18:40:00Z",
+      "confirmed_mismatches": 0,
+      "recovery": {
+        "enabled": true,
+        "last_attempt_at": "",
+        "last_result": "",
+        "cooldown_until": ""
+      }
+    },
+    {
+      "target_id": "aksm-1",
+      "fc": 6,
+      "register": 40002,
+      "unit": "celsius",
+      "reference": "2.0",
+      "current": "3.2",
+      "state": "mismatch",
+      "last_read_at": "2026-11-04T18:39:00Z",
+      "confirmed_mismatches": 2,
+      "recovery": {
+        "enabled": true,
+        "last_attempt_at": "2026-11-04T18:35:00Z",
+        "last_result": "failed",
+        "cooldown_until": "2026-11-04T18:45:00Z"
+      }
+    },
+    {
+      "target_id": "xweb-1",
+      "fc": 0,
+      "register": "/cgi-bin/config",
+      "unit": "",
+      "reference": "-",
+      "current": "-",
+      "state": "unreadable",
+      "last_read_at": "2026-11-04T18:38:00Z",
+      "confirmed_mismatches": 0,
+      "recovery": {
+        "enabled": false,
+        "last_attempt_at": "",
+        "last_result": "",
+        "cooldown_until": ""
+      }
+    },
+    {
+      "target_id": "xweb-1",
+      "fc": 0,
+      "register": 40010,
+      "unit": "celsius",
+      "reference": "5.0",
+      "current": "4.8",
+      "state": "stale",
+      "last_read_at": "2026-11-03T20:10:00Z",
+      "confirmed_mismatches": 0,
+      "recovery": {
+        "enabled": false,
+        "last_attempt_at": "",
+        "last_result": "",
+        "cooldown_until": ""
+      }
+    }
+  ],
+  "recovery": {
+    "enabled": true,
+    "actions_last_hour": 2,
+    "actions_last_day": 7
+  }
+}

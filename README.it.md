@@ -24,7 +24,7 @@ Monitoraggio OT passivo e gate con applicazione Default-Deny per il percorso di 
 <a id="alpha-status"></a>
 ## Stato alpha
 
-> **0.2.0-alpha.8 — sperimentale, non pronto per la produzione.**
+> **0.3.0-alpha.1 — sperimentale, non pronto per la produzione.**
 > GeDefense Retail è una alpha preliminare. È stato verificato su loopback con regolatori e
 > supervisori simulati, non contro hardware frigorifero reale in un punto vendita. Non esiste ancora
 > un penetration test indipendente dell'Access Gate e non viene formulata alcuna dichiarazione di
@@ -135,7 +135,9 @@ Il discovery passivo e l’advisory coprono il panorama OT dei supermercati DE/U
 - **Logo GeDefense originale** e mascotte integrati come asset locali (nessuna CDN esterna).
 - Pacchetti Linux e Windows con script di installazione e checksum SHA-256.
 
-**Novità in 0.2.0-alpha.8:** documentazione vendor/pilota in `docs/retail/`, rilettura CurrentValue prima della scrittura Modbus (mismatch/errore ⇒ deny + audit), catalogo vendor a runtime (nessun auto-allow) e `data/ot-catalog` nel pacchetto.
+**Novità in 0.3.0-alpha.1:** documentazione vendor/pilota in `docs/retail/`, rilettura CurrentValue prima della scrittura Modbus (mismatch/errore ⇒ deny + audit), catalogo vendor a runtime (nessun auto-allow) e `data/ot-catalog` nel pacchetto.
+
+**Novità in 0.3.0-alpha.1:** monitoraggio dell'integrità dei setpoint con **recovery automatico opt-in** (disattivato per default; rate-limit, cooldown, read-back, auditato), `retailgate netpolicy` (nftables/iptables; solo CIDR sorgente del gate) e rilevamento passivo di bypass (`retail.bypass-suspected`).
 
 <a id="architecture"></a>
 ## Architettura (in breve)
@@ -174,9 +176,9 @@ Il discovery passivo e l’advisory coprono il panorama OT dei supermercati DE/U
 - **La segmentazione è responsabilità dell'operatore.** Senza un progetto di rete reale "nessun secondo
   percorso", il gate può essere aggirato. Il servizio di monitoraggio rende visibili i bypass; non può
   impedirli.
-- **Nessuna correlazione automatica dei bypass.** Gate e servizio di monitoraggio sono separati; le
-  scritture rifiutate e le allerte passive `retail.write-attempt` vengono correlate manualmente in
-  questa alpha.
+- **Il rilevamento bypass è passivo, non attribuzione.** `retaild` genera
+  `retail.bypass-suspected` (critical) per tentativi di scrittura passivi da origini fuori da
+  `gate_source_cidrs`; prova il tentativo/origine, non l'autore o un gap di segmentazione.
 - **Il certificate pinning e le allowlist dei parametri** sono implementati nel proxy ma non ancora
   esposti nello schema di configurazione.
 - **`write_unknown` senza rilettura automatica.** Se la risposta del regolatore è incerta (timeout,
@@ -192,22 +194,24 @@ Il discovery passivo e l’advisory coprono il panorama OT dei supermercati DE/U
   degli accessi su Windows; utilizzi un account di servizio dedicato e ACL esplicite. Si tratta di una
   condizione beta documentata.
 
+**Limiti 0.3.0-alpha.1:** il recovery automatico è opt-in e non prova che nessuno abbia scritto fuori dal gate; la finestra read→write (TOCTOU) resta; le scritture HTTP non hanno un recheck generico; `netpolicy` agisce solo sull'host del gate e richiede routing/segmentazione corretti.
+
 <a id="download"></a>
 ## Download
 
-**Ultima release alpha: [v0.2.0-alpha.8](https://github.com/visiongaiatechnology/gedefense-retail/releases/tag/v0.2.0-alpha.8).**
-Asset: quattro archivi, [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.8/SHA256SUMS),
-[SHA256SUMS.archives](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.8/SHA256SUMS.archives),
-[SBOM.spdx.json](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.8/SBOM.spdx.json)
+**Ultima release alpha: [v0.3.0-alpha.1](https://github.com/visiongaiatechnology/gedefense-retail/releases/tag/v0.3.0-alpha.1).**
+Asset: quattro archivi, [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.1/SHA256SUMS),
+[SHA256SUMS.archives](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.1/SHA256SUMS.archives),
+[SBOM.spdx.json](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.1/SBOM.spdx.json)
 e firme cosign (`*.sig`/`*.pem`). I binari Windows sono **NOT_SIGNED** (Authenticode, alpha); usi
 hash/firme.
 
 | Piattaforma | Archivio | Checksum |
 |---|---|---|
-| Linux amd64 | [gedefense-retail-0.2.0-alpha.8-linux-amd64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.8/gedefense-retail-0.2.0-alpha.8-linux-amd64.tar.gz) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.8/SHA256SUMS) · [archivi](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.8/SHA256SUMS.archives) |
-| Linux arm64 | [gedefense-retail-0.2.0-alpha.8-linux-arm64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.8/gedefense-retail-0.2.0-alpha.8-linux-arm64.tar.gz) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.8/SHA256SUMS) · [archivi](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.8/SHA256SUMS.archives) |
-| Windows amd64 | [gedefense-retail-0.2.0-alpha.8-windows-amd64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.8/gedefense-retail-0.2.0-alpha.8-windows-amd64.zip) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.8/SHA256SUMS) · [archivi](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.8/SHA256SUMS.archives) |
-| Windows arm64 | [gedefense-retail-0.2.0-alpha.8-windows-arm64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.8/gedefense-retail-0.2.0-alpha.8-windows-arm64.zip) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.8/SHA256SUMS) · [archivi](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.8/SHA256SUMS.archives) |
+| Linux amd64 | [gedefense-retail-0.3.0-alpha.1-linux-amd64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.1/gedefense-retail-0.3.0-alpha.1-linux-amd64.tar.gz) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.1/SHA256SUMS) · [archivi](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.1/SHA256SUMS.archives) |
+| Linux arm64 | [gedefense-retail-0.3.0-alpha.1-linux-arm64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.1/gedefense-retail-0.3.0-alpha.1-linux-arm64.tar.gz) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.1/SHA256SUMS) · [archivi](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.1/SHA256SUMS.archives) |
+| Windows amd64 | [gedefense-retail-0.3.0-alpha.1-windows-amd64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.1/gedefense-retail-0.3.0-alpha.1-windows-amd64.zip) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.1/SHA256SUMS) · [archivi](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.1/SHA256SUMS.archives) |
+| Windows arm64 | [gedefense-retail-0.3.0-alpha.1-windows-arm64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.1/gedefense-retail-0.3.0-alpha.1-windows-arm64.zip) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.1/SHA256SUMS) · [archivi](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.1/SHA256SUMS.archives) |
 
 **Verifichi prima dell'installazione:** `sha256sum -c SHA256SUMS` nell'archivio estratto e
 `sha256sum -c SHA256SUMS.archives` per gli archivi scaricati. Archivi e `SHA256SUMS` sono firmati con

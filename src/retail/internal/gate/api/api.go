@@ -72,6 +72,8 @@ type Deps struct {
 	Policy func() config.Policy
 	// Escalations exposes the 24/7 notifier escalation state (optional).
 	Escalations *EscalationHooks
+	// Integrity exposes the read-only setpoint integrity snapshot (optional).
+	Integrity IntegrityProvider
 }
 
 // wallClock is the default ports.Clock replacement for API timestamps.

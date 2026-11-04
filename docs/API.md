@@ -94,9 +94,10 @@ successful completion.
 | GET | `/api/v1/gate/denies` | denied write attempts with evidence |
 | GET | `/api/v1/gate/audit` | gate audit chain |
 | GET | `/api/v1/gate/status` | plans/sessions/denies/fail-safe state |
+| GET | `/api/v1/gate/integrity` | setpoint-integrity references, last values, recovery state |
 | GET | `/api/v1/gate/policy` · POST `/policy/reload` | write policy |
 | GET | `/api/v1/gate/escalations` · POST `/{id}/ack` | 24/7 escalation incl. human acknowledgement |
-| GET | `/api/v1/gate/stream` | SSE: plan/session/deny/fail-safe events |
+| GET | `/api/v1/gate/stream` | SSE: plan/session/deny/fail-safe/integrity (`gate_integrity`) events |
 
 Write plans bind target, protocol, function, address and value exactly. The proxy rejects any
 deviation, expired or reused token, wrong source IP, or closed maintenance window — with a Modbus
@@ -134,6 +135,49 @@ read-before-write guarantee.
 
 The vendor catalog (`data/ot-catalog/`) feeds `/api/v1/vendors*` and the UI for classification and
 advisory only; it never grants write access, whitelist admission or an auto-allow.
+
+### Setpoint integrity and automatic recovery
+
+`GET /api/v1/gate/integrity` (viewer/approver/master/auditor) reports the configured `integrity`
+references with target/fc/register/unit, expected value/scale, last read value/state, last check time,
+and recovery statistics (actions in the current hour/day, cooldown remaining, last
+`gate.recovery.applied|failed|unknown`). SSE clients receive `gate_integrity` events for confirmed
+mismatches, recovery attempts and errors.
+
+Configuration (in `gate.json`):
+
+```json
+"integrity": {
+  "enabled": true, "poll_interval_s": 60, "confirm_reads": 3, "stale_after_s": 180,
+  "references": [
+    {"target_id":"aksm-1","fc":3,"register":40002,"unit_id":1,
+     "value":"4.0","scale":0.1,"unit":"celsius","note":"meat room setpoint","recovery":true}
+  ],
+  "recovery": {"enabled": false, "max_actions_per_hour": 3, "max_actions_per_day": 10,
+               "cooldown_s": 300, "require_no_active_window": true}
+}
+```
+
+- The worker polls references cyclically via **FC3** and only reports a mismatch after
+  `confirm_reads` consecutive deviations; `stale_after` marks missing/stale data.
+- **Recovery is disabled by default (`recovery.enabled:false`).** When enabled, only references with
+  `"recovery": true` are written (FC6 to the reference value) — no active plan/session is used;
+  rate-limit, cooldown and `require_no_active_window` apply; a read-back verifies the result.
+- Audit events: `gate.integrity.mismatch`, `gate.recovery.applied|failed|unknown`.
+  `failed`/`unknown` require operator action; no automatic retry loop.
+- Limits: recovery proves neither who wrote outside the gate nor that no other writer exists; the
+  read→write TOCTOU window remains; HTTP writes have no generic value re-check. Integrity monitoring
+  only covers configured Modbus references.
+
+
+**Operator/fail-safe semantics:** while the gate fail-safe has `AllowWrite=false`, no integrity reads
+or recovery run. Recovery needs a successful audit intent before the write; if the audit append fails
+after the write, the action is `gate.recovery.unknown` and is **not** retried automatically. Each
+confirmed mismatch allows one attempt (no flapping loop). The FC6 recovery write is preceded by an
+FC3 re-read, but read→write is not atomic (TOCTOU residual). References are operator-approved, only
+Modbus (`modbus_tcp`, FC3/FC6) is supported in this version; HTTP has no integrity/recovery.
+`require_no_active_window` must be true when recovery is enabled; rate limits/cooldown and
+`integrity.recovery.enabled=false` (kill switch) apply.
 
 ## Data protection
 

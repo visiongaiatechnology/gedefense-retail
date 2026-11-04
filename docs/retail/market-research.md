@@ -3,7 +3,7 @@
 **Produktlinie:** VisionGaiaTechnology · GeDefense Retail — ColdChain & Store Infrastructure Security
 **Dokumenttyp:** Research-Grundlage für Katalog, Detektionsregeln, Produktpositionierung
 **Recherchestand / Abrufdatum aller Quellen:** **2026-11-03**
-**Autor:** ot-researcher (Task task-1)
+**Autor:** GeDefense Retail research
 
 ---
 

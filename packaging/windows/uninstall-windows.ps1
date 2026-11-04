@@ -1,6 +1,6 @@
 # GeDefense Retail - Windows uninstaller.
 # Stops/removes the services and binaries; configuration and data are kept
-# unless -Purge is supplied. Refuses unsafe paths (FIND-006): absolute paths,
+# unless -Purge is supplied. Refuses unsafe paths: absolute paths,
 # marker file required, no drive/system roots, no reparse points.
 #
 # Note: the installer's hardened DACLs are not restored on uninstall; the

@@ -12,6 +12,7 @@ import (
 	"github.com/visiongaiatechnology/gedefense/retail/internal/detect"
 	"github.com/visiongaiatechnology/gedefense/retail/internal/discovery"
 	"github.com/visiongaiatechnology/gedefense/retail/internal/domain"
+	"github.com/visiongaiatechnology/gedefense/retail/internal/gate/bypass"
 	"github.com/visiongaiatechnology/gedefense/retail/internal/policy"
 	"github.com/visiongaiatechnology/gedefense/retail/internal/ports"
 	"github.com/visiongaiatechnology/gedefense/retail/internal/state"
@@ -30,6 +31,7 @@ type pipeline struct {
 	correlate *correlate.Engine
 	alerts    *alert.Engine
 	discovery *discovery.Discoverer
+	bypass    *bypass.Engine
 	spool     ports.Spool
 	hub       *api.Hub
 	siteID    domain.SiteID
@@ -49,6 +51,7 @@ type pipelineDeps struct {
 	Correlate *correlate.Engine
 	Alerts    *alert.Engine
 	Discovery *discovery.Discoverer
+	Bypass    *bypass.Engine
 	Spool     ports.Spool
 	Hub       *api.Hub
 	SiteID    domain.SiteID
@@ -58,7 +61,7 @@ func newPipeline(d pipelineDeps) *pipeline {
 	return &pipeline{
 		log: d.Log, clock: d.Clock, events: d.Events, reg: d.Registry,
 		policy: d.Policy, detect: d.Detect, correlate: d.Correlate,
-		alerts: d.Alerts, discovery: d.Discovery, spool: d.Spool, hub: d.Hub, siteID: d.SiteID,
+		alerts: d.Alerts, discovery: d.Discovery, bypass: d.Bypass, spool: d.Spool, hub: d.Hub, siteID: d.SiteID,
 	}
 }
 
@@ -133,9 +136,16 @@ func (p *pipeline) store(ctx context.Context, ev domain.Event) error {
 	return nil
 }
 
-// evaluate runs event-based detection, the alert workflow and correlation.
+// evaluate runs event-based detection, the bypass integration, the alert
+// workflow and correlation.
 func (p *pipeline) evaluate(ctx context.Context, ev domain.Event) {
-	alerts := p.detect.EvaluateEvent(ctx, ev)
+	var alerts []domain.Alert
+	if p.detect != nil {
+		alerts = p.detect.EvaluateEvent(ctx, ev)
+	}
+	// The bypass adapter only reacts to EventWriteAttempt; gate sources are
+	// filtered by the bypass engine, reads and other kinds produce nothing.
+	alerts = append(alerts, p.bypassAlerts(ctx, ev)...)
 	if len(alerts) == 0 {
 		return
 	}

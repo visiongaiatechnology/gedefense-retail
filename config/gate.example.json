@@ -76,6 +76,20 @@
       "status": "active"
     }
   ],
+  "integrity": {
+    "enabled": false,
+    "poll_interval_s": 60,
+    "confirm_reads": 2,
+    "stale_after_s": 180,
+    "references": [],
+    "recovery": {
+      "enabled": false,
+      "max_actions_per_hour": 3,
+      "max_actions_per_day": 10,
+      "cooldown_s": 600,
+      "require_no_active_window": true
+    }
+  },
   "notify": {
     "webhook_url": "",
     "hmac_secret": "",

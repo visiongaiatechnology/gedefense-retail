@@ -70,3 +70,36 @@
     }
   }
 }
+
+@layer views {
+  .gate-integrity__meta {
+    align-items: center;
+    gap: var(--sp-2) var(--sp-4);
+  }
+
+  .gate-integrity__recovery {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    min-width: 10rem;
+  }
+
+  .gate-integrity__recovery .chip {
+    align-self: flex-start;
+  }
+
+  .gate-status .data-table td {
+    vertical-align: top;
+  }
+
+  @media (max-width: 760px) {
+    .gate-integrity__meta {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .gate-integrity__recovery {
+      min-width: 0;
+    }
+  }
+}

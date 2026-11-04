@@ -335,6 +335,7 @@ export const gateApi = {
 
   // status & policy
   status: (options = {}) => gateRequest('/status', options),
+  getIntegrity: (options = {}) => gateRequest('/integrity', options),
   getPolicy: (options = {}) => gateRequest('/policy', options),
   getUsers: (options = {}) => gateRequest('/users', options),
 

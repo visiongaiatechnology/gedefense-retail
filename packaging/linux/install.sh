@@ -2,7 +2,7 @@
 # GeDefense Retail - Linux installer (inside the release bundle).
 #
 # Installs binaries, example configuration, systemd units, the service users/
-# groups and hardened ownership/permissions (FIND-002). The refrigeration plant
+# groups and hardened ownership/permissions. The refrigeration plant
 # is never touched: this only installs the passive monitoring gateway and the
 # optional access gate.
 #
@@ -91,7 +91,7 @@ if [ -f "$ETC_DIR/retail.json" ]; then
     echo "install: retaild check failed for $ETC_DIR/retail.json" >&2; exit 1; }
 fi
 
-# --- data: owned by the service user, mode 0700 (FIND-002) -------------------
+# --- data: owned by the service user, mode 0700 -------------------
 install -d -m 0700 -o gedefense -g gedefense "$DATA_RETAIL"
 install -d -m 0700 -o gedefense-gate -g gedefense-gate "$DATA_GATE"
 install -d -m 0750 -o gedefense -g gedefense "$LOG_DIR"

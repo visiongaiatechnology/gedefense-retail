@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "last_checked": "2026-11-03",
-  "generated_by": "ot-researcher / VGT GeDefense Retail (task-1)",
+  "generated_by": "VisionGaiaTechnology GeDefense Retail",
   "notes": "Regulatorischer Kontext fuer die Produktgrenzen von GeDefense Retail. Keine Rechtsberatung. Jede Aussage mit Quelle; Unsicheres ist ueber confidence/verification markiert. Schema-Dokumentation: docs/retail/vendor-landscape.md Abschnitt 0.",
   "product_boundary_summary": [
     "GeDefense Retail ist ein passives Monitoring-/Detection-System und kein Ersatz fuer Anlagensteuerung, HACCP-System, amtliche Kontrollen oder eine unabhaengige Temperaturueberwachung.",

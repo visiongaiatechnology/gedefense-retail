@@ -24,7 +24,7 @@
   binding, lockout, short-lived sessions.
 - Setup wizard: available only from loopback and only until setup is completed.
 
-## Write enforcement: read-before-write (0.2.0-alpha.8)
+## Write enforcement: read-before-write (0.3.0-alpha.1)
 
 - **Modbus TCP only:** immediately before forwarding a write, the gate re-reads the current value
   (FC3 for holding registers, FC1 `read_coils` for coil writes) and compares it with the value bound
@@ -48,7 +48,7 @@
 - Real controller/firmware semantics of the re-read are **not tested** in this alpha (fake devices,
   loopback).
 
-## Vendor catalog and packaged data (0.2.0-alpha.8)
+## Vendor catalog and packaged data (0.3.0-alpha.1)
 
 - The release bundle ships `data/ot-catalog/` (`vendors.json`, `write-surface.json`,
   `regulatory-context.json`).
@@ -63,7 +63,7 @@
   requests receive `401`. `retaild check` reports catalog problems only as warnings in `warnings[]`
   and does not change `ok` or check results.
 
-## Release integrity and signatures (0.2.0-alpha.8)
+## Release integrity and signatures (0.3.0-alpha.1)
 
 - Archives, `SHA256SUMS`, `SHA256SUMS.archives` and `SBOM.spdx.json` are published with cosign
   **keyless** signatures (`*.sig`/`*.pem`), together with `SHA256SUMS` / `SHA256SUMS.archives`;
@@ -100,6 +100,46 @@
 - Operator duty: graceful service stops, maintenance windows, verify the audit chain on start. A
   complete incident-response/forensics runbook is **not** part of this alpha.
 
+## Setpoint integrity and automatic recovery (0.3.0-alpha.1)
+
+- Optional `integrity` block in `gate.json`: references (target/fc/register/unit/value/scale/recovery),
+  polling (`poll_interval`, `confirm_reads`, `stale_after`) and recovery limits
+  (`max_actions_per_hour/day`, `cooldown_s`, `require_no_active_window`).
+- The worker re-reads references per FC3 and confirms deviations before raising
+  `gate.integrity.mismatch`. **Automatic recovery is opt-in and disabled by default**; it writes only
+  explicitly marked references (FC6), without an active plan/session, rate-limited/cooldown, with
+  read-back and audit (`gate.recovery.applied|failed|unknown`).
+- **Limits:** recovery is not evidence about who wrote outside the gate and does not eliminate the
+  read→write (TOCTOU) window; HTTP writes have no generic value re-check; monitoring covers only
+  configured Modbus references. `failed`/`unknown` recovery requires an operator decision.
+
+
+**Fail-safe / audit / retry semantics:** recovery is skipped entirely while the gate fail-safe sets
+`AllowWrite=false` (audit store failure/full, clock jump, unreadable stores, network split, gate core
+down). Recovery requires a successful audit intent; if the audit append fails after a write, the
+action is `gate.recovery.unknown` and there is **no automatic retry**. One recovery attempt per
+confirmed mismatch, no flapping loop. Read→write is not atomic (TOCTOU residual). Only Modbus
+FC3/FC6 references are covered; HTTP has no integrity/recovery. `require_no_active_window` is
+mandatory true when recovery is enabled; the kill switch is `integrity.recovery.enabled=false`.
+
+## Network enforcement and bypass detection (0.3.0-alpha.1)
+
+- `retailgate netpolicy` generates/applies nftables or iptables rules: new connections to controllers
+  are accepted only from the `--gate-source` CIDRs; everything else is dropped and logged. Rules live
+  in their own table/chain; `--check`, `--out`, `--apply` and `--rollback` are supported.
+- **Precondition/limit:** it only enforces on the gate host and assumes routing/NAT/bridge and correct
+  segmentation are configured there. It is **not** a router and cannot remove bypass paths outside
+  the gate host.
+- `retaild` `bypass: {enabled, gate_source_cidrs}` validates its CIDR list even when disabled
+  (`enabled:true` without a valid list refuses to start; `retaild check` fails). Passive write
+  attempts from non-gate sources raise `retail.bypass-suspected` (critical, category `access`, rule
+  version 1) with evidence/facts/hypothesis/recommendations and dedup
+  `retail.bypass-suspected|<site>|<source>|<target>|<register>`; gate sources and reads produce no
+  bypass alert. It is an adapter/gate-signal rule, not part of the passive rule pack (15 rules).
+- **Limit:** passive observation proves only the write attempt and the source being outside the gate
+  CIDRs — not the actor, approval or a proven segmentation gap. The alert is a hypothesis and a
+  verification order; no attribution claim, no prevention.
+
 ## Known alpha limitations
 
 - Verified against fake controllers and supervisors on loopback, **not** against real store hardware.
@@ -107,6 +147,9 @@
 - TOTP is not phishing-resistant (WebAuthn/FIDO2 planned).
 - Network segmentation and the removal of bypass paths (service laptops, legacy VPNs, vendor
   cloud portals) remain operator responsibilities; GeDefense can only make bypasses visible.
+- Automatic recovery is opt-in and does not prove that nobody wrote outside the gate; netpolicy only
+  enforces on the gate host and requires correct routing/segmentation; bypass alerts are passive
+  signals, not attribution proof.
 - The management path must actually be routed through `retailgate`; without that, enforcement is
   not effective.
 - Certificate pinning and CGI parameter allowlists are implemented in the proxy but not yet

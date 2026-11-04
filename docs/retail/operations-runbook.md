@@ -1,4 +1,4 @@
-# Operations Runbook — GeDefense Retail (Alpha 0.2.0-alpha.8)
+# Operations Runbook — GeDefense Retail (Alpha 0.3.0-alpha.1)
 
 **Status:** Betriebsanleitung für Filiale/Technik · **Stand:** 2026-11-03
 **Produkt:** GeDefense Retail 0.1.0 — ColdChain & Store Infrastructure Security (VisionGaiaTechnology)
@@ -322,7 +322,7 @@ Compliance-Behauptung aus GeDefense-Ausgaben ableiten.
 
 ---
 
-## 12. Read-before-Write und Vendor-Katalog (Alpha 0.2.0-alpha.8)
+## 12. Read-before-Write und Vendor-Katalog (Alpha 0.3.0-alpha.1)
 
 - **Modbus:** Vor jedem freigegebenen Write liest das Gate den CurrentValue erneut.
   `current_value_missing|mismatch|unreadable` ⇒ Deny + Audit, keine automatische Wiederholung.
@@ -332,3 +332,61 @@ Compliance-Behauptung aus GeDefense-Ausgaben ableiten.
   unbekannte Assets bleiben unbekannt.
 - Bei Katalog-/Datenupdates Paketversion dokumentieren, Audit prüfen und keine Schreibfreigabe
   daraus ableiten.
+
+---
+
+## 13. Setpoint-Integrität, Recovery, Netpolicy und Bypass (Alpha 0.3.0-alpha.1)
+
+### 13.1 Mismatch und Recovery
+
+- `gate.integrity.mismatch` prüfen: Referenz (`target_id`, `fc`, `register`, `value/scale`), letzten
+  Ist-Wert, `last_checked`/`stale_after`, ob ein Wartungsfenster aktiv war.
+- Bei `gate.recovery.applied`: Read-back und Audit prüfen; Recovery nur bestätigen, wenn der
+  Referenzwert fachlich richtig ist.
+- Bei `gate.recovery.failed`: Ursache (Gerät/Read/Write/Fenster) klären, **keine** Wiederholung
+  erzwingen; Referenz/Policy korrigieren und erneut freigeben.
+- Bei `gate.recovery.unknown`: schreibenden Zustand als unklar behandeln, sofort Geräte-Read-back,
+  Betreiber informieren, `write_unknown`-Semantik anwenden, keine automatische Wiederholung.
+- **Kill-Switch:** `integrity.recovery.enabled=false` setzen, Gate neu starten/laden; Monitoring und
+  Audit laufen weiter. Rate-Limits/Cooldown (`max_actions_per_hour/day`, `cooldown_s`) nicht
+  umgehen; aktive Fenster blockieren Recovery (`require_no_active_window`).
+
+### 13.2 Netpolicy
+
+- `retailgate netpolicy --check` vor Apply; Regelset prüfen, Rollback bereithalten.
+- `--apply` nur im Wartungsfenster; danach Verbindungen von Gate-CIDRs testen und Drop-Logs
+  beobachten. `--rollback` bei Fehlern; Routing/Segmentierung bleibt Betreiberaufgabe.
+
+### 13.3 Bypass
+
+- Konfiguration `bypass.gate_source_cidrs`: CIDR/Einzel-IP (IPv4/IPv6), max. 64, keine normalisierten
+  Duplikate, keine IPv6-Zonen; Einträge werden auch bei `enabled=false` validiert, unbekannte Felder
+  sind Fehler. `enabled=true` ohne gültige Liste ⇒ Start verweigert, `retaild check` Exit ≠ 0.
+- `retail.bypass-suspected` (critical, Kategorie `access`, Rule-Version 1) bedeutet: passiver
+  Schreibversuch (`write_attempt`) von einer Quelle **außerhalb** `gate_source_cidrs`. Gate-Quellen
+  und Reads erzeugen keinen Bypass-Alert.
+- Alert enthält Evidence/Fakten/Hypothese/Prüfempfehlungen; Dedup
+  `retail.bypass-suspected|<site>|<source>|<target>|<register>` (ein offener Alert pro Kombination,
+  Schreib-Storm erzeugt keinen Alert-Flood). Einspeisung in normale Alert-Engine/Korrelation/Incidents.
+- Triage: Quelle/Zeit/Ziel/Register und Geräte-Logs prüfen; Freigaben/Sessions korrelieren; keine
+  Attributionsbehauptung ohne Evidenz. Die Regel ist eine Adapter-/Gate-Signal-Regel (nicht Teil des
+  passiven Rule-Packs, 15 Regeln); UI-Label fällt bis zum Locale-Merge auf den Server-Titel zurück.
+- **Grenze:** belegt sind nur Schreibversuch und Quelle außerhalb der Gate-CIDRs — nicht Urheber,
+  Freigabe oder eine bewiesene Segmentierungslücke. Alert ist Prüfauftrag, keine Prävention.
+
+### 13.4 Betreiber-Checkliste Integrity/Recovery
+
+- **Config:** `integrity.enabled`, `poll_interval_s`, `confirm_reads`, `stale_after_s`,
+  `references[]` (`target_id`, `fc=3`, `register` im Read-Window, `value`, `scale`, `unit`, `note`,
+  `recovery`), `recovery.enabled` Default false, `max_actions_per_hour/day`, `cooldown_s`,
+  `require_no_active_window` (bei Recovery true verpflichtend).
+- **Fail-safe:** bei `AllowWrite=false` keine Reads/Recovery.
+- **Audit:** Recovery nur mit erfolgreichem Audit-Intent; Audit-Fehler nach Write ⇒
+  `gate.recovery.unknown`, kein Retry.
+- **Ein Versuch pro bestätigtem Mismatch**, keine Flapping-Schleife; FC3-Re-Read vor FC6, nicht
+  atomar (TOCTOU-Restfenster).
+- **Kill-Switch:** `recovery.enabled=false` + Reload/Restart; Limits/Cooldown beachten.
+- **Eskalation:** `gate.recovery.failed|unknown` an Betreiber; Audit-Events
+  `gate.integrity.mismatch`, `gate.recovery.applied|failed|unknown`.
+- **Grenze:** Referenzwerte = Betreiber-Freigabe, kein Compliance-Beweis; nur Modbus FC3/FC6, HTTP
+  ohne Integrity/Recovery.

@@ -69,6 +69,18 @@ async function handleGateRequest(path, method, params, init, config) {
   if (gatePath === '/status' && method === 'GET') {
     return jsonResponse(await gateFixture('status.json', config.state));
   }
+  if (gatePath === '/integrity' && method === 'GET') {
+    if (config.state === 'empty') {
+      return jsonResponse({
+        enabled: false,
+        interval_s: 0,
+        references: [],
+        recovery: { enabled: false, actions_last_hour: 0, actions_last_day: 0 },
+        reason: 'disabled',
+      });
+    }
+    return jsonResponse(await gateFixture('integrity.json', config.state));
+  }
   if (gatePath === '/policy' && method === 'GET') {
     return jsonResponse(await gateFixture('policy.json', config.state));
   }

@@ -1,4 +1,4 @@
-# Pilot-Abnahme — GeDefense Retail (Alpha 0.2.0-alpha.8)
+# Pilot-Abnahme — GeDefense Retail (Alpha 0.3.0-alpha.1)
 
 **Status:** öffentliche Abnahmegrundlage. Keine echte OT-Hardware, keine Produktionsfreigabe,
 **keine Compliance- oder Zertifizierungsaussage**. Stand: 2026-11-04.

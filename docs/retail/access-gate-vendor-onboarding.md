@@ -1,10 +1,11 @@
 # Access Gate — Vendor-Onboarding und Offboarding (Dienstleister)
 
-**Status:** Alpha 0.2.0-alpha.8 **implementiert** (Gate-E2E 25/25; Details `alpha verification report`); **keine** echte OT-Hardware/Produktionsfreigabe
+**Status:** Alpha 0.3.0-alpha.1 **implementiert** (Gate-E2E 25/25; Details `alpha verification report`); **keine** echte OT-Hardware/Produktionsfreigabe
 **Produkt:** GeDefense Retail Access Gate (`retailgate`) 0.2 Alpha
-**Quellen:** `access-gate-engineering contract` §3/§5/§6, `access-gate-API reference` §1/§3/§4,
-`internal plan` Punkt 6/19, `access-gate-scope.md`, `access-gate-network-blueprint.md`,
-`access-gate-vendor-workflows.md`, `architecture-decisions.md` D-13, `access-gate-policy-reference.md`
+**Quellen:** [deployment-guide.md](deployment-guide.md), [operations-runbook.md](operations-runbook.md),
+[retail-policy-reference.md](retail-policy-reference.md),
+[access-gate-vendor-workflows.md](access-gate-vendor-workflows.md),
+[access-gate-api-contract.md](access-gate-api-contract.md)
 
 > **Zweck:** Ein Dienstleister (Kälte-/Anlagentechnik) erhält **keinen** direkten Gerätezugang.
 > Er erhält ein lokales Gate-Konto, MFA, ein clientzertifikatgebundenes Gerät, ein Ticket und — pro
@@ -15,8 +16,8 @@
 >
 > **Grenzen:** Dieser Prozess ist **kein** Ersatz für Betreiber-Freigabe, HACCP oder Hersteller-
 > Support. Er erzeugt **keine** Compliance-Aussage. Das Gate ist **opt-in**; die S-01-Ausnahme nur
-> für `retailgate` ist in **ADR D-13** begründet (Autorisations-Proxy). Die Alpha ist implementiert
-> (0.2.0-alpha.8, Gate-E2E 25/25), aber **nicht** gegen echte OT-Hardware/Produktion verifiziert —
+> für `retailgate` ist durch das Gate-Design begründet (Autorisations-Proxy). Die Alpha ist implementiert
+> (0.3.0-alpha.1, Gate-E2E 25/25), aber **nicht** gegen echte OT-Hardware/Produktion verifiziert —
 > Schritte bleiben bis Pilot/Retest **Soll-Prozess**.
 
 ---
@@ -79,7 +80,7 @@ die Identität an. **Kein** Konto auf Zuruf, keine Sammelkonten.
 - TOTP-Secret über `retailgate totp` erzeugen; Übergabe an die Person über sicheren Kanal
   (Passwortmanager/QR), danach Secret nur in `gate.json` (Datei 0600).
 - **OFFEN (Implementierung):** exakte CLI-Flags von `retailgate hash-password/totp` sind im
-  Engineering Contract nur als Subkommandos benannt — bei Implementierung verifizieren.
+  Gate-Contract nur als Subkommandos benannt — bei Implementierung verifizieren.
 
 ### Schritt 3 — MFA einrichten
 
@@ -198,7 +199,7 @@ direkte Modbus-/HTTP-Verbindung zum Regler haben; der einzige Weg ist das Gate.
 - Konto-Datensatz (ohne Secrets), Rollen, Zeitraum, Vertretung, Gerät/Fingerprint.
 - Ticket + Plan + Freigaben + Token-Ausgabezeit + Session + Nachher-Werte.
 - Gate-Audit (`gate.write.allowed`, `gate.write.denied`, Plan-/Session-Events) — Retention gemäß
-  Engineering Contract §6 (Audit 365 Tage, Denies 180 Tage, Pläne 365 Tage, konfigurierbar).
+  Gate-Contract §6 (Audit 365 Tage, Denies 180 Tage, Pläne 365 Tage, konfigurierbar).
 - **Keine** Klartext-Secrets in Nachweisen. Audit ist hash-chained und manipulationserschwerend.
 
 ---

@@ -97,6 +97,7 @@ type gate struct {
 	fsState    atomic.Value // failsafe.Result
 	targets    *targets.Registry
 	api        *api.Server
+	integrity  *integrityWorker
 	apiSrv     *http.Server
 	apiLn      net.Listener
 	audit      *auditSink
@@ -276,6 +277,9 @@ func (g *gate) serve(ctx context.Context) error {
 	if err := tr.Start(ctx); err != nil {
 		return fmt.Errorf("start targets: %w", err)
 	}
+	if g.cfg.Integrity != nil && g.cfg.Integrity.Enabled {
+		g.startIntegrity(ctx)
+	}
 
 	server, err := api.New(api.Deps{
 		Info: api.Info{
@@ -302,6 +306,12 @@ func (g *gate) serve(ctx context.Context) error {
 		Escalations: &api.EscalationHooks{
 			List: g.listEscalations,
 			Ack:  g.ackEscalation,
+		},
+		Integrity: func() api.IntegrityStatus {
+			if g.integrity == nil {
+				return api.IntegrityStatus{Enabled: false, References: []api.IntegrityReferenceStatus{}}
+			}
+			return g.integrity.Status()
 		},
 	})
 	if err != nil {

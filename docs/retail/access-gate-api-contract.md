@@ -1,4 +1,4 @@
-# Access Gate — API-Contract (Alpha 0.2.0-alpha.8)
+# Access Gate — API-Contract (Alpha 0.3.0-alpha.1)
 
 Öffentliche Kurzfassung des Gate-API-Contracts. Sie beschreibt das **Verhalten**, nicht interne
 Implementierungsdetails. Ergänzende Dokumente: [DEPLOYMENT.md](../DEPLOYMENT.md),
@@ -83,3 +83,49 @@ keine Garantie „TOCTOU-frei".
 
 Dieser Contract ist eine technische Verhaltensbeschreibung der Alpha. Er ist keine HACCP-, NIS2-,
 IEC-62443- oder sonstige Zertifizierungs-/Konformitätsaussage.
+
+---
+
+## Integrität, Recovery und Netzwerk-Enforcement (Alpha 0.3.0-alpha.1)
+
+### Setpoint-Integrität
+
+`GET /api/v1/gate/integrity` (viewer/approver/master/auditor) liefert die `integrity`-Referenzen mit
+Ziel/FC/Register/Unit, erwartetem Wert/Scale, letztem Ist-Wert/Zustand, letzter Prüfung und
+Recovery-Statistik (Aktionen Stunde/Tag, Cooldown, letzter
+`gate.recovery.applied|failed|unknown`). SSE-Clients erhalten `gate_integrity`-Events.
+
+```json
+"integrity": {
+  "enabled": true, "poll_interval_s": 60, "confirm_reads": 3, "stale_after_s": 180,
+  "references": [{"target_id":"aksm-1","fc":3,"register":40002,"unit_id":1,
+                  "value":"4.0","scale":0.1,"unit":"celsius",
+                  "note":"Sollwert Fleischraum","recovery":true}],
+  "recovery": {"enabled": false, "max_actions_per_hour": 3, "max_actions_per_day": 10,
+               "cooldown_s": 600, "require_no_active_window": true}
+}
+```
+
+- **Config/Validierung:** `enabled=true` braucht mindestens eine Referenz; `poll_interval_s` 10–86400,
+  `confirm_reads` 1–5, `stale_after_s` > `poll_interval_s`; Referenz-Target `modbus_tcp`, `fc=3`,
+  `register` im `read_registers`-Fenster, `value` numerisch/uint16-fähig, keine Duplikate
+  (`target_id, unit_id, register`). `recovery.enabled` Default **false**; bei Aktivierung
+  `max_actions_per_hour/day` ≥1 (Stunde ≤ Tag), `cooldown_s` ≥60,
+  **`require_no_active_window=true` verpflichtend**.
+- **Fail-safe:** bei Gate-`AllowWrite=false` keine Integrity-Reads/Recovery.
+- **Audit-fail-closed:** ohne Audit-Intent kein Recovery-Write; Audit-Fehler nach dem Write ⇒
+  `gate.recovery.unknown`, **kein Retry**.
+- **Ein Versuch pro bestätigtem Mismatch** (keine Flapping-Schleife); FC3-Re-Read vor FC6 ist
+  **nicht atomar** (TOCTOU-Restfenster).
+- **Recovery** nur für `"recovery": true`-Referenzen, ohne Plan/Session, mit Rate-Limit/Cooldown und
+  Read-back; `failed`/`unknown` erfordern Betreiberaktion. Kill-Switch:
+  `recovery.enabled=false` + Reload/Restart.
+- **Grenzen:** kein Beweis über externe Schreiber, nur Modbus FC3/FC6 (HTTP ohne
+  Integrity/Recovery), Referenzwerte sind Betreiber-Freigabe (kein HACCP-/Compliance-Beweis).
+
+### Netzwerk-Enforcement
+
+`retailgate netpolicy --config gate.json --format nftables|iptables --gate-source <CIDR>
+[--out FILE] [--check] [--apply] [--rollback]` akzeptiert neue Verbindungen zu Reglern nur von
+Gate-Quell-CIDRs (sonst drop + Log), eigene Table/Chain. Voraussetzung: Routing/NAT/Bridge und
+Segmentierung am Gate-Host; kein Router-Feature, Wirkung nur auf dem Gate-Host.

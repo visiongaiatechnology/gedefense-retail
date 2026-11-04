@@ -63,6 +63,41 @@ func (c Config) Validate() error {
 	if err := c.validateSecurity(); err != nil {
 		return err
 	}
+	if err := c.validateBypass(); err != nil {
+		return err
+	}
+	return nil
+}
+
+// validateBypass enforces the fail-closed bypass configuration. An omitted block
+// (nil) keeps the feature disabled; an enabled block requires at least one valid,
+// unique IPv4/IPv6 gate source. Entries are validated even when the feature is
+// disabled so that a typo cannot silently hide a broken configuration.
+func (c Config) validateBypass() error {
+	if c.Bypass == nil {
+		return nil
+	}
+	if len(c.Bypass.GateSourceCIDRs) > 64 {
+		return fmt.Errorf("%w: bypass.gate_source_cidrs allows at most 64 entries", ErrInvalidConfig)
+	}
+	if c.Bypass.Enabled && len(c.Bypass.GateSourceCIDRs) == 0 {
+		return fmt.Errorf("%w: bypass.enabled=true requires at least one bypass.gate_source_cidrs entry (fail-closed)", ErrInvalidConfig)
+	}
+	seen := make(map[string]struct{}, len(c.Bypass.GateSourceCIDRs))
+	for i, raw := range c.Bypass.GateSourceCIDRs {
+		prefix, addr, err := parseWhitelistEntry(raw)
+		if err != nil {
+			return fmt.Errorf("%w: bypass.gate_source_cidrs[%d]: %v", ErrInvalidConfig, i, err)
+		}
+		if addr.Zone() != "" {
+			return fmt.Errorf("%w: bypass.gate_source_cidrs[%d]: IPv6 zone identifiers are not supported", ErrInvalidConfig, i)
+		}
+		normalized := prefix.String()
+		if _, dup := seen[normalized]; dup {
+			return fmt.Errorf("%w: bypass.gate_source_cidrs[%d]: duplicate entry %q", ErrInvalidConfig, i, normalized)
+		}
+		seen[normalized] = struct{}{}
+	}
 	return nil
 }
 

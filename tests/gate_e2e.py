@@ -58,6 +58,9 @@ def main() -> int:
              "listen": f"127.0.0.1:{MODBUS_PORT}", "upstream": f"127.0.0.1:{MODBUS_UPSTREAM}",
              "unit_id": 1, "timeout_s": 5, "read_registers": {"fc": 3, "start": 0, "count": 64},
              "read_coils": {"fc": 1, "start": 0, "count": 8}},
+            {"target_id": "cold-1", "asset_id": "asset-danfoss-aksm800", "protocol": "modbus_tcp",
+             "listen": f"127.0.0.1:{MODBUS2_PORT}", "upstream": f"127.0.0.1:{MODBUS2_UPSTREAM}",
+             "unit_id": 1, "timeout_s": 5, "read_registers": {"fc": 3, "start": 0, "count": 64}},
             {"target_id": "xweb-1", "asset_id": "asset-dixell-xweb", "protocol": "http",
              "listen": f"127.0.0.1:{HTTP_PROXY_PORT}", "upstream": f"http://127.0.0.1:{HTTP_UPSTREAM}",
              "ca_file": "", "insecure_skip_verify": False,
@@ -67,6 +70,12 @@ def main() -> int:
         "users": users,
         "notify": {"webhook_url": f"http://127.0.0.1:{WEBHOOK_PORT}/hook", "hmac_secret": "e2e-secret-0123456789abcdef",
                    "timeout_s": 5, "escalation": [{"after_minutes": 5, "role": "approver"}]},
+        "integrity": {"enabled": True, "poll_interval_s": 10, "confirm_reads": 2, "stale_after_s": 60,
+                      "references": [{"target_id": "cold-1", "fc": 3, "register": 40001, "unit_id": 1,
+                                      "value": "4.0", "scale": 0.1, "unit": "celsius",
+                                      "note": "E2E Referenz Kuehlraum", "recovery": True}],
+                      "recovery": {"enabled": True, "max_actions_per_hour": 1, "max_actions_per_day": 2,
+                                   "cooldown_s": 60, "require_no_active_window": True}},
     }
     policy = {
         "policy_id": "gate-policy-filiale-001", "version": 1,
@@ -89,6 +98,10 @@ def main() -> int:
 
     mon = FakeModbus(MODBUS_UPSTREAM)
     mon.start()
+    mon2 = FakeModbus(MODBUS2_UPSTREAM)
+    with mon2.lock:
+        mon2.registers[40001] = 300  # 30.0 degC external drift vs 4.0 reference
+    mon2.start()
     http_upstream = ThreadingHTTPServer(("127.0.0.1", HTTP_UPSTREAM), FakeSupervisor)
     start_threaded(http_upstream)
     webhook = ThreadingHTTPServer(("127.0.0.1", WEBHOOK_PORT), Webhook)
@@ -139,6 +152,17 @@ def main() -> int:
         master_tok = (json.loads(raw) if st == 200 else {}).get("session_token", "")
         check("G-05", "Approver- und Master-Login", bool(approver_tok) and bool(master_tok))
 
+        def approve_with_mfa(plan_id: str, tok: str, secret: str, comment: str):
+            """Approve with a fresh TOTP window; retry once on a replay/403 flake."""
+            result = (0, None)
+            for _ in range(2):
+                wait_next_totp_window()
+                result = jpost(f"/api/v1/gate/plans/{plan_id}/approve", tok, {"comment": comment},
+                               headers={"X-Gate-MFA": totp(secret)})
+                if result[0] == 200:
+                    return result
+            return result
+
         # --- Plan ---
         now = time.time()
         plan_body = {
@@ -174,15 +198,11 @@ def main() -> int:
         st, _ = jpost(f"/api/v1/gate/plans/{plan_id}/approve", approver_tok, {"comment": "ohne MFA"})
         check("G-10", "Freigabe ohne MFA -> 403", st == 403, f"status={st}")
 
-        wait_next_totp_window()
-        st, first = jpost(f"/api/v1/gate/plans/{plan_id}/approve", approver_tok, {"comment": "1. Augen"},
-                          headers={"X-Gate-MFA": totp(secrets["approver-01"][0])})
+        st, first = approve_with_mfa(plan_id, approver_tok, secrets["approver-01"][0], "1. Augen")
         first_token = (first or {}).get("token") if isinstance(first, dict) else None
         check("G-11", "Erste Vier-Augen-Freigabe: kein Token", st == 200 and not first_token, f"status={st}")
 
-        wait_next_totp_window()
-        st, final = jpost(f"/api/v1/gate/plans/{plan_id}/approve", master_tok, {"comment": "2. Augen"},
-                          headers={"X-Gate-MFA": totp(secrets["master-01"][0])})
+        st, final = approve_with_mfa(plan_id, master_tok, secrets["master-01"][0], "2. Augen")
         token = ((final or {}).get("token") or {}).get("token", "") if isinstance(final, dict) else ""
         check("G-12", "Zweite Freigabe (Master) liefert Einmal-Token", st == 200 and bool(token), f"status={st}")
 
@@ -228,12 +248,8 @@ def main() -> int:
             pid = (plan2 or {}).get("plan", {}).get("plan_id", "") if isinstance(plan2, dict) else ""
             if not pid:
                 return "", ""
-            wait_next_totp_window()
-            st1, _ = jpost(f"/api/v1/gate/plans/{pid}/approve", approver_tok, {"comment": "1. Augen"},
-                  headers={"X-Gate-MFA": totp(secrets["approver-01"][0])})
-            wait_next_totp_window()
-            st2, final2 = jpost(f"/api/v1/gate/plans/{pid}/approve", master_tok, {"comment": "2. Augen"},
-                                headers={"X-Gate-MFA": totp(secrets["master-01"][0])})
+            _st1, _ = approve_with_mfa(pid, approver_tok, secrets["approver-01"][0], "1. Augen")
+            _st2, final2 = approve_with_mfa(pid, master_tok, secrets["master-01"][0], "2. Augen")
             tok2 = ((final2 or {}).get("token") or {}).get("token", "") if isinstance(final2, dict) else ""
             time.sleep(6)
             sts, sess2 = jpost("/api/v1/gate/sessions", vendor_tok, {"plan_id": pid, "token": tok2})
@@ -254,12 +270,8 @@ def main() -> int:
             if not pid:
                 print(f"        [debug] plan rejected status={stp} body={str(plan3)[:200]}")
                 return "", ""
-            wait_next_totp_window()
-            jpost(f"/api/v1/gate/plans/{pid}/approve", approver_tok, {"comment": "1. Augen"},
-                  headers={"X-Gate-MFA": totp(secrets["approver-01"][0])})
-            wait_next_totp_window()
-            _st2, final3 = jpost(f"/api/v1/gate/plans/{pid}/approve", master_tok, {"comment": "2. Augen"},
-                                 headers={"X-Gate-MFA": totp(secrets["master-01"][0])})
+            _st1, _ = approve_with_mfa(pid, approver_tok, secrets["approver-01"][0], "1. Augen")
+            _st2, final3 = approve_with_mfa(pid, master_tok, secrets["master-01"][0], "2. Augen")
             tok3 = ((final3 or {}).get("token") or {}).get("token", "") if isinstance(final3, dict) else ""
             time.sleep(6)
             _sts, sess3 = jpost("/api/v1/gate/sessions", vendor_tok, {"plan_id": pid, "token": tok3})
@@ -364,6 +376,33 @@ def main() -> int:
         except Exception as exc:  # noqa: BLE001
             check("G-22", "HTTP-Proxy liefert Gate-Login", False, repr(exc))
 
+        # --- 0.3 Setpoint Integrity + Automatic Recovery (cold-1 reference) ---
+        recovered = False
+        last_status = None
+        deadline = time.time() + 70
+        while time.time() < deadline:
+            st, integ = jget("/api/v1/gate/integrity", approver_tok)
+            last_status = integ
+            refs = (integ or {}).get("references", []) if isinstance(integ, dict) else []
+            if st == 200 and refs:
+                rec = refs[0].get("recovery", {})
+                if refs[0].get("state") == "ok" and rec.get("last_result") == "applied":
+                    recovered = True
+                    break
+            time.sleep(1)
+        check("G-31", "Integritaets-Worker + Automatic Recovery (Drift 30.0 -> Referenz 4.0)",
+              recovered and any(w[1] == 40 for w in mon2.writes),
+              f"status={last_status} writes={mon2.writes}")
+        st, audit_api = jget("/api/v1/gate/audit?limit=200", master_tok)
+        audit_raw = json.dumps(audit_api or {})
+        check("G-32", "Audit enthaelt gate.recovery.applied", "gate.recovery.applied" in audit_raw)
+        with mon2.lock:
+            mon2.registers[40001] = 300
+        writes_before = len(mon2.writes)
+        time.sleep(25)
+        check("G-33", "Cooldown/Rate-Limit verhindert zweite Recovery",
+              len(mon2.writes) == writes_before, f"writes={mon2.writes}")
+
         # --- Fail-safe: gate down -> management closed, plant unaffected ---
         gate.terminate()
         try:
@@ -401,6 +440,7 @@ def main() -> int:
         stdout.close()
         stderr.close()
         mon.stop()
+        mon2.stop()
         http_upstream.shutdown()
         webhook.shutdown()
 

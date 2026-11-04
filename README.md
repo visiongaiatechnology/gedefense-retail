@@ -60,6 +60,27 @@ It ships as two separate services:
   audit log; the gate refuses to start on a broken chain.
 
 <a id="features"></a>
+## Supported manufacturers and models
+
+Passive discovery and advisory cover the DE/EU supermarket OT landscape below. **Documented** means the manufacturer/model and management interface are verified in the OT catalog; **catalog only** means the manufacturer is listed without verified management-interface details; **component only** means no own IP stack is assumed. GeDefense never approves writes automatically — the Access Gate forwards only exact, operator-approved operations.
+
+| Manufacturer | Models / families | Integration |
+|---|---|---|
+| Danfoss | AK-SM 800 / 800A, AK-SC 355, AK-PC 781 | documented |
+| Copeland | XWEB 500, E2, E3 Site Supervisor | documented |
+| Dixell (Copeland) | XWEB | documented |
+| Carel | pCO / pCO5+, Compressor Rack / Total Store (pRack / μRack as unverified synonyms), RED/tERA cloud | portfolio documented; protocols unverified |
+| RDM | Intuitive Supervisor | catalog only |
+| Eliwell | Refrigeration controllers | catalog only |
+| TEKO | Refrigeration controllers | catalog only |
+| Bitzer | Compressors (no IP stack) | component only |
+| GEA | Refrigeration systems | component only |
+| Günther | Heat exchangers / condensers | component only |
+| Wurm | Refrigeration systems | component only |
+| Systemair | Ventilation / HVAC | component only |
+
+**Protocols:** Modbus TCP, BACnet/IP, MQTT, SNMPv3 and HTTP(S) management interfaces are implemented for passive discovery. BACnet MSTP and SOAP/XML are documented for specific supervisors; LON/proprietary fieldbuses have no adapter in this alpha. OUI/MAC vendor mapping is intentionally not claimed.
+
 ## Features
 
 ### ColdChain monitoring (`retaild`, passive/read-only)

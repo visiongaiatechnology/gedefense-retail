@@ -57,6 +57,27 @@ GeDefense Retail 保护并记录超市背后的基础设施：制冷控制器、
   Access Gate 将拒绝启动。
 
 <a id="features"></a>
+## 支持的制造商与型号
+
+被动发现与建议覆盖以下 DE/EU 超市 OT 环境。**已记录**表示厂商/型号与管理接口已在 OT 目录中验证；**仅目录**表示厂商已列出但管理接口细节未经验证；**仅组件**表示不假设其拥有独立 IP 栈。GeDefense 不会自动批准写入——Access Gate 仅转发经操作员批准的精确操作。
+
+| 制造商 | 型号 / 系列 | 集成 |
+|---|---|---|
+| Danfoss | AK-SM 800 / 800A, AK-SC 355, AK-PC 781 | 已记录 |
+| Copeland | XWEB 500, E2, E3 Site Supervisor | 已记录 |
+| Dixell (Copeland) | XWEB | 已记录 |
+| Carel | pCO / pCO5+, Compressor Rack / Total Store (pRack / μRack as unverified synonyms), RED/tERA cloud | 产品组合已记录；协议未验证 |
+| RDM | Intuitive Supervisor | 仅目录 |
+| Eliwell | Refrigeration controllers | 仅目录 |
+| TEKO | Refrigeration controllers | 仅目录 |
+| Bitzer | Compressors (no IP stack) | 仅组件 |
+| GEA | Refrigeration systems | 仅组件 |
+| Günther | Heat exchangers / condensers | 仅组件 |
+| Wurm | Refrigeration systems | 仅组件 |
+| Systemair | Ventilation / HVAC | 仅组件 |
+
+**协议：** Modbus TCP、BACnet/IP、MQTT、SNMPv3 和 HTTP(S) 管理接口已实现被动发现。BACnet MSTP 和 SOAP/XML 已针对特定监控器记录；LON/专有现场总线在此 Alpha 中无适配器。OUI/MAC 厂商映射有意不作声明。
+
 ## 功能
 
 ### ColdChain 监控（`retaild`，被动/只读）

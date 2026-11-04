@@ -60,6 +60,27 @@ GeDefense Retail は、スーパーマーケットの背後にあるインフラ
   チェーンが壊れている場合、ゲートは起動を拒否します。
 
 <a id="features"></a>
+## 対応メーカーとモデル
+
+パッシブ検出とアドバイザリは、以下の DE/EU スーパーマーケット OT 環境を対象とします。**文書化済み**は、ベンダー/モデルと管理インターフェースが OT カタログで検証済みであることを意味します。**カタログのみ**は、管理インターフェースの詳細が未検証のまま掲載されていることを意味します。**コンポーネントのみ**は、独自 IP スタックを想定しないことを意味します。GeDefense は書き込みを自動承認しません。Access Gate は、オペレーターが承認した正確な操作のみを転送します。
+
+| メーカー | モデル / ファミリー | 統合 |
+|---|---|---|
+| Danfoss | AK-SM 800 / 800A, AK-SC 355, AK-PC 781 | 文書化済み |
+| Copeland | XWEB 500, E2, E3 Site Supervisor | 文書化済み |
+| Dixell (Copeland) | XWEB | 文書化済み |
+| Carel | pCO / pCO5+, Compressor Rack / Total Store (pRack / μRack as unverified synonyms), RED/tERA cloud | ポートフォリオは文書化済み、プロトコルは未検証 |
+| RDM | Intuitive Supervisor | カタログのみ |
+| Eliwell | Refrigeration controllers | カタログのみ |
+| TEKO | Refrigeration controllers | カタログのみ |
+| Bitzer | Compressors (no IP stack) | コンポーネントのみ |
+| GEA | Refrigeration systems | コンポーネントのみ |
+| Günther | Heat exchangers / condensers | コンポーネントのみ |
+| Wurm | Refrigeration systems | コンポーネントのみ |
+| Systemair | Ventilation / HVAC | コンポーネントのみ |
+
+**プロトコル:** Modbus TCP、BACnet/IP、MQTT、SNMPv3、HTTP(S) 管理インターフェースはパッシブ検出用に実装済みです。BACnet MSTP と SOAP/XML は特定のスーパーバイザ向けに文書化されています。LON/独自フィールドバスはこのアルファ版ではアダプターがありません。OUI/MAC によるベンダー判定は意図的に主張していません。
+
 ## 機能
 
 ### ColdChain モニタリング (`retaild`、パッシブ/読み取り専用)

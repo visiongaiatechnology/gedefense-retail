@@ -62,6 +62,27 @@ GeDefense Retail защищает и документирует инфрастр
   журнал аудита, связанный хеш-цепочкой; при нарушении цепочки Access Gate отказывается запускаться.
 
 <a id="features"></a>
+## Поддерживаемые производители и модели
+
+Пассивное обнаружение и advisory охватывают следующую OT-среду супермаркетов DE/EU. **Документировано** означает, что производитель/модель и интерфейс управления проверены в OT-каталоге; **только каталог** — производитель указан без проверенных деталей интерфейса; **только компонент** — собственный IP-стек не предполагается. GeDefense никогда не одобряет записи автоматически — Access Gate передаёт только точные операции, одобренные оператором.
+
+| Производитель | Модели / семейства | Интеграция |
+|---|---|---|
+| Danfoss | AK-SM 800 / 800A, AK-SC 355, AK-PC 781 | документировано |
+| Copeland | XWEB 500, E2, E3 Site Supervisor | документировано |
+| Dixell (Copeland) | XWEB | документировано |
+| Carel | pCO / pCO5+, Compressor Rack / Total Store (pRack / μRack as unverified synonyms), RED/tERA cloud | портфель документирован; протоколы не проверены |
+| RDM | Intuitive Supervisor | только каталог |
+| Eliwell | Refrigeration controllers | только каталог |
+| TEKO | Refrigeration controllers | только каталог |
+| Bitzer | Compressors (no IP stack) | только компонент |
+| GEA | Refrigeration systems | только компонент |
+| Günther | Heat exchangers / condensers | только компонент |
+| Wurm | Refrigeration systems | только компонент |
+| Systemair | Ventilation / HVAC | только компонент |
+
+**Протоколы:** Modbus TCP, BACnet/IP, MQTT, SNMPv3 и интерфейсы управления HTTP(S) реализованы для пассивного обнаружения. BACnet MSTP и SOAP/XML документированы для отдельных супервизоров; LON/проприетарные полевые шины не имеют адаптера в этой альфе. Сопоставление OUI/MAC намеренно не заявляется.
+
 ## Возможности
 
 ### Мониторинг ColdChain (`retaild`, пассивный/только чтение)

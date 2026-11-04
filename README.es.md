@@ -63,6 +63,27 @@ Se distribuye como dos servicios independientes:
   auditoría encadenado por hash; el gate se niega a arrancar si la cadena está rota.
 
 <a id="features"></a>
+## Fabricantes y modelos compatibles
+
+El descubrimiento pasivo y el asesoramiento cubren el panorama OT de supermercados DE/EU siguiente. **Documentado** significa que el fabricante/modelo y la interfaz de gestión están verificados en el catálogo OT; **solo catálogo** significa que el fabricante figura sin detalles verificados de la interfaz; **solo componente** significa que no se asume una pila IP propia. GeDefense nunca aprueba escrituras automáticamente: el Access Gate solo reenvía operaciones exactas aprobadas por el operador.
+
+| Fabricante | Modelos / familias | Integración |
+|---|---|---|
+| Danfoss | AK-SM 800 / 800A, AK-SC 355, AK-PC 781 | documentado |
+| Copeland | XWEB 500, E2, E3 Site Supervisor | documentado |
+| Dixell (Copeland) | XWEB | documentado |
+| Carel | pCO / pCO5+, Compressor Rack / Total Store (pRack / μRack as unverified synonyms), RED/tERA cloud | portafolio documentado; protocolos sin verificar |
+| RDM | Intuitive Supervisor | solo catálogo |
+| Eliwell | Refrigeration controllers | solo catálogo |
+| TEKO | Refrigeration controllers | solo catálogo |
+| Bitzer | Compressors (no IP stack) | solo componente |
+| GEA | Refrigeration systems | solo componente |
+| Günther | Heat exchangers / condensers | solo componente |
+| Wurm | Refrigeration systems | solo componente |
+| Systemair | Ventilation / HVAC | solo componente |
+
+**Protocolos:** Modbus TCP, BACnet/IP, MQTT, SNMPv3 e interfaces de gestión HTTP(S) están implementados para descubrimiento pasivo. BACnet MSTP y SOAP/XML están documentados para supervisores concretos; LON/buses propietarios no tienen adaptador en esta alfa. La asignación OUI/MAC no se afirma deliberadamente.
+
 ## Funcionalidades
 
 ### Monitorización ColdChain (`retaild`, pasiva/solo lectura)

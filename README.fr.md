@@ -63,6 +63,27 @@ Il est livré sous forme de deux services distincts :
   d'audit chaîné par hachage ; le gate refuse de démarrer si la chaîne est rompue.
 
 <a id="features"></a>
+## Fabricants et modèles pris en charge
+
+La découverte passive et l’advisory couvrent le paysage OT de supermarchés DE/UE ci-dessous. **Documenté** signifie que le fabricant/modèle et l’interface de gestion sont vérifiés dans le catalogue OT ; **catalogue uniquement** signifie que le fabricant est listé sans détails vérifiés d’interface ; **composant uniquement** signifie qu’aucune pile IP propre n’est supposée. GeDefense n’approuve jamais d’écriture automatiquement — l’Access Gate ne transmet que des opérations exactes approuvées par l’opérateur.
+
+| Fabricant | Modèles / familles | Intégration |
+|---|---|---|
+| Danfoss | AK-SM 800 / 800A, AK-SC 355, AK-PC 781 | documenté |
+| Copeland | XWEB 500, E2, E3 Site Supervisor | documenté |
+| Dixell (Copeland) | XWEB | documenté |
+| Carel | pCO / pCO5+, Compressor Rack / Total Store (pRack / μRack as unverified synonyms), RED/tERA cloud | portefeuille documenté ; protocoles non vérifiés |
+| RDM | Intuitive Supervisor | catalogue uniquement |
+| Eliwell | Refrigeration controllers | catalogue uniquement |
+| TEKO | Refrigeration controllers | catalogue uniquement |
+| Bitzer | Compressors (no IP stack) | composant uniquement |
+| GEA | Refrigeration systems | composant uniquement |
+| Günther | Heat exchangers / condensers | composant uniquement |
+| Wurm | Refrigeration systems | composant uniquement |
+| Systemair | Ventilation / HVAC | composant uniquement |
+
+**Protocoles :** Modbus TCP, BACnet/IP, MQTT, SNMPv3 et interfaces de gestion HTTP(S) sont implémentés pour la découverte passive. BACnet MSTP et SOAP/XML sont documentés pour certains superviseurs ; LON/bus propriétaires n’ont pas d’adaptateur dans cette alpha. L’attribution OUI/MAC n’est volontairement pas revendiquée.
+
 ## Fonctionnalités
 
 ### Surveillance ColdChain (`retaild`, passive/lecture seule)

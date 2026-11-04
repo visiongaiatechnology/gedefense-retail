@@ -62,6 +62,27 @@ Es besteht aus zwei getrennten Diensten:
   hash-verketteten Audit-Log; bei gebrochener Kette startet das Gate nicht.
 
 <a id="features"></a>
+## Unterstützte Hersteller und Modelle
+
+Passive Erkennung und Advisory decken die folgende DE/EU-Supermarkt-OT-Landschaft ab. **Belegt** bedeutet: Hersteller/Modell und Management-Schnittstelle sind im OT-Katalog verifiziert; **nur Katalog** bedeutet: Hersteller ist gelistet, aber ohne verifizierte Management-Schnittstelle; **nur Komponente** bedeutet: kein eigener IP-Stack angenommen. GeDefense gibt niemals automatisch Schreibzugriffe frei — das Access Gate leitet nur exakte, vom Betreiber freigegebene Operationen weiter.
+
+| Hersteller | Modelle / Familien | Einbindung |
+|---|---|---|
+| Danfoss | AK-SM 800 / 800A, AK-SC 355, AK-PC 781 | belegt |
+| Copeland | XWEB 500, E2, E3 Site Supervisor | belegt |
+| Dixell (Copeland) | XWEB | belegt |
+| Carel | pCO / pCO5+, Compressor Rack / Total Store (pRack / μRack as unverified synonyms), RED/tERA cloud | Portfolio belegt; Protokolle unverifiziert |
+| RDM | Intuitive Supervisor | nur Katalog |
+| Eliwell | Refrigeration controllers | nur Katalog |
+| TEKO | Refrigeration controllers | nur Katalog |
+| Bitzer | Compressors (no IP stack) | nur Komponente |
+| GEA | Refrigeration systems | nur Komponente |
+| Günther | Heat exchangers / condensers | nur Komponente |
+| Wurm | Refrigeration systems | nur Komponente |
+| Systemair | Ventilation / HVAC | nur Komponente |
+
+**Protokolle:** Modbus TCP, BACnet/IP, MQTT, SNMPv3 und HTTP(S)-Management-Oberflächen sind für passive Erkennung implementiert. BACnet MSTP und SOAP/XML sind für einzelne Supervisoren dokumentiert; LON/proprietäre Feldbusse haben in dieser Alpha keinen Adapter. OUI-/MAC-Zuordnung wird bewusst nicht behauptet.
+
 ## Funktionen
 
 ### ColdChain-Monitoring (`retaild`, passiv/read-only)

@@ -169,6 +169,33 @@ GeDefense Retail 保护并记录超市背后的基础设施：制冷控制器、
 `LICENSE`、`VERSION`、`THIRD-PARTY-NOTICES.md`、安装脚本以及 `SHA256SUMS` 文件。
 
 <a id="install-linux"></a>
+## 截图（2K，演示数据）
+
+基于本地演示与真实感超市数据拍摄 — **不含生产数据**。所有图片均为 **2560 × 1440 px**。
+
+<table>
+  <tr>
+    <td><img src="docs/screenshots/2k/01-overview-2k.png" alt="Overview" width="100%"></td>
+    <td><img src="docs/screenshots/2k/02-assets-2k.png" alt="Assets" width="100%"></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/2k/03-asset-vendor-panel-2k.png" alt="Vendor knowledge" width="100%"></td>
+    <td><img src="docs/screenshots/2k/04-coldchain-2k.png" alt="Cold chain" width="100%"></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/2k/05-access-2k.png" alt="Access" width="100%"></td>
+    <td><img src="docs/screenshots/2k/06-threat-2k.png" alt="Threat timeline" width="100%"></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/2k/07-integrity-2k.png" alt="Integrity" width="100%"></td>
+    <td><img src="docs/screenshots/2k/08-gate-inbox-2k.png" alt="Gate inbox" width="100%"></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/2k/09-gate-status-2k.png" alt="Gate status" width="100%"></td>
+    <td><img src="docs/screenshots/2k/10-incidents-2k.png" alt="Incidents" width="100%"></td>
+  </tr>
+</table>
+
 ## 安装 — Linux
 
 **前提条件**

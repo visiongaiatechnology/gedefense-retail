@@ -46,3 +46,29 @@ Setup-Wizard, 8 Sprachen, Mobile und Zuständen). Reproduzierbar; Fixtures liege
 Mindest-Viewportbreite von ~500 CSS-Pixel; die 390-px-Emulation wurde per CDP
 (`Emulation.setDeviceMetricsOverride`, `scrollWidth == innerWidth == 390`) vom UI-Owner
 verifiziert und ist in `ui-design-spec.md` dokumentiert. Das Skript nutzt deshalb 500×844.
+## 2K demo screenshots
+
+Runtime-generated demo data for a large supermarket (48 assets, 25 cold-chain sensors, 14 maintenance windows, 28 alerts, 16 gate plans). **No production data.** All images are **2560 × 1440 px** and are embedded in every README.
+
+<table>
+  <tr>
+    <td><img src="2k/01-overview-2k.png" alt="Overview" width="100%"></td>
+    <td><img src="2k/02-assets-2k.png" alt="Assets" width="100%"></td>
+  </tr>
+  <tr>
+    <td><img src="2k/03-asset-vendor-panel-2k.png" alt="Vendor knowledge" width="100%"></td>
+    <td><img src="2k/04-coldchain-2k.png" alt="Cold chain" width="100%"></td>
+  </tr>
+  <tr>
+    <td><img src="2k/05-access-2k.png" alt="Access" width="100%"></td>
+    <td><img src="2k/06-threat-2k.png" alt="Threat timeline" width="100%"></td>
+  </tr>
+  <tr>
+    <td><img src="2k/07-integrity-2k.png" alt="Integrity" width="100%"></td>
+    <td><img src="2k/08-gate-inbox-2k.png" alt="Gate inbox" width="100%"></td>
+  </tr>
+  <tr>
+    <td><img src="2k/09-gate-status-2k.png" alt="Gate status" width="100%"></td>
+    <td><img src="2k/10-incidents-2k.png" alt="Incidents" width="100%"></td>
+  </tr>
+</table>

@@ -200,6 +200,33 @@ Cada paquete contiene `bin/` (binarios), `config/` (configuración de ejemplo y 
 archivo `SHA256SUMS`.
 
 <a id="install-linux"></a>
+## Capturas de pantalla (2K, datos de demostración)
+
+Capturadas con la demo local y datos realistas de supermercado — **sin datos de producción**. Todas las imágenes son **2560 × 1440 px**.
+
+<table>
+  <tr>
+    <td><img src="docs/screenshots/2k/01-overview-2k.png" alt="Overview" width="100%"></td>
+    <td><img src="docs/screenshots/2k/02-assets-2k.png" alt="Assets" width="100%"></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/2k/03-asset-vendor-panel-2k.png" alt="Vendor knowledge" width="100%"></td>
+    <td><img src="docs/screenshots/2k/04-coldchain-2k.png" alt="Cold chain" width="100%"></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/2k/05-access-2k.png" alt="Access" width="100%"></td>
+    <td><img src="docs/screenshots/2k/06-threat-2k.png" alt="Threat timeline" width="100%"></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/2k/07-integrity-2k.png" alt="Integrity" width="100%"></td>
+    <td><img src="docs/screenshots/2k/08-gate-inbox-2k.png" alt="Gate inbox" width="100%"></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/2k/09-gate-status-2k.png" alt="Gate status" width="100%"></td>
+    <td><img src="docs/screenshots/2k/10-incidents-2k.png" alt="Incidents" width="100%"></td>
+  </tr>
+</table>
+
 ## Instalación — Linux
 
 **Requisitos previos**

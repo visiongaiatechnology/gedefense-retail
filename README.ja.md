@@ -189,6 +189,33 @@ cosign 署名 (`*.sig`/`*.pem`)。Windows バイナリは **NOT_SIGNED** (Authen
 `LICENSE`、`VERSION`、`THIRD-PARTY-NOTICES.md`、インストーラースクリプト、`SHA256SUMS` が含まれます。
 
 <a id="install-linux"></a>
+## スクリーンショット (2K、デモデータ)
+
+ローカルデモと現実的なスーパーマーケットのデータで撮影 — **本番データは含みません**。すべての画像は **2560 × 1440 px** です。
+
+<table>
+  <tr>
+    <td><img src="docs/screenshots/2k/01-overview-2k.png" alt="Overview" width="100%"></td>
+    <td><img src="docs/screenshots/2k/02-assets-2k.png" alt="Assets" width="100%"></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/2k/03-asset-vendor-panel-2k.png" alt="Vendor knowledge" width="100%"></td>
+    <td><img src="docs/screenshots/2k/04-coldchain-2k.png" alt="Cold chain" width="100%"></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/2k/05-access-2k.png" alt="Access" width="100%"></td>
+    <td><img src="docs/screenshots/2k/06-threat-2k.png" alt="Threat timeline" width="100%"></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/2k/07-integrity-2k.png" alt="Integrity" width="100%"></td>
+    <td><img src="docs/screenshots/2k/08-gate-inbox-2k.png" alt="Gate inbox" width="100%"></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/2k/09-gate-status-2k.png" alt="Gate status" width="100%"></td>
+    <td><img src="docs/screenshots/2k/10-incidents-2k.png" alt="Incidents" width="100%"></td>
+  </tr>
+</table>
+
 ## インストール — Linux
 
 **前提条件**

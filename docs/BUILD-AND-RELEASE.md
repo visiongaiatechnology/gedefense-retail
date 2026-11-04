@@ -1,7 +1,7 @@
 # GeDefense Retail — Build & Release (Cross-Platform)
 
 **Produkt:** GeDefense Retail — ColdChain & Store Infrastructure Security (VisionGaiaTechnology)
-**Version:** siehe `VERSION` (aktuell `0.3.0-alpha.1`)
+**Version:** siehe `VERSION` (aktuell `0.3.0-alpha.2`)
 **Status:** ALPHA — nicht produktionsfreigegeben.
 
 Dieses Dokument beschreibt den reproduzierbaren Cross-Platform-Build, die

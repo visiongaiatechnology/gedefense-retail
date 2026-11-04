@@ -1,4 +1,4 @@
-# Operations Runbook — GeDefense Retail (Alpha 0.3.0-alpha.1)
+# Operations Runbook — GeDefense Retail (Alpha 0.3.0-alpha.2)
 
 **Status:** Betriebsanleitung für Filiale/Technik · **Stand:** 2026-11-03
 **Produkt:** GeDefense Retail 0.1.0 — ColdChain & Store Infrastructure Security (VisionGaiaTechnology)
@@ -322,7 +322,7 @@ Compliance-Behauptung aus GeDefense-Ausgaben ableiten.
 
 ---
 
-## 12. Read-before-Write und Vendor-Katalog (Alpha 0.3.0-alpha.1)
+## 12. Read-before-Write und Vendor-Katalog (Alpha 0.3.0-alpha.2)
 
 - **Modbus:** Vor jedem freigegebenen Write liest das Gate den CurrentValue erneut.
   `current_value_missing|mismatch|unreadable` ⇒ Deny + Audit, keine automatische Wiederholung.
@@ -335,7 +335,7 @@ Compliance-Behauptung aus GeDefense-Ausgaben ableiten.
 
 ---
 
-## 13. Setpoint-Integrität, Recovery, Netpolicy und Bypass (Alpha 0.3.0-alpha.1)
+## 13. Setpoint-Integrität, Recovery, Netpolicy und Bypass (Alpha 0.3.0-alpha.2)
 
 ### 13.1 Mismatch und Recovery
 

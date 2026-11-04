@@ -1,4 +1,4 @@
-# Access Gate — API-Contract (Alpha 0.3.0-alpha.1)
+# Access Gate — API-Contract (Alpha 0.3.0-alpha.2)
 
 Öffentliche Kurzfassung des Gate-API-Contracts. Sie beschreibt das **Verhalten**, nicht interne
 Implementierungsdetails. Ergänzende Dokumente: [DEPLOYMENT.md](../DEPLOYMENT.md),
@@ -86,7 +86,7 @@ IEC-62443- oder sonstige Zertifizierungs-/Konformitätsaussage.
 
 ---
 
-## Integrität, Recovery und Netzwerk-Enforcement (Alpha 0.3.0-alpha.1)
+## Integrität, Recovery und Netzwerk-Enforcement (Alpha 0.3.0-alpha.2)
 
 ### Setpoint-Integrität
 

@@ -24,7 +24,7 @@
   binding, lockout, short-lived sessions.
 - Setup wizard: available only from loopback and only until setup is completed.
 
-## Write enforcement: read-before-write (0.3.0-alpha.1)
+## Write enforcement: read-before-write (0.3.0-alpha.2)
 
 - **Modbus TCP only:** immediately before forwarding a write, the gate re-reads the current value
   (FC3 for holding registers, FC1 `read_coils` for coil writes) and compares it with the value bound
@@ -48,7 +48,7 @@
 - Real controller/firmware semantics of the re-read are **not tested** in this alpha (fake devices,
   loopback).
 
-## Vendor catalog and packaged data (0.3.0-alpha.1)
+## Vendor catalog and packaged data (0.3.0-alpha.2)
 
 - The release bundle ships `data/ot-catalog/` (`vendors.json`, `write-surface.json`,
   `regulatory-context.json`).
@@ -63,7 +63,7 @@
   requests receive `401`. `retaild check` reports catalog problems only as warnings in `warnings[]`
   and does not change `ok` or check results.
 
-## Release integrity and signatures (0.3.0-alpha.1)
+## Release integrity and signatures (0.3.0-alpha.2)
 
 - Archives, `SHA256SUMS`, `SHA256SUMS.archives` and `SBOM.spdx.json` are published with cosign
   **keyless** signatures (`*.sig`/`*.pem`), together with `SHA256SUMS` / `SHA256SUMS.archives`;
@@ -100,7 +100,7 @@
 - Operator duty: graceful service stops, maintenance windows, verify the audit chain on start. A
   complete incident-response/forensics runbook is **not** part of this alpha.
 
-## Setpoint integrity and automatic recovery (0.3.0-alpha.1)
+## Setpoint integrity and automatic recovery (0.3.0-alpha.2)
 
 - Optional `integrity` block in `gate.json`: references (target/fc/register/unit/value/scale/recovery),
   polling (`poll_interval`, `confirm_reads`, `stale_after`) and recovery limits
@@ -122,7 +122,7 @@ confirmed mismatch, no flapping loop. Read→write is not atomic (TOCTOU residua
 FC3/FC6 references are covered; HTTP has no integrity/recovery. `require_no_active_window` is
 mandatory true when recovery is enabled; the kill switch is `integrity.recovery.enabled=false`.
 
-## Network enforcement and bypass detection (0.3.0-alpha.1)
+## Network enforcement and bypass detection (0.3.0-alpha.2)
 
 - `retailgate netpolicy` generates/applies nftables or iptables rules: new connections to controllers
   are accepted only from the `--gate-source` CIDRs; everything else is dropped and logged. Rules live

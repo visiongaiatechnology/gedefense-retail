@@ -1,4 +1,4 @@
-# Retail Policy Reference — GeDefense Retail (Alpha 0.3.0-alpha.1)
+# Retail Policy Reference — GeDefense Retail (Alpha 0.3.0-alpha.2)
 
 **Status:** Referenz für Betreiber/Administratoren · **Stand:** 2026-11-03 · **Produkt:** GeDefense Retail 0.1.0 (ColdChain & Store Infrastructure Security)
 **Quellen:** `src/retail/internal/domain/policy.go` (bindend), `engineering contract` §5.4/§5.10, `data model` §4.7, `threat-model.md`, `safety-boundaries.md`
@@ -301,7 +301,7 @@ dokumentierter Missbrauchspfad (vgl. Threat Model R-06).
 
 ---
 
-## 14. Werte, `value_scale` und Read-before-Write (Alpha 0.3.0-alpha.1)
+## 14. Werte, `value_scale` und Read-before-Write (Alpha 0.3.0-alpha.2)
 
 ### 14.1 Werte-Modell
 
@@ -344,7 +344,7 @@ dokumentierter Missbrauchspfad (vgl. Threat Model R-06).
 
 ---
 
-## 15. Setpoint-Integrität und Recovery (Alpha 0.3.0-alpha.1)
+## 15. Setpoint-Integrität und Recovery (Alpha 0.3.0-alpha.2)
 
 - `gate.json` `integrity.references[]` benötigen `target_id`, `fc` (3), `register`, `unit_id`,
   `value`, `scale` (Default 1.0) und optional `unit`/`note`/`recovery`.

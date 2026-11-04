@@ -24,7 +24,7 @@ Surveillance OT passive et mise en œuvre du Default-Deny pour le chemin de gest
 <a id="alpha-status"></a>
 ## Statut alpha
 
-> **0.3.0-alpha.1 — expérimental, pas prêt pour la production.**
+> **0.3.0-alpha.2 — expérimental, pas prêt pour la production.**
 > GeDefense Retail est une alpha précoce. Il a été vérifié sur loopback avec des régulateurs et des
 > superviseurs simulés, et non contre du matériel frigorifique réel dans un magasin. Il n'existe pas
 > encore de test d'intrusion indépendant de l'Access Gate, et aucune allégation de conformité ou de
@@ -136,9 +136,9 @@ La découverte passive et l’advisory couvrent le paysage OT de supermarchés D
 - **Logo GeDefense original** et mascotte intégrés comme ressources locales (aucun CDN externe).
 - Paquets Linux et Windows avec scripts d'installation et sommes de contrôle SHA-256.
 
-**Nouveau dans 0.3.0-alpha.1 :** documentation fournisseur/pilote dans `docs/retail/`, relecture CurrentValue avant écriture Modbus (écart/échec ⇒ refus + audit), catalogue fournisseur d'exécution (pas d'auto-allow) et `data/ot-catalog` dans le paquet.
+**Nouveau dans 0.3.0-alpha.2 :** documentation fournisseur/pilote dans `docs/retail/`, relecture CurrentValue avant écriture Modbus (écart/échec ⇒ refus + audit), catalogue fournisseur d'exécution (pas d'auto-allow) et `data/ot-catalog` dans le paquet.
 
-**Nouveau dans 0.3.0-alpha.1 :** surveillance d'intégrité des consignes avec **récupération automatique opt-in** (désactivée par défaut ; rate-limit, cooldown, relecture, auditée), `retailgate netpolicy` (nftables/iptables ; CIDR source du gate uniquement) et détection passive de bypass (`retail.bypass-suspected`).
+**Nouveau dans 0.3.0-alpha.2 :** surveillance d'intégrité des consignes avec **récupération automatique opt-in** (désactivée par défaut ; rate-limit, cooldown, relecture, auditée), `retailgate netpolicy` (nftables/iptables ; CIDR source du gate uniquement) et détection passive de bypass (`retail.bypass-suspected`).
 
 <a id="architecture"></a>
 ## Architecture (en bref)
@@ -195,24 +195,24 @@ La découverte passive et l’advisory couvrent le paysage OT de supermarchés D
   contrôle d'accès sous Windows ; utilisez un compte de service dédié et des ACL explicites. Il s'agit
   d'une condition bêta documentée.
 
-**Limites 0.3.0-alpha.1 :** la récupération automatique est opt-in et ne prouve pas qu'aucune écriture n'a eu lieu hors du gate ; la fenêtre read→write (TOCTOU) subsiste ; les écritures HTTP n'ont pas de recheck générique ; `netpolicy` n'agit que sur l'hôte du gate et exige un routage/segmentation corrects.
+**Limites 0.3.0-alpha.2 :** la récupération automatique est opt-in et ne prouve pas qu'aucune écriture n'a eu lieu hors du gate ; la fenêtre read→write (TOCTOU) subsiste ; les écritures HTTP n'ont pas de recheck générique ; `netpolicy` n'agit que sur l'hôte du gate et exige un routage/segmentation corrects.
 
 <a id="download"></a>
 ## Téléchargement
 
-**Dernière release alpha : [v0.3.0-alpha.1](https://github.com/visiongaiatechnology/gedefense-retail/releases/tag/v0.3.0-alpha.1).**
-Ressources : quatre archives, [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.1/SHA256SUMS),
-[SHA256SUMS.archives](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.1/SHA256SUMS.archives),
-[SBOM.spdx.json](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.1/SBOM.spdx.json)
+**Dernière release alpha : [v0.3.0-alpha.2](https://github.com/visiongaiatechnology/gedefense-retail/releases/tag/v0.3.0-alpha.2).**
+Ressources : quatre archives, [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.2/SHA256SUMS),
+[SHA256SUMS.archives](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.2/SHA256SUMS.archives),
+[SBOM.spdx.json](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.2/SBOM.spdx.json)
 et signatures cosign (`*.sig`/`*.pem`). Les binaires Windows sont **NOT_SIGNED** (Authenticode, alpha) ;
 utilisez les hachages/signatures.
 
 | Plateforme | Archive | Sommes de contrôle |
 |---|---|---|
-| Linux amd64 | [gedefense-retail-0.3.0-alpha.1-linux-amd64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.1/gedefense-retail-0.3.0-alpha.1-linux-amd64.tar.gz) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.1/SHA256SUMS) · [archives](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.1/SHA256SUMS.archives) |
-| Linux arm64 | [gedefense-retail-0.3.0-alpha.1-linux-arm64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.1/gedefense-retail-0.3.0-alpha.1-linux-arm64.tar.gz) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.1/SHA256SUMS) · [archives](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.1/SHA256SUMS.archives) |
-| Windows amd64 | [gedefense-retail-0.3.0-alpha.1-windows-amd64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.1/gedefense-retail-0.3.0-alpha.1-windows-amd64.zip) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.1/SHA256SUMS) · [archives](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.1/SHA256SUMS.archives) |
-| Windows arm64 | [gedefense-retail-0.3.0-alpha.1-windows-arm64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.1/gedefense-retail-0.3.0-alpha.1-windows-arm64.zip) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.1/SHA256SUMS) · [archives](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.1/SHA256SUMS.archives) |
+| Linux amd64 | [gedefense-retail-0.3.0-alpha.2-linux-amd64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.2/gedefense-retail-0.3.0-alpha.2-linux-amd64.tar.gz) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.2/SHA256SUMS) · [archives](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.2/SHA256SUMS.archives) |
+| Linux arm64 | [gedefense-retail-0.3.0-alpha.2-linux-arm64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.2/gedefense-retail-0.3.0-alpha.2-linux-arm64.tar.gz) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.2/SHA256SUMS) · [archives](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.2/SHA256SUMS.archives) |
+| Windows amd64 | [gedefense-retail-0.3.0-alpha.2-windows-amd64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.2/gedefense-retail-0.3.0-alpha.2-windows-amd64.zip) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.2/SHA256SUMS) · [archives](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.2/SHA256SUMS.archives) |
+| Windows arm64 | [gedefense-retail-0.3.0-alpha.2-windows-arm64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.2/gedefense-retail-0.3.0-alpha.2-windows-arm64.zip) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.2/SHA256SUMS) · [archives](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.3.0-alpha.2/SHA256SUMS.archives) |
 
 **Vérifiez avant installation :** `sha256sum -c SHA256SUMS` dans l'archive décompressée et
 `sha256sum -c SHA256SUMS.archives` pour les archives téléchargées. Les archives et `SHA256SUMS` sont

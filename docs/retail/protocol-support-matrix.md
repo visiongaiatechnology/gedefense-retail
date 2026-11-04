@@ -1,4 +1,4 @@
-# GeDefense Retail — Protokollmatrix (Alpha 0.3.0-alpha.1)
+# GeDefense Retail — Protokollmatrix (Alpha 0.3.0-alpha.2)
 
 **Produktlinie:** VisionGaiaTechnology · GeDefense Retail
 **Zweck:** Verbindliche Entscheidungsgrundlage für Read-only-Adapter, passive Erkennung und Simulator-Tests
@@ -183,7 +183,7 @@
 
 ---
 
-## 8. Durchsetzungssemantik im Access Gate (Alpha 0.3.0-alpha.1)
+## 8. Durchsetzungssemantik im Access Gate (Alpha 0.3.0-alpha.2)
 
 ### 8.1 Modbus TCP — Read-before-Write
 

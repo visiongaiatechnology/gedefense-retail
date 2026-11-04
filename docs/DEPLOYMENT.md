@@ -87,7 +87,7 @@ Do not treat HTTP writes as equivalent to Modbus read-before-write.
 **Vendor catalog:** `data/ot-catalog/` is shipped in the bundle and used for discovery/API/UI/gate
 advisory. It never grants write access or whitelist admission (no auto-allow).
 
-## Setpoint integrity and automatic recovery (0.3.0-alpha.1)
+## Setpoint integrity and automatic recovery (0.3.0-alpha.2)
 
 Configure the optional `integrity` block in `gate.json`:
 
@@ -133,7 +133,7 @@ Configure the optional `integrity` block in `gate.json`:
   `gate.recovery.failed|unknown` to the operator; audit events:
   `gate.integrity.mismatch`, `gate.recovery.applied|failed|unknown`.
 
-## Network enforcement (`retailgate netpolicy`, 0.3.0-alpha.1)
+## Network enforcement (`retailgate netpolicy`, 0.3.0-alpha.2)
 
 `retailgate netpolicy --config gate.json --format nftables|iptables --gate-source <CIDR>
 [--out FILE] [--check] [--apply] [--rollback]`
@@ -145,7 +145,7 @@ Configure the optional `integrity` block in `gate.json`:
   is not a router. It only enforces on that host — bypass paths elsewhere remain operator duty.
 - Review the generated rules before `--apply`; keep an out-of-band rollback path.
 
-## Bypass detection in `retaild` (0.3.0-alpha.1)
+## Bypass detection in `retaild` (0.3.0-alpha.2)
 
 ```json
 "bypass": {"enabled": true, "gate_source_cidrs": ["10.10.40.0/24", "10.10.50.10/32"]}
@@ -168,7 +168,7 @@ Configure the optional `integrity` block in `gate.json`:
   as a hypothesis; verify with device logs/operator evidence. This is a visibility control, not
   prevention.
 
-## Permissions and service accounts (0.3.0-alpha.1)
+## Permissions and service accounts (0.3.0-alpha.2)
 
 **Linux (installer)**
 
@@ -222,7 +222,7 @@ There is no inbound WAN path and no remote control.
 
 ## Release verification (checksums, signatures, SBOM)
 
-For release `v0.3.0-alpha.1`:
+For release `v0.3.0-alpha.2`:
 
 1. `sha256sum -c SHA256SUMS` inside the unpacked bundle; `sha256sum -c SHA256SUMS.archives` for the
    downloaded archives.

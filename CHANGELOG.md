@@ -3,6 +3,18 @@
 All notable changes to GeDefense Retail are documented here. The project follows semantic
 versioning; alpha releases may change behavior without notice and are **not production-ready**.
 
+## [0.3.0-alpha.2] — 2026-11-04
+
+### Fixed
+
+- `retailgate netpolicy --check` now classifies a missing CAP_NET_ADMIN/root
+  capability as `not_tested` with an explicit reason and exit code 4 instead of
+  an empty report; real rule syntax errors are reported as `error`, and a
+  successful check (root/CAP_NET_ADMIN) keeps `ok`/exit 0. This makes the Linux
+  CI deterministic and keeps "not verified" distinct from "rules broken".
+- No enforcement, approval or automatic-recovery behaviour changed in this
+  patch; it is a release-hygiene fix for the 0.3 line.
+
 ## [0.3.0-alpha.1] — 2026-11-04
 
 ### Added

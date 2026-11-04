@@ -1,6 +1,6 @@
 # Access Gate — Vendor-Onboarding und Offboarding (Dienstleister)
 
-**Status:** Alpha 0.3.0-alpha.1 **implementiert** (Gate-E2E 25/25; Details `alpha verification report`); **keine** echte OT-Hardware/Produktionsfreigabe
+**Status:** Alpha 0.3.0-alpha.2 **implementiert** (Gate-E2E 25/25; Details `alpha verification report`); **keine** echte OT-Hardware/Produktionsfreigabe
 **Produkt:** GeDefense Retail Access Gate (`retailgate`) 0.2 Alpha
 **Quellen:** [deployment-guide.md](deployment-guide.md), [operations-runbook.md](operations-runbook.md),
 [retail-policy-reference.md](retail-policy-reference.md),
@@ -17,7 +17,7 @@
 > **Grenzen:** Dieser Prozess ist **kein** Ersatz für Betreiber-Freigabe, HACCP oder Hersteller-
 > Support. Er erzeugt **keine** Compliance-Aussage. Das Gate ist **opt-in**; die S-01-Ausnahme nur
 > für `retailgate` ist durch das Gate-Design begründet (Autorisations-Proxy). Die Alpha ist implementiert
-> (0.3.0-alpha.1, Gate-E2E 25/25), aber **nicht** gegen echte OT-Hardware/Produktion verifiziert —
+> (0.3.0-alpha.2, Gate-E2E 25/25), aber **nicht** gegen echte OT-Hardware/Produktion verifiziert —
 > Schritte bleiben bis Pilot/Retest **Soll-Prozess**.
 
 ---

@@ -1,4 +1,4 @@
-# Deployment Guide — GeDefense Retail (Alpha 0.3.0-alpha.1)
+# Deployment Guide — GeDefense Retail (Alpha 0.3.0-alpha.2)
 
 **Status:** Installations- und Betriebsvorbereitung für den Pilot · **Stand:** 2026-11-03
 **Produkt:** GeDefense Retail 0.1.0 — ColdChain & Store Infrastructure Security (VisionGaiaTechnology)
@@ -488,7 +488,7 @@ Update = kontrollierter Betreiberprozess mit geprüftem Artefakt.
 
 ---
 
-## 12. Vendor-Katalog im Paket (Alpha 0.3.0-alpha.1)
+## 12. Vendor-Katalog im Paket (Alpha 0.3.0-alpha.2)
 
 - Das Release-Bundle enthält `data/ot-catalog/` (`vendors.json`, `write-surface.json`,
   `regulatory-context.json`).
@@ -501,7 +501,7 @@ Update = kontrollierter Betreiberprozess mit geprüftem Artefakt.
 
 ---
 
-## 13. Netzwerk-Enforcement, Setpoint-Integrität und Bypass (Alpha 0.3.0-alpha.1)
+## 13. Netzwerk-Enforcement, Setpoint-Integrität und Bypass (Alpha 0.3.0-alpha.2)
 
 ### 13.1 `retailgate netpolicy`
 

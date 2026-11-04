@@ -143,6 +143,9 @@ func TestNetPolicyCLICheck(t *testing.T) {
 	if report.Format != "nftables" || report.SyntaxCheck == "" {
 		t.Fatalf("report = %+v", report)
 	}
+	if report.Status == "" {
+		t.Fatalf("empty check status (CI regression): code=%d report=%+v", code, report)
+	}
 	switch report.Status {
 	case "ok":
 		if code != 0 {

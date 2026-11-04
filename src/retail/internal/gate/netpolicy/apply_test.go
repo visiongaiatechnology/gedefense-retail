@@ -294,3 +294,77 @@ func TestWriteFileAtomic(t *testing.T) {
 		t.Fatalf("empty path error = %v", err)
 	}
 }
+
+// TestCheckClassifiesMissingPrivilegesAsNotTested reproduces the Linux CI case:
+// nft is installed but cannot open a netlink socket without CAP_NET_ADMIN/root.
+func TestCheckClassifiesMissingPrivilegesAsNotTested(t *testing.T) {
+	plan := fixturePlan(t)
+	runner := newFakeRunner(false, "nft")
+	runner.failWhen = func(line string) error {
+		if strings.HasPrefix(line, "nft -c") {
+			return errors.New("netlink: cache initialization failed: Operation not permitted")
+		}
+		return nil
+	}
+	report, err := Check(plan, FormatNFTables, runner)
+	if !errors.Is(err, ErrNotTested) {
+		t.Fatalf("privilege failure error = %v, want ErrNotTested", err)
+	}
+	if report.Status != "not_tested" {
+		t.Fatalf("status = %q, want not_tested", report.Status)
+	}
+	if !strings.Contains(report.SyntaxCheck, "NOT_TESTED") || !strings.Contains(report.SyntaxCheck, "CAP_NET_ADMIN") {
+		t.Fatalf("syntax_check = %q", report.SyntaxCheck)
+	}
+	if !strings.Contains(strings.ToLower(report.SyntaxCheck), "operation not permitted") {
+		t.Fatalf("privilege reason missing: %q", report.SyntaxCheck)
+	}
+	// No other status may be reported for an unverified check.
+	if report.Status == "ok" {
+		t.Fatal("unprivileged nft check must never report ok")
+	}
+	// EPERM markers from different nft/libnetfilter versions classify identically.
+	for _, message := range []string{
+		"nft: netlink: Operation not permitted (EPERM)",
+		"nft: permission denied",
+		"cache initialization failed",
+	} {
+		versionRunner := newFakeRunner(false, "nft")
+		versionRunner.failWhen = func(line string) error {
+			if strings.HasPrefix(line, "nft -c") {
+				return errors.New(message)
+			}
+			return nil
+		}
+		versionReport, versionErr := Check(plan, FormatNFTables, versionRunner)
+		if !errors.Is(versionErr, ErrNotTested) || versionReport.Status != "not_tested" {
+			t.Fatalf("message %q: status=%q err=%v", message, versionReport.Status, versionErr)
+		}
+	}
+}
+
+// TestCheckClassifiesRealSyntaxError keeps genuine rule syntax errors distinct:
+// status error, never not_tested, with a non-empty report.
+func TestCheckClassifiesRealSyntaxError(t *testing.T) {
+	plan := fixturePlan(t)
+	runner := newFakeRunner(false, "nft")
+	runner.failWhen = func(line string) error {
+		if strings.HasPrefix(line, "nft -c") {
+			return errors.New("Error: syntax error, unexpected newline, expecting string")
+		}
+		return nil
+	}
+	report, err := Check(plan, FormatNFTables, runner)
+	if !errors.Is(err, ErrApply) {
+		t.Fatalf("syntax error class = %v, want ErrApply", err)
+	}
+	if report.Status != "error" {
+		t.Fatalf("status = %q, want error", report.Status)
+	}
+	if !strings.Contains(report.SyntaxCheck, "syntax error") {
+		t.Fatalf("syntax_check = %q", report.SyntaxCheck)
+	}
+	if report.Format == "" || report.Endpoints == 0 {
+		t.Fatalf("report is empty: %+v", report)
+	}
+}

@@ -215,7 +215,7 @@ Für eine MAC-basierte Herstellererkennung wären IEEE-OUI-Zuordnungen nötig. I
 
 ---
 
-## 9. Laufzeit-Katalog (Alpha 0.3.0-alpha.1)
+## 9. Laufzeit-Katalog (Alpha 0.3.0-alpha.2)
 
 - `data/ot-catalog/` ist Paketbestandteil (`vendors.json`, `write-surface.json`,
   `regulatory-context.json`).

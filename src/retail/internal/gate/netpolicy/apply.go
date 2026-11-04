@@ -53,7 +53,7 @@ func Check(plan Plan, format Format, runner Runner) (CheckReport, error) {
 			return report, fmt.Errorf("%w: nft not installed", ErrNotTested)
 		}
 		if rerr := runner.Run("nft", "-c", "-f", name); rerr != nil {
-			return CheckReport{}, fmt.Errorf("%w: nft syntax check: %v", ErrApply, rerr)
+			return classifyCheckFailure(report, "nft -c", rerr)
 		}
 		report.SyntaxCheck = "ok (nft -c -f)"
 	case FormatIPTables:
@@ -63,7 +63,7 @@ func Check(plan Plan, format Format, runner Runner) (CheckReport, error) {
 			return report, fmt.Errorf("%w: sh not installed", ErrNotTested)
 		}
 		if rerr := runner.Run("sh", "-n", name); rerr != nil {
-			return CheckReport{}, fmt.Errorf("%w: shell syntax check: %v", ErrApply, rerr)
+			return classifyCheckFailure(report, "sh -n", rerr)
 		}
 		report.SyntaxCheck = "ok (sh -n)"
 		if _, lerr := runner.LookPath("iptables"); lerr != nil {
@@ -76,6 +76,61 @@ func Check(plan Plan, format Format, runner Runner) (CheckReport, error) {
 	}
 	report.Status = "ok"
 	return report, nil
+}
+
+// classifyCheckFailure turns a failed tool syntax check into a non-empty report
+// and the right error class. A missing privilege (e.g. nft -c without
+// CAP_NET_ADMIN/root on Linux: "netlink: cache initialization failed: Operation
+// not permitted") is NOT a syntax error and must be reported as not_tested, never
+// as a broken ruleset. Genuine syntax errors are reported as error.
+func classifyCheckFailure(report CheckReport, tool string, cause error) (CheckReport, error) {
+	report.SyntaxCheck = ""
+	reason := sanitizeCheckReason(cause)
+	if isPrivilegeFailure(cause) {
+		report.Status = "not_tested"
+		report.SyntaxCheck = "NOT_TESTED (" + tool + " requires CAP_NET_ADMIN/root: " + reason + ")"
+		return report, fmt.Errorf("%w: %s: %s", ErrNotTested, tool, reason)
+	}
+	report.Status = "error"
+	report.SyntaxCheck = "error (" + tool + "): " + reason
+	return report, fmt.Errorf("%w: %s syntax check: %v", ErrApply, tool, cause)
+}
+
+// isPrivilegeFailure detects missing CAP_NET_ADMIN/root or a sandboxed netlink
+// socket in the tool output. Fail-closed: only explicit markers classify as
+// not_tested, everything else stays a genuine error.
+func isPrivilegeFailure(err error) bool {
+	if err == nil {
+		return false
+	}
+	if errors.Is(err, os.ErrPermission) {
+		return true
+	}
+	text := strings.ToLower(err.Error())
+	for _, marker := range []string{
+		"operation not permitted",
+		"cache initialization failed",
+		"permission denied",
+		"eperm",
+		"cap_net_admin",
+		"requires root",
+	} {
+		if strings.Contains(text, marker) {
+			return true
+		}
+	}
+	return false
+}
+
+// sanitizeCheckReason keeps the report single-line and bounded (no log injection,
+// no multi-kilobyte kernel dumps in JSON).
+func sanitizeCheckReason(err error) string {
+	text := strings.Join(strings.Fields(err.Error()), " ")
+	text = strings.ReplaceAll(text, "\n", " ")
+	if len(text) > 240 {
+		text = text[:240] + "..."
+	}
+	return text
 }
 
 // ApplyOptions controls Apply.

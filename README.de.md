@@ -24,7 +24,7 @@ Passives OT-Monitoring und ein Default-Deny-Gate für den Management-Pfad der Fi
 <a id="alpha-status"></a>
 ## Alpha-Status
 
-> **0.2.0-alpha.7 — experimentell, nicht produktionsreif.**
+> **0.2.0-alpha.8 — experimentell, nicht produktionsreif.**
 > GeDefense Retail ist eine frühe Alpha. Verifiziert wurde auf Loopback mit simulierten Reglern und
 > Supervisoren, nicht gegen echte Kältetechnik in einer Filiale. Ein unabhängiger Penetrationstest
 > des Access Gate liegt noch nicht vor; es gibt keine Compliance- oder Zertifizierungsaussage.
@@ -112,7 +112,7 @@ Es besteht aus zwei getrennten Diensten:
 - **Original-GeDefense-Logo** und Maskottchen als lokale Assets (kein externes CDN).
 - Linux- und Windows-Pakete mit Installer-Skripten und SHA-256-Checksums.
 
-### Sicherheits-Härtung in 0.2.0-alpha.7
+### Sicherheits-Härtung in 0.2.0-alpha.8
 
 - Gehärtete Installer: dedizierte Dienstkonten; Linux-Config `root:gedefense` `0750`/`0640`,
   Windows `LocalService` mit expliziten `icacls`-DACLs und ohne geerbten `Users`-Zugriff.
@@ -120,6 +120,8 @@ Es besteht aus zwei getrennten Diensten:
   SPDX-`SBOM.spdx.json`; Windows-Binaries bleiben **NOT_SIGNED** (kein Authenticode-Zertifikat).
 - Bearer-Token-Rotation, mTLS-Pflicht für die optionale Zentrale, reproduzierbare Builds mit
   `SOURCE_DATE_EPOCH`, gehärtete CI-Rechte und sauberer Shutdown-/Audit-Flush.
+
+**Neu in 0.2.0-alpha.8:** kuratierte Vendor-/Pilot-Dokumentation unter `docs/retail/`, Modbus Read-before-Write (CurrentValue-Recheck; Mismatch/Lesefehler ⇒ Deny + Audit), Vendor-Katalog als Laufzeitwissen (kein Auto-Allow) und `data/ot-catalog` im Paket.
 
 <a id="architecture"></a>
 ## Architektur (kurz)
@@ -177,19 +179,19 @@ Es besteht aus zwei getrennten Diensten:
 <a id="download"></a>
 ## Download
 
-**Aktuelles Alpha-Release: [v0.2.0-alpha.7](https://github.com/visiongaiatechnology/gedefense-retail/releases/tag/v0.2.0-alpha.7).**
-Assets: vier Archive, [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.7/SHA256SUMS),
-[SHA256SUMS.archives](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.7/SHA256SUMS.archives),
-[SBOM.spdx.json](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.7/SBOM.spdx.json)
+**Aktuelles Alpha-Release: [v0.2.0-alpha.8](https://github.com/visiongaiatechnology/gedefense-retail/releases/tag/v0.2.0-alpha.8).**
+Assets: vier Archive, [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.8/SHA256SUMS),
+[SHA256SUMS.archives](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.8/SHA256SUMS.archives),
+[SBOM.spdx.json](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.8/SBOM.spdx.json)
 und cosign-Signaturen (`*.sig`/`*.pem`). Windows-Binaries sind **NOT_SIGNED** mit Authenticode
 (Alpha); stattdessen Hashes/Signaturen verwenden.
 
 | Plattform | Archiv | Checksums |
 |---|---|---|
-| Linux amd64 | [gedefense-retail-0.2.0-alpha.7-linux-amd64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.7/gedefense-retail-0.2.0-alpha.7-linux-amd64.tar.gz) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.7/SHA256SUMS) · [Archive](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.7/SHA256SUMS.archives) |
-| Linux arm64 | [gedefense-retail-0.2.0-alpha.7-linux-arm64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.7/gedefense-retail-0.2.0-alpha.7-linux-arm64.tar.gz) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.7/SHA256SUMS) · [Archive](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.7/SHA256SUMS.archives) |
-| Windows amd64 | [gedefense-retail-0.2.0-alpha.7-windows-amd64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.7/gedefense-retail-0.2.0-alpha.7-windows-amd64.zip) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.7/SHA256SUMS) · [Archive](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.7/SHA256SUMS.archives) |
-| Windows arm64 | [gedefense-retail-0.2.0-alpha.7-windows-arm64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.7/gedefense-retail-0.2.0-alpha.7-windows-arm64.zip) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.7/SHA256SUMS) · [Archive](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.7/SHA256SUMS.archives) |
+| Linux amd64 | [gedefense-retail-0.2.0-alpha.8-linux-amd64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.8/gedefense-retail-0.2.0-alpha.8-linux-amd64.tar.gz) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.8/SHA256SUMS) · [Archive](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.8/SHA256SUMS.archives) |
+| Linux arm64 | [gedefense-retail-0.2.0-alpha.8-linux-arm64.tar.gz](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.8/gedefense-retail-0.2.0-alpha.8-linux-arm64.tar.gz) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.8/SHA256SUMS) · [Archive](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.8/SHA256SUMS.archives) |
+| Windows amd64 | [gedefense-retail-0.2.0-alpha.8-windows-amd64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.8/gedefense-retail-0.2.0-alpha.8-windows-amd64.zip) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.8/SHA256SUMS) · [Archive](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.8/SHA256SUMS.archives) |
+| Windows arm64 | [gedefense-retail-0.2.0-alpha.8-windows-arm64.zip](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.8/gedefense-retail-0.2.0-alpha.8-windows-arm64.zip) | [SHA256SUMS](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.8/SHA256SUMS) · [Archive](https://github.com/visiongaiatechnology/gedefense-retail/releases/download/v0.2.0-alpha.8/SHA256SUMS.archives) |
 
 **Vor Installation prüfen:** `sha256sum -c SHA256SUMS` im entpackten Bundle und
 `sha256sum -c SHA256SUMS.archives` für die heruntergeladenen Archive. Archive und `SHA256SUMS` sind
@@ -197,7 +199,7 @@ mit cosign keyless signiert; eine Datei prüfen mit `cosign verify-blob --certif
 --signature <Datei>.sig --certificate-oidc-issuer https://token.actions.githubusercontent.com
 --certificate-identity-regexp 'https://github.com/visiongaiatechnology/gedefense-retail/.github/workflows/release.yml@refs/tags/v.*' <Datei>` (exakte Identität in
 [docs/BUILD-AND-RELEASE.md](docs/BUILD-AND-RELEASE.md)). `SBOM.spdx.json` ist das
-SPDX-Komponenteninventar. **Fehlt eine Signaturdatei, gilt der Download als unsigniert.**
+SPDX-SBOM für Release-Archive und Binaries; alle Bundle-Dateien sind durch die Bundle-`SHA256SUMS` abgedeckt. **Fehlt eine Signaturdatei, gilt der Download als unsigniert.**
 
 Jedes Bundle enthält `bin/` (Binaries), `config/` (Beispielkonfiguration und systemd-Units), `docs/`,
 `README.md`, `LICENSE`, `VERSION`, `THIRD-PARTY-NOTICES.md`, die Installer-Skripte und eine

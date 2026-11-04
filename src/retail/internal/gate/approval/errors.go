@@ -109,13 +109,17 @@ var validDenyReasons = map[string]struct{}{
 	domain.DenyValueMismatch:        {},
 	domain.DenyAddressMismatch:      {},
 	domain.DenyOutsideWindow:        {},
-	domain.DenyTokenInvalid:         {},
-	domain.DenyTokenExpired:         {},
-	domain.DenyTokenUsed:            {},
-	domain.DenyMFARequired:          {},
-	domain.DenyPolicyMissing:        {},
-	domain.DenyFailsafeClock:        {},
-	domain.DenyFailsafeStore:        {},
+	// Read-before-write verification (write-surface.json security principle).
+	domain.DenyCurrentValueMissing:    {},
+	domain.DenyCurrentValueMismatch:   {},
+	domain.DenyCurrentValueUnreadable: {},
+	domain.DenyTokenInvalid:           {},
+	domain.DenyTokenExpired:           {},
+	domain.DenyTokenUsed:              {},
+	domain.DenyMFARequired:            {},
+	domain.DenyPolicyMissing:          {},
+	domain.DenyFailsafeClock:          {},
+	domain.DenyFailsafeStore:          {},
 }
 
 // ValidDenyReason reports whether reason is a stable domain deny code.

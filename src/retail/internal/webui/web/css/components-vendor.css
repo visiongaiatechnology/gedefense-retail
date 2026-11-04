@@ -1,0 +1,222 @@
+/*
+ * Herstellerwissen panel in the asset inspector. Read-only catalog knowledge;
+ * opaque evidence rows inside the glass inspector, no decorative containers.
+ */
+@layer components {
+  .vendor-panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+    margin-block-start: var(--sp-4);
+    padding-block-start: var(--sp-4);
+    border-block-start: 1px solid var(--line);
+  }
+
+  .vendor-panel__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-2);
+  }
+
+  .vendor-panel__title {
+    color: var(--text-1);
+    font-size: var(--fs-400);
+    font-weight: 640;
+    letter-spacing: -0.01em;
+  }
+
+  .vendor-panel__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+  }
+
+  .vendor-knowledge {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+  }
+
+  .vendor-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+    padding-block-start: var(--sp-3);
+    border-block-start: 1px solid var(--line);
+  }
+
+  .vendor-section:first-of-type {
+    border-block-start: 0;
+    padding-block-start: 0;
+  }
+
+  .vendor-section__title {
+    color: var(--text-2);
+    font-size: var(--fs-300);
+    font-weight: 640;
+  }
+
+  .vendor-section__subtitle {
+    color: var(--text-3);
+    font-size: var(--fs-100);
+    font-weight: 640;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+  }
+
+  .vendor-chips {
+    gap: var(--sp-2);
+  }
+
+  .vendor-empty {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-1);
+    padding: var(--sp-3);
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--r-control);
+    background: var(--surface-inset);
+  }
+
+  .vendor-empty__title {
+    color: var(--text-1);
+    font-size: var(--fs-300);
+    font-weight: 620;
+  }
+
+  .vendor-surface-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+  }
+
+  .vendor-surface {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+    padding: var(--sp-3);
+    border: 1px solid var(--line);
+    border-radius: var(--r-control);
+    background: var(--surface-inset);
+  }
+
+  .vendor-surface__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-2);
+  }
+
+  .vendor-surface__id {
+    color: var(--text-2);
+    font-size: var(--fs-100);
+    overflow-wrap: anywhere;
+  }
+
+  .vendor-surface__label {
+    color: var(--text-3);
+    font-size: var(--fs-100);
+    font-weight: 600;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+  }
+
+  .vendor-surface__ops {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    margin: 0;
+    padding-inline-start: 1rem;
+    color: var(--text-2);
+    font-size: var(--fs-200);
+    list-style: disc;
+  }
+
+  .vendor-surface__evidence {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem 0.6rem;
+    padding-block-start: var(--sp-1);
+    border-block-start: 1px solid var(--line);
+    color: var(--text-3);
+    font-size: var(--fs-100);
+  }
+
+  .vendor-source-link {
+    color: var(--accent-bright);
+    font-family: var(--font-mono);
+    font-size: var(--fs-100);
+    overflow-wrap: anywhere;
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
+    text-underline-offset: 0.15em;
+  }
+
+  .vendor-source-link:hover {
+    color: var(--text-1);
+  }
+
+  .vendor-source-link:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  .vendor-regulatory__details {
+    border: 1px solid var(--line);
+    border-radius: var(--r-control);
+    background: var(--surface-inset);
+    padding: var(--sp-2) var(--sp-3);
+  }
+
+  .vendor-regulatory__details > summary {
+    color: var(--text-2);
+    font-size: var(--fs-200);
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .vendor-regulatory__details > summary:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  .vendor-regulatory__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-block-start: var(--sp-2);
+    padding-inline-start: 1rem;
+    color: var(--text-2);
+    font-size: var(--fs-200);
+    list-style: disc;
+  }
+
+  .vendor-regulatory__list li > span {
+    display: block;
+  }
+
+  @media (max-width: 720px) {
+    .vendor-panel {
+      margin-block-start: var(--sp-3);
+    }
+
+    .vendor-surface {
+      padding: var(--sp-2);
+    }
+
+    .vendor-surface__evidence {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vendor-panel *,
+    .vendor-source-link {
+      transition: none;
+    }
+  }
+}

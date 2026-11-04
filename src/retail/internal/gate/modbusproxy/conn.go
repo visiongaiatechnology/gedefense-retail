@@ -111,7 +111,31 @@ func (p *Proxy) handleWrite(ctx context.Context, client net.Conn, clientIP strin
 		p.respondException(client, f, decision.exception)
 		return false
 	}
-	// Authorization succeeded; the validated ADU is forwarded byte-identically.
+	// Read-before-write: re-read the live device value and compare it with the
+	// approved CurrentValue. No consume, no audit and no forwarded byte before
+	// this check succeeded.
+	if reason, code := p.verifyCurrentValues(ctx, up, f.UnitID, decision); reason != "" {
+		decision.reason = reason
+		decision.exception = code
+		p.writesDenied.Add(1)
+		p.deny(ctx, clientIP, intent, decision)
+		p.respondException(client, f, code)
+		return false
+	}
+	if reason, code := p.commitWrite(ctx, decision); reason != "" {
+		decision.reason = reason
+		decision.exception = code
+		p.writesDenied.Add(1)
+		p.deny(ctx, clientIP, intent, decision)
+		if reason == ReasonFailsafeStore {
+			p.recordError("audit failure after readback: write denied and connection closed")
+			return true
+		}
+		p.respondException(client, f, code)
+		return false
+	}
+	// Authorization and current-value verification succeeded; the validated ADU
+	// is forwarded byte-identically.
 	responseRaw, err := p.transact(ctx, up, f)
 	if err != nil {
 		p.upstreamErrors.Add(1)

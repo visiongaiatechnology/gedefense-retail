@@ -20,6 +20,7 @@ import {
 import { detailGrid } from './panel.js';
 import { icon } from '../core/icons.js';
 import { t, ruleTitle } from '../i18n/index.js';
+import { createVendorKnowledgePanel } from './vendor-panel.js';
 
 export async function openAssetInspector(assetId, { onClose = null } = {}) {
   const inspector = openInspector({
@@ -96,6 +97,8 @@ function buildContent(data) {
       { label: t('component.asset_inspector.field_last_seen'), value: formatDateTime(asset.last_seen_at) },
     ])
   );
+
+  blocks.push(createVendorKnowledgePanel(asset));
 
   if (asset.operator_notes) {
     blocks.push(sectionBlock(t('component.asset_inspector.section_notes'), el('p', { class: 'provenance', text: asset.operator_notes })));

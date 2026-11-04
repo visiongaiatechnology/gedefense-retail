@@ -321,11 +321,37 @@ func (m *Modbus) respond(unit uint8, pdu []byte) []byte {
 		m.holding[address] = value
 		return append([]byte{}, pdu...)
 	case 15, 16:
-		// The fixture supports single writes; multi-writes are still counted as
-		// write ADUs so the null-write proof remains valid.
+		if len(pdu) < 6 {
+			return exceptionPDU(fc, 0x03)
+		}
+		address := int(binary.BigEndian.Uint16(pdu[1:3]))
+		qty := int(binary.BigEndian.Uint16(pdu[3:5]))
+		byteCount := int(pdu[5])
+		if fc == 15 {
+			if qty < 1 || qty > 1968 || byteCount != (qty+7)/8 || len(pdu) != 6+byteCount {
+				return exceptionPDU(fc, 0x03)
+			}
+			if address+qty > len(m.coils) {
+				return exceptionPDU(fc, 0x02)
+			}
+			for i := 0; i < qty; i++ {
+				m.coils[address+i] = (pdu[6+i/8]>>(uint(i)%8))&0x01 == 1
+			}
+		} else {
+			if qty < 1 || qty > 123 || byteCount != 2*qty || len(pdu) != 6+byteCount {
+				return exceptionPDU(fc, 0x03)
+			}
+			if address+qty > len(m.holding) {
+				return exceptionPDU(fc, 0x02)
+			}
+			for i := 0; i < qty; i++ {
+				m.holding[address+i] = binary.BigEndian.Uint16(pdu[6+i*2 : 6+i*2+2])
+			}
+		}
 		m.writes.Add(1)
 		m.lastFC.Store(uint32(fc))
-		return exceptionPDU(fc, 0x01)
+		m.lastAddr.Store(uint32(address))
+		return append([]byte{fc}, pdu[1:5]...)
 	default:
 		return exceptionPDU(fc, 0x01)
 	}

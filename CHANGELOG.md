@@ -3,6 +3,48 @@
 All notable changes to GeDefense Retail are documented here. The project follows semantic
 versioning; alpha releases may change behavior without notice and are **not production-ready**.
 
+## [0.2.0-alpha.8] — 2026-11-04
+
+### Fixed (operator-confirmed release packaging defect)
+
+- Release bundles now contain the curated public `docs/retail/` documentation: vendor landscape,
+  protocol support matrix, market context, pilot acceptance, operations runbook, deployment guide,
+  policy reference, vendor workflows/onboarding, safety boundaries and threat model. Previously
+  `docs/BUILD-AND-RELEASE.md` referenced `docs/retail/deployment-guide.md` and
+  `docs/retail/pilot-acceptance.md` while the archives omitted the directory.
+- `data/ot-catalog/` (`vendors.json`, `write-surface.json`, `regulatory-context.json`) is part of
+  the bundle and documented as runtime knowledge (no auto-allow).
+- Documentation index adds a "Vendor & pilot documentation" section; internal audit/release/handoff
+  reports remain unpublished.
+
+### Added
+
+- **Modbus read-before-write:** immediately before forwarding an approved write, the gate re-reads
+  the current value (FC3/FC4) and compares it with the plan's bound value. Missing/empty values,
+  read errors and mismatches deny the write and are audited with `current_value_missing`,
+  `current_value_mismatch` or `current_value_unreadable`.
+- **HTTP boundary documented honestly:** no generic current-value re-check for HTTP(S) supervisor
+  UIs; URL/method allowlisting and value binding remain, and the gate check warns when verification
+  is not possible.
+- **Vendor catalog as runtime knowledge:** discovery, API, UI and gate advisory use
+  `data/ot-catalog/`; it is not an auto-allow. New endpoints: `GET /api/v1/vendors`,
+  `/api/v1/vendors/{id}` and `GET /api/v1/regulatory-context`.
+- Updated public docs: `docs/README.md` (vendor & pilot section), `docs/API.md`,
+  `docs/DEPLOYMENT.md`, `docs/SECURITY-MODEL.md`, `docs/BUILD-AND-RELEASE.md`.
+
+### Security
+
+- Read-before-write hardens the Modbus management path against stale planning values, but remains
+  defense in depth on top of plan approval, four-eyes, one-time token and source-IP binding.
+- The vendor catalog cannot grant write access, whitelist admission or a bypass; regulatory context
+  is informational only.
+
+### Known limitations
+
+- Real controller/current-value semantics are not tested (fake devices, loopback); HTTP has no
+  generic current-value re-check; Windows binaries remain NOT_SIGNED; no independent Access Gate
+  penetration test; no compliance or certification claim.
+
 ## [0.2.0-alpha.7] — 2026-11-03
 
 ### Fixed (operator review)

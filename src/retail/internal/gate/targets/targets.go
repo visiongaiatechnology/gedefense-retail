@@ -37,6 +37,7 @@ type Spec struct {
 	UnitID         uint8
 	AllowedUnitIDs []uint8
 	ReadRegisters  *modbusproxy.RegisterRange
+	ReadCoils      *modbusproxy.RegisterRange
 	ReadOnlyMode   bool
 	TimeoutS       int
 
@@ -174,6 +175,7 @@ func (r *Registry) Start(ctx context.Context) error {
 				UnitID:         entry.spec.UnitID,
 				Timeout:        timeoutFromSeconds(entry.spec.TimeoutS),
 				ReadRegisters:  entry.spec.ReadRegisters,
+				ReadCoils:      entry.spec.ReadCoils,
 				ReadOnlyMode:   entry.spec.ReadOnlyMode,
 				AllowedUnitIDs: entry.spec.AllowedUnitIDs,
 				SourceCIDRs:    r.cidrs,

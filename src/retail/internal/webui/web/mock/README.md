@@ -101,3 +101,12 @@ Die Gate-Ansicht nutzt denselben Mock-Harness. `mock-gate-api.js` bedient
   Sessions lassen sich mit Bestätigung widerrufen.
 - **Fixture-Hinweis:** Pläne/Sessions/Denies sind synthetisch. Es werden keine
   echten Passwörter, TOTP-Seeds oder Session-Tokens verwendet.
+
+## Herstellerkatalog (optional)
+
+`mock-vendor-api.js` bedient `GET /api/v1/vendors`, `/vendors/{family_id}` und
+`/regulatory-context` aus `fixtures/vendors.json`, `regulatory-context.json` und
+`write-surfaces.json` (Quelle: `data/ot-catalog/`). `?state=empty` oder
+`?vendors=disabled` simuliert einen fehlenden/deaktivierten Katalog (`enabled:false`).
+Demo-Asset: `#/assets?asset=asset-danfoss-aksm800` öffnet den Inspector mit
+Herstellerwissen-Panel.

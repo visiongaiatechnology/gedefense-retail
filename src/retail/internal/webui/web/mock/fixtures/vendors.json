@@ -1,0 +1,523 @@
+{
+  "enabled": true,
+  "schema_version": "1.0",
+  "last_checked": "2026-11-03",
+  "vendors": [
+    {
+      "id": "danfoss",
+      "name": "Danfoss",
+      "legal_name": "Danfoss A/S",
+      "country": "DK",
+      "role": "kaelte_supervisor_hersteller",
+      "focus": "Store-/Verbundmanager (AK-System: AK-SM 800, AK-SM 800A, AK-SC 355), Kuehlstellenregler, Cloud-Monitoring",
+      "source_url": "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
+      "additional_sources": [
+        "https://www.cisa.gov/news-events/ics-advisories/icsa-25-140-03"
+      ],
+      "confidence": "high",
+      "verification": "fulltext_fetched",
+      "last_checked": "2026-11-03"
+    },
+    {
+      "id": "copeland",
+      "name": "Copeland",
+      "legal_name": "Copeland LP (ehem. Emerson Climate Technologies)",
+      "country": "US",
+      "role": "kaelte_supervisor_hersteller",
+      "focus": "E2/E3/Site-Supervisor-Plattformen, XWEB-Supervisoren, Kaelte- und Gebaeudesteuerung",
+      "source_url": "https://www.copeland.com/en-vn/products/controls-monitoring-systems/facility-controls-electronics/facility-and-system-controls/documents/supervisory-e3",
+      "additional_sources": [
+        "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/"
+      ],
+      "confidence": "high",
+      "verification": "fulltext_fetched",
+      "last_checked": "2026-11-03"
+    },
+    {
+      "id": "dixell",
+      "name": "Dixell",
+      "legal_name": "Dixell (Copeland-Gruppe)",
+      "country": "IT",
+      "role": "kaelte_supervisor_hersteller",
+      "focus": "XWEB-Supervisoren, Kuehlstellen- und Verbundregler",
+      "source_url": "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
+      "additional_sources": [
+        "https://dixell.fr/wp-content/uploads/2026/10/Recommandations-pour-une-utilisation-securisee-des-superviseurs-XWEB-v1.0.pdf"
+      ],
+      "confidence": "high",
+      "verification": "fulltext_fetched",
+      "last_checked": "2026-11-03"
+    },
+    {
+      "id": "carel",
+      "name": "Carel",
+      "legal_name": "CAREL Industries S.p.A.",
+      "country": "IT",
+      "role": "kaelte_und_hvac_steuerungshersteller",
+      "focus": "pCO-/pYC-Plattformen, Compressor-Rack-Controller, Kuehlmoebel-/Kuehlraum-Controller, Total-Store-Loesung, RED optimise, tERA-Remote-Monitoring, IoT-Gateways",
+      "source_url": "https://www.carel.com/reducing-energy-consumption-and-operational-costs-in-buildings",
+      "confidence": "high",
+      "verification": "fulltext_fetched",
+      "last_checked": "2026-11-03"
+    },
+    {
+      "id": "rdm",
+      "name": "RDM",
+      "legal_name": "Resource Data Management",
+      "country": "GB",
+      "role": "kaelte_und_gebaeudecontrolling_hersteller",
+      "focus": "HVACR-Control-/Monitoring-Loesungen fuer Retail",
+      "source_url": "https://www.resourcedm.com/media/wytf0ftg/rdm-catalogue-full-collection-v1-en_gb.pdf",
+      "confidence": "low",
+      "verification": "search_result_only",
+      "last_checked": "2026-11-03"
+    },
+    {
+      "id": "eliwell",
+      "name": "Eliwell",
+      "legal_name": "Eliwell (Schneider Electric)",
+      "country": "IT",
+      "role": "kuehlstellenregler_hersteller",
+      "focus": "Kuehlstellen- und Kaelte-Steuerungen, breite EU-Installationsbasis",
+      "source_url": "https://www.eliwell.eu/en/about-eliwell-france-s1.html",
+      "confidence": "low",
+      "verification": "search_result_only",
+      "last_checked": "2026-11-03"
+    },
+    {
+      "id": "teko",
+      "name": "TEKO",
+      "legal_name": "TEKO Kaltetechnik",
+      "country": "DE",
+      "role": "kaelte_regler_hersteller",
+      "focus": "Kaelte-/Verbundregler und Leistungsregelung im deutschen Markt",
+      "source_url": "https://teko-gmbh.com/wp-content/media/tekopost-9.pdf",
+      "confidence": "low",
+      "verification": "search_result_only",
+      "last_checked": "2026-11-03"
+    },
+    {
+      "id": "bitzer",
+      "name": "Bitzer",
+      "country": "DE",
+      "role": "komponentenhersteller",
+      "focus": "Verdichter und Kaeltemittel-Komponenten; eigene Elektronik/OT-Schnittstellen in dieser Recherche nicht belegt",
+      "confidence": "low",
+      "verification": "secondary_reported",
+      "last_checked": "2026-11-03",
+      "notes": "Keine geprüfte OT-Schnittstellen-/Fernwartungsquelle gefunden; nur als Herstellerkontext gelistet."
+    },
+    {
+      "id": "gea",
+      "name": "GEA",
+      "country": "DE",
+      "role": "anlagenbauer_kaeltetechnik",
+      "focus": "Gewerbliche Kaelteanlagen/Anlagenbau; OT-Schnittstellen in dieser Recherche nicht belegt",
+      "confidence": "low",
+      "verification": "secondary_reported",
+      "last_checked": "2026-11-03",
+      "notes": "Keine geprüfte OT-Schnittstellenquelle; Herstellerkontext."
+    },
+    {
+      "id": "guenther",
+      "name": "Guenther",
+      "legal_name": "Günther GmbH",
+      "country": "DE",
+      "role": "komponentenhersteller",
+      "focus": "Waermetauscher/Kaeltekomponenten; OT-Schnittstellen nicht belegt",
+      "confidence": "low",
+      "verification": "secondary_reported",
+      "last_checked": "2026-11-03",
+      "notes": "Herstellerkontext ohne geprüfte OT-Schnittstelle."
+    },
+    {
+      "id": "wurm",
+      "name": "Wurm",
+      "country": "DE",
+      "role": "anlagenbauer_kaeltetechnik",
+      "focus": "Kaelteanlagenbau/Systemtechnik; OT-Schnittstellen in dieser Recherche nicht belegt",
+      "confidence": "low",
+      "verification": "secondary_reported",
+      "last_checked": "2026-11-03",
+      "notes": "Herstellerkontext ohne geprüfte OT-Schnittstelle."
+    },
+    {
+      "id": "systemair",
+      "name": "Systemair",
+      "country": "SE",
+      "role": "lueftungs_und_klimahersteller",
+      "focus": "Lueftung/Klima; Gebaeudetechnik-Schnittstellen in dieser Recherche nicht belegt",
+      "confidence": "low",
+      "verification": "secondary_reported",
+      "last_checked": "2026-11-03",
+      "notes": "Herstellerkontext ohne geprüfte OT-Schnittstelle."
+    }
+  ],
+  "device_families": [
+    {
+      "id": "danfoss_ak_sm_800",
+      "vendor_id": "danfoss",
+      "name": "AK-SM 800",
+      "category": "store_supervisor",
+      "protocols": [
+        "http_https_management"
+      ],
+      "ports": [
+        80,
+        443
+      ],
+      "management_interface": "eingebetteter Webserver, UI 'StoreView'",
+      "firmware_update": "kein Update mehr (End-of-Life seit Mai 2021)",
+      "lifecycle": "eol_2021_05",
+      "notes": "Im Oktober-2026-Vorfall betroffene Serie; Danfoss nennt fehlende Software-/Security-Updates.",
+      "source_url": "https://thehackernews.com/2026/10/attackers-heat-french-supermarket.html",
+      "additional_sources": [
+        "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/"
+      ],
+      "confidence": "medium",
+      "verification": "secondary_reported",
+      "last_checked": "2026-11-03"
+    },
+    {
+      "id": "danfoss_ak_sc_355",
+      "vendor_id": "danfoss",
+      "name": "AK-SC 355",
+      "category": "store_supervisor",
+      "protocols": [
+        "http_https_management"
+      ],
+      "ports": [
+        80,
+        443
+      ],
+      "management_interface": "Web-Management (Supervisor)",
+      "firmware_update": "kein Update mehr (2016 ausgelaufen)",
+      "lifecycle": "eol_2016",
+      "notes": "Von CERT-FR als betroffene Serie gelistet.",
+      "source_url": "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
+      "additional_sources": [
+        "https://thehackernews.com/2026/10/attackers-heat-french-supermarket.html"
+      ],
+      "confidence": "high",
+      "verification": "fulltext_fetched",
+      "last_checked": "2026-11-03"
+    },
+    {
+      "id": "danfoss_ak_sm_800a",
+      "vendor_id": "danfoss",
+      "name": "AK-SM 800A",
+      "category": "store_supervisor",
+      "protocols": [
+        "http_https_management"
+      ],
+      "ports": [
+        80,
+        443
+      ],
+      "management_interface": "eingebetteter Webserver mit nginx-Proxy, CGI (xml.cgi) und interner Applikation",
+      "firmware_update": "signierte .spk-Pakete; Upgrade 3.x -> 4.x -> 5.3.x; kein Downgrade ab 5.3.x; 'Strict Session Control' (HTTPS Pflicht) ab 4.0",
+      "lifecycle": "current",
+      "cves": [
+        {
+          "id": "CVE-2025-41450",
+          "type": "authentication_bypass",
+          "cvss_v3_1": 8.2,
+          "affected": "< R4.2",
+          "fixed_in": "R4.2",
+          "source_url": "https://www.cisa.gov/news-events/ics-advisories/icsa-25-140-03",
+          "confidence": "high"
+        },
+        {
+          "id": "CVE-2025-41451",
+          "type": "command_injection_rce",
+          "cvss_v3_1": 7.6,
+          "affected": "< 4.3.1",
+          "fixed_in": "R4.3.1",
+          "source_url": "https://www.cisa.gov/news-events/ics-advisories/icsa-25-140-03",
+          "confidence": "high"
+        },
+        {
+          "id": "CVE-2025-41452",
+          "type": "config_injection_dos",
+          "cvss_v3_1": 5.4,
+          "affected": "< 4.3.1",
+          "fixed_in": "R4.3.1",
+          "source_url": "https://www.cisa.gov/news-events/ics-advisories/icsa-25-140-03",
+          "confidence": "high"
+        }
+      ],
+      "notes": "Schwachstellen 2025 gepatcht; laut vorlaeufiger Einschaetzung NICHT der Einstiegsvektor der Oktober-2026-Angriffe (unbestaetigt).",
+      "source_url": "https://claroty.com/team82/research/freeze-the-controller-defrost-the-food-uncovering-vulnerabilities-in-danfoss-refrigeration-controllers",
+      "additional_sources": [
+        "https://www.cisa.gov/news-events/ics-advisories/icsa-25-140-03"
+      ],
+      "confidence": "high",
+      "verification": "fulltext_fetched",
+      "last_checked": "2026-11-03"
+    },
+    {
+      "id": "copeland_xweb",
+      "vendor_id": "copeland",
+      "name": "Copeland XWEB",
+      "category": "store_supervisor",
+      "protocols": [
+        "http_https_management"
+      ],
+      "management_interface": "Web-Management (Supervisor)",
+      "firmware_update": "Hersteller-Security-Update-Advisories (Inhalt dieser Recherche nicht geprueft)",
+      "lifecycle": "unknown",
+      "notes": "Von CERT-FR offiziell als betroffenes System der Kaelteangriffe gelistet; kein CVE seitens CERT-FR benannt.",
+      "source_url": "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
+      "confidence": "high",
+      "verification": "fulltext_fetched",
+      "last_checked": "2026-11-03"
+    },
+    {
+      "id": "dixell_xweb",
+      "vendor_id": "dixell",
+      "name": "Dixell XWEB",
+      "category": "store_supervisor",
+      "protocols": [
+        "http_https_management"
+      ],
+      "management_interface": "Web-Management (Supervisor)",
+      "firmware_update": "Hersteller-Hardening-Leitfaden 10/2026 (durch CERT-FR verlinkt)",
+      "lifecycle": "unknown",
+      "notes": "Von CERT-FR offiziell als betroffenes System gelistet.",
+      "source_url": "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
+      "additional_sources": [
+        "https://dixell.fr/wp-content/uploads/2026/10/Recommandations-pour-une-utilisation-securisee-des-superviseurs-XWEB-v1.0.pdf"
+      ],
+      "confidence": "high",
+      "verification": "fulltext_fetched",
+      "last_checked": "2026-11-03"
+    },
+    {
+      "id": "copeland_e2_site_supervisor",
+      "vendor_id": "copeland",
+      "name": "E2 / Site Supervisor",
+      "category": "store_supervisor",
+      "protocols": [
+        "bacnet_mstp",
+        "soap_xml",
+        "http_https_management"
+      ],
+      "management_interface": "Supervisor-Konsole/Web, E-Mail-/SMS-Alarme",
+      "firmware_update": "Firmware/Application per USB (ADF-Datei); Release Notes je Version; Security-Update-Advisories",
+      "lifecycle": "legacy_but_supported",
+      "notes": "Vorgaengerplattform von E3; BACnet-MSTP-Dokumentation vorhanden.",
+      "source_url": "https://www.copeland.com/en-vn/products/controls-monitoring-systems/facility-controls-electronics/facility-and-system-controls/documents/supervisory-e3",
+      "confidence": "medium",
+      "verification": "fulltext_fetched",
+      "last_checked": "2026-11-03"
+    },
+    {
+      "id": "copeland_e3",
+      "vendor_id": "copeland",
+      "name": "E3 Supervisory Control",
+      "category": "store_supervisor",
+      "protocols": [
+        "bacnet_mstp",
+        "soap_xml",
+        "http_https_management"
+      ],
+      "management_interface": "Supervisor-Konsole/Web-Display, E-Mail-/SMS-Alarme",
+      "firmware_update": "Firmware/Application per USB (ADF); Versionen 2.2xF01 bis 2.33F01/02 als Release Notes dokumentiert",
+      "lifecycle": "current",
+      "notes": "Mehrere Hersteller-Sicherheitsdokumente vorhanden (Password Standards, Password Management, Security Update Advisory).",
+      "source_url": "https://www.copeland.com/en-vn/products/controls-monitoring-systems/facility-controls-electronics/facility-and-system-controls/documents/supervisory-e3",
+      "confidence": "medium",
+      "verification": "fulltext_fetched",
+      "last_checked": "2026-11-03"
+    },
+    {
+      "id": "carel_pco_platform",
+      "vendor_id": "carel",
+      "name": "pCO-/pYC-Plattform",
+      "category": "controller_platform",
+      "management_interface": "Programmierbare Steuerungen, Terminals, IoT-Gateways",
+      "firmware_update": "Hersteller-/Serviceportal (Details nicht geprueft)",
+      "lifecycle": "current",
+      "notes": "Portfolio belegt; konkrete Feldbus-/Netzwerkprotokolle in dieser Recherche nicht im Volltext verifiziert.",
+      "source_url": "https://www.carel.com/reducing-energy-consumption-and-operational-costs-in-buildings",
+      "confidence": "medium",
+      "verification": "fulltext_fetched",
+      "last_checked": "2026-11-03"
+    },
+    {
+      "id": "carel_rack_and_store",
+      "vendor_id": "carel",
+      "name": "Compressor-Rack-/Total-Store-Loesung",
+      "category": "rack_controller",
+      "management_interface": "Rack-Controller, Store-Management, BMS-/FieldBus-Anbindung",
+      "firmware_update": "Hersteller-/Serviceportal (Details nicht geprueft)",
+      "lifecycle": "current",
+      "notes": "Produktkategorien belegt; Protokolle/Ports unbestaetigt. 'pRack/muRack'-Modellnamen konnten nicht verifiziert werden.",
+      "source_url": "https://www.carel.com/reducing-energy-consumption-and-operational-costs-in-buildings",
+      "confidence": "low",
+      "verification": "search_result_only",
+      "last_checked": "2026-11-03"
+    },
+    {
+      "id": "carel_remote_monitoring",
+      "vendor_id": "carel",
+      "name": "RED optimise / RED control / tERA",
+      "category": "cloud_monitoring",
+      "protocols": [
+        "http_https_management"
+      ],
+      "management_interface": "Digitalplattform/App/Remote-Monitoring-Service, IoT-Gateway",
+      "firmware_update": "n/a (Cloud-Service)",
+      "lifecycle": "current",
+      "notes": "Existenz der Services belegt; Datenfluss, Mandantentrennung und Zugriffsmodell nicht geprueft.",
+      "source_url": "https://www.carel.com/reducing-energy-consumption-and-operational-costs-in-buildings",
+      "confidence": "medium",
+      "verification": "fulltext_fetched",
+      "last_checked": "2026-11-03"
+    }
+  ],
+  "protocols": [
+    {
+      "id": "http_https_management",
+      "name": "HTTP/HTTPS-Managementoberflaeche",
+      "transport": "tcp",
+      "default_port": 443,
+      "direction": "bidirektional",
+      "authenticated_native": true,
+      "encrypted_native": false,
+      "read_only_possible": true,
+      "passive_detectable": true,
+      "source_url": "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
+      "confidence": "high",
+      "verification": "fulltext_fetched",
+      "last_checked": "2026-11-03",
+      "notes": "Belegter Angriffsweg der Kaelteangriffe 2026. GeDefense beobachtet nur Metadaten/Sessions, keine Interaktion."
+    },
+    {
+      "id": "modbus_tcp",
+      "name": "Modbus TCP",
+      "transport": "tcp",
+      "default_port": 502,
+      "direction": "bidirektional",
+      "authenticated_native": false,
+      "encrypted_native": false,
+      "read_only_possible": true,
+      "passive_detectable": true,
+      "source_url": "https://www.xonasystems.com/industry-advisories/global-modbus/tcp-probing-campaign-reinforces-ot-exposure-risk",
+      "confidence": "high",
+      "verification": "fulltext_fetched",
+      "last_checked": "2026-11-03",
+      "notes": "Port 502 und fehlende native Auth/Verschluesselung belegt. Read: FC 3/4; Write-FCs duerfen nicht implementiert werden."
+    },
+    {
+      "id": "bacnet_mstp",
+      "name": "BACnet MSTP",
+      "transport": "serial",
+      "default_port": null,
+      "direction": "bidirektional",
+      "authenticated_native": false,
+      "encrypted_native": false,
+      "read_only_possible": true,
+      "passive_detectable": false,
+      "source_url": "https://www.copeland.com/en-vn/products/controls-monitoring-systems/facility-controls-electronics/facility-and-system-controls/documents/supervisory-e3",
+      "confidence": "high",
+      "verification": "fulltext_fetched",
+      "last_checked": "2026-11-03",
+      "notes": "Feldbus; nicht direkt aus IP-PCAP sichtbar, nur ueber Gateway/Supervisor."
+    },
+    {
+      "id": "bacnet_ip",
+      "name": "BACnet/IP",
+      "transport": "udp",
+      "default_port": 47808,
+      "direction": "bidirektional",
+      "authenticated_native": false,
+      "encrypted_native": false,
+      "read_only_possible": true,
+      "passive_detectable": true,
+      "source_url": "https://www.copeland.com/en-vn/products/controls-monitoring-systems/facility-controls-electronics/facility-and-system-controls/documents/supervisory-e3",
+      "confidence": "medium",
+      "verification": "secondary_reported",
+      "last_checked": "2026-11-03",
+      "notes": "BACnet-Unterstuetzung der Geraeteklasse belegt; Port 47808 ist Protokollkonvention und in dieser Recherche nicht separat verifiziert."
+    },
+    {
+      "id": "mqtt",
+      "name": "MQTT",
+      "transport": "tcp",
+      "default_port": 1883,
+      "direction": "publish_subscribe",
+      "authenticated_native": true,
+      "encrypted_native": false,
+      "read_only_possible": true,
+      "passive_detectable": true,
+      "source_url": "https://www.carel.com/reducing-energy-consumption-and-operational-costs-in-buildings",
+      "confidence": "low",
+      "verification": "secondary_reported",
+      "last_checked": "2026-11-03",
+      "notes": "Ports 1883/8883 sind Konvention; MQTT-Relevanz fuer Filial-OT in dieser Recherche nicht belegt. Nur Subscribe, kein Publish."
+    },
+    {
+      "id": "snmp_v3",
+      "name": "SNMPv3",
+      "transport": "udp",
+      "default_port": 161,
+      "direction": "manager_agent",
+      "authenticated_native": true,
+      "encrypted_native": true,
+      "read_only_possible": true,
+      "passive_detectable": true,
+      "source_url": "https://www.xonasystems.com/industry-advisories/global-modbus/tcp-probing-campaign-reinforces-ot-exposure-risk",
+      "confidence": "low",
+      "verification": "secondary_reported",
+      "last_checked": "2026-11-03",
+      "notes": "Protokollkonvention; v1/v2c-Klartext-Community als Risiko. Nur GET/GETBULK, kein SET."
+    },
+    {
+      "id": "opc_ua",
+      "name": "OPC UA",
+      "transport": "tcp",
+      "default_port": 4840,
+      "direction": "client_server",
+      "authenticated_native": true,
+      "encrypted_native": true,
+      "read_only_possible": true,
+      "passive_detectable": false,
+      "confidence": "low",
+      "verification": "secondary_reported",
+      "last_checked": "2026-11-03",
+      "notes": "Port/Konvention nicht primaerquelllich geprueft; im Filial-OT nicht belegt. Nur mit expliziter Freigabe und SignAndEncrypt."
+    },
+    {
+      "id": "soap_xml",
+      "name": "SOAP/XML-API",
+      "transport": "tcp",
+      "default_port": 80,
+      "direction": "client_server",
+      "authenticated_native": true,
+      "encrypted_native": false,
+      "read_only_possible": true,
+      "passive_detectable": true,
+      "source_url": "https://www.copeland.com/en-vn/products/controls-monitoring-systems/facility-controls-electronics/facility-and-system-controls/documents/supervisory-e3",
+      "confidence": "medium",
+      "verification": "fulltext_fetched",
+      "last_checked": "2026-11-03",
+      "notes": "Installationsdokument fuer Copeland-Supervisor-SOAP belegt; keine Interaktion durch GeDefense."
+    },
+    {
+      "id": "lon_proprietary",
+      "name": "LON / proprietaere Feldbusse",
+      "transport": "fieldbus",
+      "default_port": null,
+      "direction": "bidirektional",
+      "authenticated_native": false,
+      "encrypted_native": false,
+      "read_only_possible": true,
+      "passive_detectable": false,
+      "confidence": "low",
+      "verification": "secondary_reported",
+      "last_checked": "2026-11-03",
+      "notes": "Nur ueber Gateway sichtbar; nicht MVP."
+    }
+  ]
+}

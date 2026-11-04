@@ -24,6 +24,7 @@ import (
 	"github.com/visiongaiatechnology/gedefense/retail/internal/ports"
 	"github.com/visiongaiatechnology/gedefense/retail/internal/state"
 	"github.com/visiongaiatechnology/gedefense/retail/internal/store"
+	"github.com/visiongaiatechnology/gedefense/retail/internal/vendorcatalog"
 	"github.com/visiongaiatechnology/gedefense/retail/internal/version"
 )
 
@@ -80,6 +81,9 @@ type apiTestOptions struct {
 	security     *WhitelistConfig
 	setup        bool
 	configPath   string
+	// vendorCatalog is the optional OT vendor catalog served by the monitoring
+	// endpoints (nil = disabled catalog).
+	vendorCatalog *vendorcatalog.Catalog
 }
 
 // apiHarness bundles a fully wired API server with real stores.
@@ -181,6 +185,7 @@ func newAPIHarness(t *testing.T, opts apiTestOptions) *apiHarness {
 		SimulationEnabled: opts.simulation,
 		Security:          securityDeps(opts.security),
 		Setup:             buildSetupManager(t, opts, auditDep, registry, clock),
+		VendorCatalog:     opts.vendorCatalog,
 	})
 	if err != nil {
 		t.Fatalf("New: %v", err)

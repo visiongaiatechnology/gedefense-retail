@@ -24,11 +24,50 @@
   binding, lockout, short-lived sessions.
 - Setup wizard: available only from loopback and only until setup is completed.
 
-## Release integrity and signatures (0.2.0-alpha.3)
+## Write enforcement: read-before-write (0.2.0-alpha.8)
+
+- **Modbus TCP only:** immediately before forwarding a write, the gate re-reads the current value
+  (FC3 for holding registers, FC1 `read_coils` for coil writes) and compares it with the value bound
+  in the plan. Empty/missing values, read errors and mismatches deny the write and are audited with
+  `current_value_missing`, `current_value_unreadable` or `current_value_mismatch`; no write leaves the
+  gate. Order: verify → consume/audit → forward.
+- **Values:** `current_value`/`new_value` are display values; `value_scale` defaults to `1.0` and
+  the raw value is `round(display/value_scale)`. Decimal values require a scale (otherwise `400`);
+  `retailgate check` warns as well.
+- **`read_coils` (FC1)** is a separate read window; Modbus targets may configure
+  `read_coils: {"fc":1,"start":0,"count":N}`. FC5/FC15 writes require it — otherwise the gate denies
+  and `retailgate check` reports a failing check `RBC-<target>`.
+- **TOCTOU residual risk:** a short window between re-read and write remains and cannot be fully
+  closed by the gate. Mitigations: immediate re-read, short sessions/approval windows and
+  device-side interlocks/monitoring for unexpected changes. No “TOCTOU-free” claim.
+- Read-before-write is defense in depth on top of plan approval, four eyes, one-time token and
+  source-IP binding; it never replaces approval.
+- **HTTP(S) boundary:** there is no generic current-value re-check for supervisor web UIs. The gate
+  keeps URL/method allowlisting and value binding; check output warns when verification is not
+  possible. HTTP writes are therefore not equivalent to Modbus read-before-write.
+- Real controller/firmware semantics of the re-read are **not tested** in this alpha (fake devices,
+  loopback).
+
+## Vendor catalog and packaged data (0.2.0-alpha.8)
+
+- The release bundle ships `data/ot-catalog/` (`vendors.json`, `write-surface.json`,
+  `regulatory-context.json`).
+- Discovery, API (`/api/v1/vendors*`, `/api/v1/regulatory-context`), UI and gate advisory use it as
+  runtime knowledge; unknown devices stay unknown.
+- The catalog is **not** an auto-allow: it grants no write permission, no whitelist admission and no
+  bypass of plan/approval. Regulatory context is informational and makes no compliance claim.
+- **Failure behaviour:** a missing, invalid or oversized `vendors.json` disables the catalog
+  (`enabled:false`, empty lists, warnings, HTTP 200 — no 500). Partial failures keep the catalog
+  enabled with empty affected lists and warnings. Missing files never abort startup.
+- Catalog/regulatory endpoints are read-only, `viewer`-RBAC, rate-limited and `no-store`; anonymous
+  requests receive `401`. `retaild check` reports catalog problems only as warnings in `warnings[]`
+  and does not change `ok` or check results.
+
+## Release integrity and signatures (0.2.0-alpha.8)
 
 - Archives, `SHA256SUMS`, `SHA256SUMS.archives` and `SBOM.spdx.json` are published with cosign
   **keyless** signatures (`*.sig`/`*.pem`), together with `SHA256SUMS` / `SHA256SUMS.archives`;
-  `SBOM.spdx.json` (SPDX-2.3 JSON) lists the bundled components and hashes.
+  `SBOM.spdx.json` (SPDX-2.3 JSON) lists the release archives and binaries with hashes; all bundle files are covered by the bundle `SHA256SUMS`.
 - **Windows binaries are NOT_SIGNED** (no Authenticode certificate); SmartScreen may warn. Do not
   treat Windows code signing as a security control in this alpha.
 - Verification steps are in [DEPLOYMENT.md](DEPLOYMENT.md) and

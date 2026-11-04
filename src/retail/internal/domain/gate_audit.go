@@ -61,12 +61,18 @@ const (
 	DenyOperationNotApproved = "operation_not_approved"
 	DenyValueMismatch        = "value_mismatch"
 	DenyAddressMismatch      = "address_mismatch"
-	DenyOutsideWindow        = "outside_window"
-	DenyTokenInvalid         = "token_invalid"
-	DenyTokenExpired         = "token_expired"
-	DenyTokenUsed            = "token_used"
-	DenyMFARequired          = "mfa_required"
-	DenyPolicyMissing        = "policy_missing"
-	DenyFailsafeClock        = "failsafe_clock"
-	DenyFailsafeStore        = "failsafe_store"
+	// Read-before-write verification (security principle from write-surface.json):
+	// the live device value must match the approved CurrentValue before a write
+	// is forwarded. Stable identifiers for API/audit/UI.
+	DenyCurrentValueMissing    = "current_value_missing"
+	DenyCurrentValueMismatch   = "current_value_mismatch"
+	DenyCurrentValueUnreadable = "current_value_unreadable"
+	DenyOutsideWindow          = "outside_window"
+	DenyTokenInvalid           = "token_invalid"
+	DenyTokenExpired           = "token_expired"
+	DenyTokenUsed              = "token_used"
+	DenyMFARequired            = "mfa_required"
+	DenyPolicyMissing          = "policy_missing"
+	DenyFailsafeClock          = "failsafe_clock"
+	DenyFailsafeStore          = "failsafe_store"
 )

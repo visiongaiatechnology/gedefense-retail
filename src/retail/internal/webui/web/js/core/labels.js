@@ -63,6 +63,7 @@ const QUALITY = {
 };
 
 const ASSET_TYPE = {
+  store_supervisor: 'enum.asset_type.store_supervisor',
   refrigeration_controller: 'enum.asset_type.refrigeration_controller',
   plc: 'enum.asset_type.plc',
   hmi: 'enum.asset_type.hmi',

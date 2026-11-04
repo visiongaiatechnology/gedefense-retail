@@ -29,6 +29,7 @@ type fakeAuth struct {
 	hasPlan       bool
 	consumeOK     bool
 	consumeBudget int
+	consumeCalls  int
 	allowedErr    error
 	denies        []domain.DeniedWriteAttempt
 	allowedOps    []domain.WriteOperation
@@ -44,6 +45,7 @@ func (f *fakeAuth) Lookup(domain.TargetID, string, time.Time) (domain.WriteSessi
 func (f *fakeAuth) ConsumeUse(domain.SessionID, time.Time) bool {
 	f.mu.Lock()
 	defer f.mu.Unlock()
+	f.consumeCalls++
 	if f.consumeBudget > 0 {
 		f.consumeBudget--
 		return true

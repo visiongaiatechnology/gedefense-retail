@@ -363,7 +363,7 @@ func TestMultiRegisterWriteRequiresEveryOperation(t *testing.T) {
 	if got := device.State(); got.WriteADUs != 1 {
 		t.Fatalf("approved multi-write did not reach the device: %+v", got)
 	}
-	if pdu[0] != FCWriteMultipleRegisters|0x80 {
+	if pdu[0] != FCWriteMultipleRegisters {
 		t.Fatalf("device response = %v", pdu)
 	}
 	if auth.allowedCount() != 2 {
@@ -401,8 +401,11 @@ func TestAuditFailureFailsClosed(t *testing.T) {
 	if auth.lastDeny(t).Reason != ReasonFailsafeStore {
 		t.Fatalf("reason = %q", auth.lastDeny(t).Reason)
 	}
-	if got := device.State(); got.WriteADUs != 0 || got.Connects != 0 {
-		t.Fatalf("write reached the controller although the audit failed")
+	if got := device.State(); got.WriteADUs != 0 {
+		t.Fatalf("write reached the controller although the audit failed: %+v", got)
+	}
+	if got := device.State(); len(got.LastRequestRaw) < 8 || got.LastRequestRaw[7] != FCReadHoldingRegisters {
+		t.Fatalf("expected only the readback FC3 request before the audit failure: %+v", got)
 	}
 }
 
@@ -418,13 +421,23 @@ func TestWriteTimeoutReportsUnknownNoRetry(t *testing.T) {
 	)
 	conn := dial(t, proxy)
 	sendPDU(t, conn, 1, 1, fc6(0, 35))
-	if _, pdu := readPDU(t, conn); pdu[0] != 0x86 || pdu[1] != 0x0b {
-		t.Fatalf("upstream timeout exception = %v", pdu)
+	// The readback itself times out: fail-closed deny as unreadable, no write is
+	// forwarded and therefore no write_unknown is reported.
+	if _, pdu := readPDU(t, conn); pdu[0] != 0x86 || pdu[1] != 0x04 {
+		t.Fatalf("readback timeout exception = %v", pdu)
 	}
-	waitFor(t, time.Second, func() bool { return auth.unknownCount() >= 1 })
+	if auth.lastDeny(t).Reason != ReasonCurrentValueUnreadable {
+		t.Fatalf("reason = %q", auth.lastDeny(t).Reason)
+	}
 	state := device.State()
-	if state.Requests != 1 || len(state.LastRequestRaw) < 8 || state.LastRequestRaw[7] != FCWriteSingleRegister {
-		t.Fatalf("write was retried or not forwarded exactly once: %+v", state)
+	if state.WriteADUs != 0 {
+		t.Fatalf("timeout during readback forwarded a write: %+v", state)
+	}
+	if len(state.LastRequestRaw) < 8 || state.LastRequestRaw[7] != FCReadHoldingRegisters {
+		t.Fatalf("expected only the readback FC3 request: %+v", state)
+	}
+	if auth.unknownCount() != 0 {
+		t.Fatal("write_unknown reported although no write ADU left the gate")
 	}
 }
 
@@ -449,7 +462,10 @@ func TestConcurrentWritesMaxUsesOne(t *testing.T) {
 			t.Fatal("no response")
 		case pdu[0] == FCWriteSingleRegister:
 			allowed++
-		case pdu[0] == 0x86 && pdu[1] == 0x01:
+		case pdu[0] == 0x86:
+			// The loser is denied either by the exhausted session (0x01) or by
+			// the read-before-write check after the winner changed the value
+			// (0x04) - both are fail-closed denials.
 			denied++
 		}
 	}

@@ -1,7 +1,7 @@
 # GeDefense Retail — Build & Release (Cross-Platform)
 
 **Produkt:** GeDefense Retail — ColdChain & Store Infrastructure Security (VisionGaiaTechnology)
-**Version:** siehe `VERSION` (aktuell `0.2.0-alpha.7`)
+**Version:** siehe `VERSION` (aktuell `0.2.0-alpha.8`)
 **Status:** ALPHA — nicht produktionsfreigegeben.
 
 Dieses Dokument beschreibt den reproduzierbaren Cross-Platform-Build, die
@@ -61,11 +61,11 @@ respektiert; `GEDEFENSE_BUILD_DATE` bleibt als explizite Überschreibung
 unterstützt (Vorrang). Für einen reproduzierbaren Vergleich:
 
 ```bash
-SOURCE_DATE_EPOCH=1793664000 GEDEFENSE_COMMIT=<sha> bash scripts/build-release.sh
+SOURCE_DATE_EPOCH=1762290000 GEDEFENSE_COMMIT=<sha> bash scripts/build-release.sh
 # BuildDate im Binary: 2025-11-04T21:00:00Z (aus dem Epoch abgeleitet)
 ```
 
-Release v0.2.0-alpha.7 verwendet `SOURCE_DATE_EPOCH=1793664000` (= `2026-11-03T00:00:00Z`); derselbe Wert ist im Release-Workflow fixiert. Zwei Builds mit demselben `SOURCE_DATE_EPOCH`, `GEDEFENSE_COMMIT` und derselben
+Release v0.2.0-alpha.3 verwendet `SOURCE_DATE_EPOCH=1762290000` (= `2025-11-04T21:00:00Z`); derselbe Wert ist im Release-Workflow fixiert. Zwei Builds mit demselben `SOURCE_DATE_EPOCH`, `GEDEFENSE_COMMIT` und derselben
 Go-Toolchain sind bit-identisch (Hashvergleich via `SHA256SUMS.binaries`).
 
 ```bash
@@ -123,11 +123,21 @@ Inhalt eines Bundles:
 |---|---|
 | `bin/` | `retaild`, `retailgate`, `retail-sim` |
 | `config/` | `retail.example.json`, `gate.example.json`, `gate-policy.example.json`, `gedefense-retail.service`, `gedefense-retailgate.service` |
-| `docs/` | Betriebs-/Sicherheits-/Gate-Dokumentation |
+| `docs/` | **nur kuratierte Public-Docs** (`docs/README.md`, `API.md`, `ARCHITECTURE.md`, `BUILD-AND-RELEASE.md`, `DEPLOYMENT.md`, `INCIDENT-RESPONSE.md`, `SECURITY-MODEL.md`, `docs/assets/`, `docs/screenshots/`, `docs/retail/`) |
+| `data/ot-catalog/` | `vendors.json`, `write-surface.json`, `regulatory-context.json` (Laufzeitwissen, kein Auto-Allow) |
 | `README.md`, `LICENSE`, `VERSION`, `THIRD-PARTY-NOTICES.md` | Produkt-/Lizenzhinweise |
 | `install.sh` / `uninstall.sh` | Linux-Installation (nur Linux-Bundles) |
 | `install-windows.ps1` / `uninstall-windows.ps1` | Windows-Installation (nur Windows-Bundles) |
 | `SHA256SUMS` | Prüfsummen aller Bundle-Dateien |
+
+### 4.1 Public-Doc-Allowlist (fail-closed)
+
+Release-Bundles enthalten ausschließlich die in `docs/PUBLIC-DOCS.manifest` gelisteten kuratierten
+Public-Docs (`docs/*.md`, `docs/assets/`, `docs/screenshots/`, `docs/retail/`) sowie
+`data/ot-catalog/`. Interne Audits, Reviews, Rohberichte, Handoffs, Checkpoint-/Arbeitsnotizen,
+Audit-/Release-Rohberichte, Engineering-Contracts oder sonstige Arbeitsnotizen werden **nie**
+paketiert. Das Packaging prüft die Manifest-Allowlist fail-closed: denied/unerwartete Docs, fehlende
+Allowlist-Einträge oder fehlende `data/ot-catalog`-Dateien brechen den Lauf mit Exit ≠ 0 ab.
 
 Prüfen:
 
@@ -261,11 +271,11 @@ Publish-Job mit `environment: release`, `contents: write` + `id-token: write`
 Verifikation (Beispiel):
 
 ```bash
-cosign verify-blob --signature gedefense-retail-0.2.0-alpha.7-linux-amd64.tar.gz.sig \
-  --certificate gedefense-retail-0.2.0-alpha.7-linux-amd64.tar.gz.pem \
+cosign verify-blob --signature gedefense-retail-0.2.0-alpha.3-linux-amd64.tar.gz.sig \
+  --certificate gedefense-retail-0.2.0-alpha.3-linux-amd64.tar.gz.pem \
   --certificate-identity-regexp 'https://github.com/<ORG>/<REPO>/.github/workflows/release.yml@refs/tags/v.*' \
   --certificate-oidc-issuer 'https://token.actions.githubusercontent.com' \
-  gedefense-retail-0.2.0-alpha.7-linux-amd64.tar.gz
+  gedefense-retail-0.2.0-alpha.3-linux-amd64.tar.gz
 sha256sum -c SHA256SUMS
 ```
 

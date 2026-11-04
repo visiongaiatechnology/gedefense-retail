@@ -9,6 +9,7 @@ import (
 
 	"github.com/visiongaiatechnology/gedefense/retail/internal/config"
 	"github.com/visiongaiatechnology/gedefense/retail/internal/domain"
+	"github.com/visiongaiatechnology/gedefense/retail/internal/vendorcatalog"
 	"github.com/visiongaiatechnology/gedefense/retail/internal/version"
 	"github.com/visiongaiatechnology/gedefense/retail/internal/webui"
 )
@@ -97,6 +98,24 @@ func Check(cfg config.Config) (Report, error) {
 		ID: "ADP-01", Name: "Adapter-Kinds im Binary", OK: len(shippedAdapters) > 0,
 		Detail: joinComma(shippedAdapters),
 	})
+
+	// The vendor catalog is optional, but `check` must state when vendor knowledge
+	// (and therefore the gate advisory and the regulatory context) is limited.
+	catalog := vendorcatalog.Load(otCatalogPath())
+	for _, warning := range catalog.Warnings() {
+		rep.Warnings = append(rep.Warnings, warning)
+	}
+	switch {
+	case !catalog.Enabled():
+		rep.Warnings = append(rep.Warnings, "OT-Vendor-Katalog nicht geladen: Vendor-Wissen, Write-Surface-Advisory und Regulatory-Kontext sind eingeschränkt.")
+	default:
+		if !catalog.HasWriteSurfaces() {
+			rep.Warnings = append(rep.Warnings, "OT-Vendor-Katalog ohne write-surface.json: Gate-Advisory und Schreibflaechen-Anzeige sind eingeschränkt.")
+		}
+		if !catalog.HasRegulatoryContext() {
+			rep.Warnings = append(rep.Warnings, "OT-Vendor-Katalog ohne regulatory-context.json: Regulatory-Kontext ist eingeschränkt.")
+		}
+	}
 
 	if cfg.Central != nil {
 		for _, p := range []string{cfg.Central.ClientCertFile, cfg.Central.ClientKeyFile, cfg.Central.CAFile} {

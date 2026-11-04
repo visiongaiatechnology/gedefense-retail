@@ -35,6 +35,8 @@ type Config struct {
 	IdleTimeout time.Duration
 	// ReadRegisters is the only readable register window. Nil denies all reads.
 	ReadRegisters *RegisterRange
+	// ReadCoils is the optional FC1 coil window for read-before-write of FC5/15.
+	ReadCoils *RegisterRange
 	// ReadOnlyMode denies every write regardless of plans/sessions.
 	ReadOnlyMode bool
 	// AllowedUnitIDs is the explicit unit-id allowlist. Empty means only UnitID.
@@ -106,6 +108,7 @@ type Proxy struct {
 	parserErrors   atomic.Uint64
 	upstreamErrors atomic.Uint64
 	connections    atomic.Uint64
+	readTxn        atomic.Uint32
 
 	errMu   sync.Mutex
 	lastErr string

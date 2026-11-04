@@ -38,7 +38,7 @@ func validPlan(t *testing.T, id domain.PlanID, at time.Time) domain.WritePlan {
 		Protocol: "modbus_tcp",
 		Operations: []domain.WriteOperation{{
 			OperationID: "op-1", Protocol: "modbus_tcp", Function: "fc6",
-			Address: "40001", CurrentValue: "4.0", NewValue: "3.5",
+			Address: "40001", CurrentValue: "4.0", NewValue: "3.5", ValueScale: 0.1,
 		}},
 		Reason: "test", RequestedBy: "vendor-1", RequestedAt: at,
 		WindowStart: at, WindowEnd: at.Add(time.Hour), State: domain.PlanPending,

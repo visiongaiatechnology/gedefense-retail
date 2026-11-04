@@ -5,6 +5,9 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"math"
+	"strconv"
+	"strings"
 	"time"
 )
 
@@ -155,15 +158,63 @@ func (s WritePlanState) Valid() bool {
 
 // WriteOperation is exactly one value change that was requested and approved.
 // A plan with several operations must have each of them approved as a unit.
+// CurrentValue/NewValue are operator-facing display values; ValueScale maps them
+// to wire values (raw = round(display / scale), default 1.0). For example a
+// temperature shown as 4.0 degC with scale 0.1 maps to raw register value 40.
 type WriteOperation struct {
-	OperationID  string `json:"operation_id"`
-	Protocol     string `json:"protocol"` // modbus_tcp, http, bacnet_ip, mqtt
-	Function     string `json:"function"` // e.g. "fc6", "http_post", "write_property"
-	Address      string `json:"address"`  // register, object instance, or URL path
-	CurrentValue string `json:"current_value"`
-	NewValue     string `json:"new_value"`
-	Unit         string `json:"unit,omitempty"`
-	Notes        string `json:"notes,omitempty"`
+	OperationID  string  `json:"operation_id"`
+	Protocol     string  `json:"protocol"` // modbus_tcp, http, bacnet_ip, mqtt
+	Function     string  `json:"function"` // e.g. "fc6", "http_post", "write_property"
+	Address      string  `json:"address"`  // register, object instance, or URL path
+	CurrentValue string  `json:"current_value"`
+	NewValue     string  `json:"new_value"`
+	ValueScale   float64 `json:"value_scale,omitempty"`
+	Unit         string  `json:"unit,omitempty"`
+	Notes        string  `json:"notes,omitempty"`
+}
+
+// EffectiveScale returns the applied scale, defaulting to 1.0 for omitted/zero.
+func (o WriteOperation) EffectiveScale() float64 {
+	if o.ValueScale <= 0 {
+		return 1
+	}
+	return o.ValueScale
+}
+
+// HasDecimalValues reports whether the display values carry a decimal point
+// (such values require an explicit value_scale to be unambiguous).
+func (o WriteOperation) HasDecimalValues() bool {
+	return strings.Contains(o.CurrentValue, ".") || strings.Contains(o.NewValue, ".")
+}
+
+// ScaleToRaw converts one display value to the wire integer (0..65535).
+func ScaleToRaw(value string, scale float64) (string, bool) {
+	text := strings.TrimSpace(value)
+	if text == "" {
+		return "", false
+	}
+	parsed, err := strconv.ParseFloat(text, 64)
+	if err != nil || math.IsNaN(parsed) || math.IsInf(parsed, 0) {
+		return "", false
+	}
+	if scale <= 0 {
+		scale = 1
+	}
+	raw := math.Round(parsed / scale)
+	if raw < 0 || raw > 65535 {
+		return "", false
+	}
+	return strconv.FormatInt(int64(raw), 10), true
+}
+
+// RawNewValue converts the approved display NewValue to the wire value.
+func (o WriteOperation) RawNewValue() (string, bool) {
+	return ScaleToRaw(o.NewValue, o.EffectiveScale())
+}
+
+// RawCurrentValue converts the approved display CurrentValue to the wire value.
+func (o WriteOperation) RawCurrentValue() (string, bool) {
+	return ScaleToRaw(o.CurrentValue, o.EffectiveScale())
 }
 
 // Validate forbids empty operations: an approval without a concrete target is a
@@ -177,6 +228,12 @@ func (o WriteOperation) Validate() error {
 	}
 	if len(o.Address) > 256 || len(o.NewValue) > 256 || len(o.CurrentValue) > 256 {
 		return fmt.Errorf("write operation %q: value or address too long", o.Address)
+	}
+	if o.ValueScale < 0 || o.ValueScale > 1_000_000 {
+		return fmt.Errorf("write operation %q: value_scale must be between 0 (default 1.0) and 1000000", o.Address)
+	}
+	if o.HasDecimalValues() && o.ValueScale <= 0 {
+		return fmt.Errorf("write operation %q: decimal values require value_scale (for example 0.1)", o.Address)
 	}
 	return nil
 }
@@ -409,7 +466,19 @@ func (p WritePlan) MatchOperation(protocol, function, address, newValue string) 
 		return WriteOperation{}, false
 	}
 	for _, op := range p.Operations {
-		if op.Protocol == protocol && op.Function == function && op.Address == address && op.NewValue == newValue {
+		if op.Protocol != protocol || op.Function != function || op.Address != address {
+			continue
+		}
+		// Numeric operations compare the wire value derived from the display
+		// value and value_scale against the client's raw value. Non-numeric
+		// operations (for example fc22 mask expressions) compare literally.
+		if raw, ok := op.RawNewValue(); ok {
+			if raw == newValue {
+				return op, true
+			}
+			continue
+		}
+		if op.NewValue == newValue {
 			return op, true
 		}
 	}

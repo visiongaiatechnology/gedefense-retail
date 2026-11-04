@@ -100,6 +100,11 @@ func (s *Server) routes() []route {
 		// 9. Live stream.
 		{method: http.MethodGet, segs: routeSegs("/api/v1/stream"), minRole: config.RoleViewer, handler: s.handleStream},
 
+		// 9b. OT vendor catalog (read-only advisory knowledge).
+		{method: http.MethodGet, segs: routeSegs("/api/v1/vendors"), minRole: config.RoleViewer, handler: s.handleVendors},
+		{method: http.MethodGet, segs: routeSegs("/api/v1/vendors/:family_id"), minRole: config.RoleViewer, handler: s.handleVendorFamily},
+		{method: http.MethodGet, segs: routeSegs("/api/v1/regulatory-context"), minRole: config.RoleViewer, handler: s.handleRegulatoryContext},
+
 		// Setup wizard (loopback only, disabled once completed).
 		{method: http.MethodGet, segs: routeSegs("/api/v1/setup/state"), setup: true, handler: s.handleSetupState},
 		{method: http.MethodPost, segs: routeSegs("/api/v1/setup/language"), setup: true, handler: s.handleSetupLanguage},

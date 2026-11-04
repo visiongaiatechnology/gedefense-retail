@@ -5,7 +5,7 @@ Diese Bilder wurden am 2026-11-03 mit **Chrome headless** gegen den **Mock-Modus
 erzeugt. Sie zeigen Komposition, Hierarchie, Zustände und Responsive-Verhalten — **keine
 echte Sicherheitslage** und keine echten Filialdaten.
 
-Erzeugung: `python tests/visual_qa.py` (43 Bilder unter `var/visual-qa/`, inkl. Gate-Views,
+Erzeugung: `python tests/visual_qa.py` (46 Bilder unter `var/visual-qa/`, inkl. Gate-Views,
 Setup-Wizard, 8 Sprachen, Mobile und Zuständen). Reproduzierbar; Fixtures liegen unter
 `src/retail/internal/webui/web/mock/fixtures/`.
 
@@ -38,6 +38,9 @@ Setup-Wizard, 8 Sprachen, Mobile und Zuständen). Reproduzierbar; Fixtures liege
 | `mobile-setup-language.png` | Setup - Sprache (Mobile) | 500×900 |
 | `mobile-setup-whitelist.png` | Setup - Whitelist (Mobile) | 500×1000 |
 | `notfound-sirdu.png` | 404-Seite mit Maskottchen Sirdu | 1440×900 |
+| `desktop-vendor-panel.png` | Herstellerwissen im Asset-Inspector (Vendor/Family/Lifecycle/Write-Surfaces) | 1440×1200 |
+| `desktop-vendor-panel-disabled.png` | Herstellerwissen degradiert (Katalog `enabled:false`) | 1440×1000 |
+| `mobile-vendor-panel.png` | Herstellerwissen (Mobile) | 500×1000 |
 
 **Hinweis zur Mobile-Breite:** Chrome unter Windows erzwingt bei `--window-size` eine
 Mindest-Viewportbreite von ~500 CSS-Pixel; die 390-px-Emulation wurde per CDP

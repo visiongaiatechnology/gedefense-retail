@@ -55,6 +55,39 @@ func Check(cfg gateconfig.Config, configPath string) (Report, error) {
 			ID: "POL-02", Name: "Default-Deny ist aktiv", OK: policy.DefaultDeny,
 			Detail: "default_deny=false ist nicht zulässig",
 		})
+		// Read-before-write (write-surface.json): every Modbus write needs an
+		// approved current_value and a read window covering the target address.
+		if len(policy.ModbusWriteAllowlist) > 0 {
+			rep.Warnings = append(rep.Warnings,
+				"modbus_write_allowlist aktiv: jede Operation benötigt current_value und ein read_registers-Fenster, das die Zieladresse abdeckt (Read-before-Write; Exceptions 0x04 bei missing/mismatch/unreadable)")
+		}
+		// HTTP has no generic current-value re-read; do not pretend otherwise.
+		if len(policy.HTTPWriteAllowlist) > 0 {
+			rep.Warnings = append(rep.Warnings,
+				"http_write_allowlist aktiv: HTTP-Writes haben keine generische Ist-Wert-Recheck-Garantie; es gilt nur die exakte URL/Methoden-Freigabe (kein Read-before-Write für HTTP)")
+		}
+		// F-A8-02: FC5/FC15 writes need an explicit FC1 read window for the
+		// read-before-write verification; otherwise they fail closed at runtime.
+		coilTargets := make(map[domain.TargetID]struct{})
+		for _, allow := range policy.ModbusWriteAllowlist {
+			if allow.FC == 5 || allow.FC == 15 {
+				coilTargets[allow.TargetID] = struct{}{}
+			}
+		}
+		for _, target := range cfg.Targets {
+			if _, ok := coilTargets[target.TargetID]; !ok {
+				continue
+			}
+			visible := target.ReadCoils != nil
+			detail := "read_coils (FC1 window) is required for FC5/FC15 read-before-write"
+			if visible {
+				detail = ""
+			}
+			rep.Checks = append(rep.Checks, CheckResult{
+				ID: "RBC-" + string(target.TargetID), Name: "Modbus-Coil-Readfenster fuer FC5/FC15",
+				OK: visible, Detail: detail,
+			})
+		}
 	}
 
 	master := false

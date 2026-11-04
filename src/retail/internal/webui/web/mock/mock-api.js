@@ -13,6 +13,7 @@
 const API_PREFIX = '/api/v1';
 import { createGateHandler } from './mock-gate-api.js';
 import { createSetupHandler } from './mock-setup-api.js';
+import { createVendorApiHandler } from './mock-vendor-api.js';
 
 const ALLOWED_STATES = new Set(['normal', 'empty', 'error', 'offline', 'partial']);
 const NOW = () => new Date().toISOString();
@@ -33,7 +34,9 @@ export function readMockConfig() {
   const delay = Number.isFinite(delayRaw) ? Math.min(5000, Math.max(0, delayRaw)) : 120;
   const gateLogin = params.get('gateLogin') === '1';
   const setupCompleted = params.get('setupCompleted') === '1';
-  return { state, delay, gateLogin, setupCompleted };
+  const vendorsDisabled = params.get('vendors') === 'disabled';
+  const emptyData = params.get('empty') || '';
+  return { state, delay, gateLogin, setupCompleted, vendorsDisabled, emptyData };
 }
 
 export function installMockApi(config) {
@@ -132,6 +135,14 @@ async function fixturePair(file, state) {
 
 /* --------------------------------------------------------------- routing */
 
+let vendorApiHandlerInstance = null;
+function vendorApiHandler() {
+  if (!vendorApiHandlerInstance) {
+    vendorApiHandlerInstance = createVendorApiHandler({ loadFixture, jsonResponse, errorResponse });
+  }
+  return vendorApiHandlerInstance;
+}
+
 let setupHandlerInstance = null;
 function setupHandler() {
   if (!setupHandlerInstance) {
@@ -168,6 +179,11 @@ async function handleRequest(url, init, config) {
   // ---- access gate (separate service, same mock harness) ----
   if (path === '/gate' || path.startsWith('/gate/')) {
     return gateHandler()(path, method, params, init, config);
+  }
+
+  // ---- manufacturer catalog (optional, read-only) ----
+  if (path === '/vendors' || path.startsWith('/vendors/') || path === '/regulatory-context') {
+    return vendorApiHandler()(path, method, params, init, config);
   }
 
   // ---- first-run setup (separate, loopback-only service) ----
@@ -231,6 +247,9 @@ async function handleRequest(url, init, config) {
 
   // ---- cold chain ----
   if (path === '/coldchain' && method === 'GET') {
+    if (config.emptyData === 'coldchain') {
+      return jsonResponse({ items: [], limit_violations: [], data_quality: [], window: { since: '', until: '' } });
+    }
     const data = await fixturePair('coldchain.json', config.state);
     const zoneId = params.get('zone_id');
     const sensorId = params.get('sensor_id');
@@ -248,7 +267,10 @@ async function handleRequest(url, init, config) {
   }
 
   // ---- access ----
-  if (path === '/access' && method === 'GET') return jsonResponse(await fixturePair('access.json', config.state));
+  if (path === '/access' && method === 'GET') {
+    if (config.emptyData === 'access') return jsonResponse({ windows: [], sessions: [], anomalies: [] });
+    return jsonResponse(await fixturePair('access.json', config.state));
+  }
 
   // ---- timeline ----
   if (path === '/timeline' && method === 'GET') {

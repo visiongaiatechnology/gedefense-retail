@@ -16,17 +16,20 @@ const Protocol = "modbus_tcp"
 
 // Stable deny reasons from the gate engineering contract §5.
 const (
-	ReasonNoSession            = "no_session"
-	ReasonSessionExpired       = "session_expired"
-	ReasonSessionRevoked       = "session_revoked"
-	ReasonWrongSource          = "wrong_source"
-	ReasonWrongTarget          = "wrong_target"
-	ReasonNotApproved          = "not_approved"
-	ReasonOperationNotApproved = "operation_not_approved"
-	ReasonValueMismatch        = "value_mismatch"
-	ReasonAddressMismatch      = "address_mismatch"
-	ReasonOutsideWindow        = "outside_window"
-	ReasonFailsafeStore        = "failsafe_store"
+	ReasonNoSession              = "no_session"
+	ReasonSessionExpired         = "session_expired"
+	ReasonSessionRevoked         = "session_revoked"
+	ReasonWrongSource            = "wrong_source"
+	ReasonWrongTarget            = "wrong_target"
+	ReasonNotApproved            = "not_approved"
+	ReasonOperationNotApproved   = "operation_not_approved"
+	ReasonValueMismatch          = "value_mismatch"
+	ReasonAddressMismatch        = "address_mismatch"
+	ReasonOutsideWindow          = "outside_window"
+	ReasonFailsafeStore          = "failsafe_store"
+	ReasonCurrentValueMissing    = "current_value_missing"
+	ReasonCurrentValueMismatch   = "current_value_mismatch"
+	ReasonCurrentValueUnreadable = "current_value_unreadable"
 )
 
 // SessionLookup is the consumer-defined seam to the gate core (contract §2).
@@ -134,20 +137,28 @@ func (p *Proxy) authorizeWrite(ctx context.Context, clientIP string, intent writ
 		return decision
 	}
 	decision.ops = ops
-	if !sessions.ConsumeUse(session.SessionID, now) {
-		decision.reason = ReasonSessionExpired
-		decision.exception = 0x01
-		return decision
-	}
-	for _, op := range ops {
-		if err := sessions.Allowed(ctx, session.SessionID, op); err != nil {
-			decision.reason = ReasonFailsafeStore
-			decision.exception = 0x04
-			return decision
-		}
-	}
+	// The use counter and the allowed-audit are committed only after the
+	// read-before-write verification succeeded (commitWrite).
 	decision.allowed = true
 	return decision
+}
+
+// commitWrite consumes one session use and audits every allowed operation. It
+// must be called only after a successful authorizeWrite + readback verification.
+// A store failure stays fail-closed: the write is denied and never forwarded.
+func (p *Proxy) commitWrite(ctx context.Context, decision writeDecision) (string, uint8) {
+	if p.sessions == nil {
+		return ReasonNoSession, 0x01
+	}
+	if !p.sessions.ConsumeUse(decision.session.SessionID, p.now()) {
+		return ReasonSessionExpired, 0x01
+	}
+	for _, op := range decision.ops {
+		if err := p.sessions.Allowed(ctx, decision.session.SessionID, op); err != nil {
+			return ReasonFailsafeStore, exServerFailure
+		}
+	}
+	return "", 0
 }
 
 // matchOperations maps every canonical write operation onto the approved plan.
@@ -225,7 +236,8 @@ func newDenyID(now time.Time) domain.DenyID {
 // denySeverity maps a deny reason onto the alert severity used by the gate core.
 func denySeverity(reason string) domain.Severity {
 	switch reason {
-	case ReasonOperationNotApproved, ReasonValueMismatch, ReasonAddressMismatch,
+	case ReasonCurrentValueMismatch,
+		ReasonOperationNotApproved, ReasonValueMismatch, ReasonAddressMismatch,
 		ReasonOutsideWindow, ReasonNotApproved, ReasonSessionRevoked, ReasonFailsafeStore:
 		return domain.SeverityCritical
 	default:

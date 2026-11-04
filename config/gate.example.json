@@ -26,7 +26,8 @@
       "upstream": "127.0.0.1:15020",
       "unit_id": 1,
       "timeout_s": 5,
-      "read_registers": { "fc": 3, "start": 1, "count": 64 }
+      "read_registers": { "fc": 3, "start": 1, "count": 64 },
+      "read_coils": { "fc": 1, "start": 0, "count": 16 }
     },
     {
       "target_id": "xweb-1",

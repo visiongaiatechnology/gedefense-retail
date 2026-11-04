@@ -134,7 +134,7 @@ func TestCatalogOUIAndLifecycle(t *testing.T) {
 	path := filepath.Join(dir, "vendors.json")
 	content := `{
 	  "vendors": [{"id":"danfoss","name":"Danfoss"}],
-	  "device_families": [{"id":"danfoss_ak_sm_800","vendor_id":"danfoss","name":"AK-SM 800","lifecycle":"eol_2021_05"}],
+	  "device_families": [{"id":"danfoss_ak_sm_800","vendor_id":"danfoss","name":"AK-SM 800","category":"store_supervisor","lifecycle":"eol_2021_05"}],
 	  "oui_prefixes": [{"prefix":"02:00:00","vendor_id":"danfoss"}]
 	}`
 	if err := os.WriteFile(path, []byte(content), 0o600); err != nil {

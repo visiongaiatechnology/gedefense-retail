@@ -13,6 +13,7 @@ import (
 
 	"github.com/visiongaiatechnology/gedefense/retail/internal/domain"
 	"github.com/visiongaiatechnology/gedefense/retail/internal/ports"
+	"github.com/visiongaiatechnology/gedefense/retail/internal/vendorcatalog"
 )
 
 // DefaultVendorsPath is relative to the service working directory
@@ -22,7 +23,10 @@ const DefaultVendorsPath = "../../data/ot-catalog/vendors.json"
 
 // Options configures the discoverer.
 type Options struct {
-	Clock       ports.Clock
+	Clock ports.Clock
+	// Catalog is the immutable, shared OT vendor catalog. When nil the discoverer
+	// loads its own catalog from VendorsPath (test/standalone use).
+	Catalog     *vendorcatalog.Catalog
 	VendorsPath string
 	ZoneID      domain.ZoneID
 }
@@ -31,23 +35,27 @@ type Options struct {
 // concurrent use.
 type Discoverer struct {
 	clock   ports.Clock
-	catalog *catalog
+	catalog *vendorcatalog.Catalog
 	zoneID  domain.ZoneID
 
 	mu     sync.Mutex
 	assets map[domain.AssetID]domain.Asset
 }
 
-// New creates a discoverer. The optional OUI/device catalog is loaded once; a
+// New creates a discoverer. The optional vendor catalog is loaded once; a
 // missing or malformed catalog only disables vendor/lifecycle enrichment.
 func New(opts Options) *Discoverer {
-	path := opts.VendorsPath
-	if path == "" {
-		path = DefaultVendorsPath
+	catalog := opts.Catalog
+	if catalog == nil {
+		path := opts.VendorsPath
+		if path == "" {
+			path = DefaultVendorsPath
+		}
+		catalog = vendorcatalog.Load(path)
 	}
 	return &Discoverer{
 		clock:   opts.Clock,
-		catalog: loadCatalog(path),
+		catalog: catalog,
 		zoneID:  opts.ZoneID,
 		assets:  make(map[domain.AssetID]domain.Asset),
 	}

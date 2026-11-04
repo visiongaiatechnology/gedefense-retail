@@ -206,7 +206,7 @@ func TestAPIPlanApprovalSessionFlow(t *testing.T) {
 	f.clock.advance(time.Minute)
 	windowStart := f.clock.Now().Add(time.Minute).Format(time.RFC3339)
 	windowEnd := f.clock.Now().Add(2 * time.Hour).Format(time.RFC3339)
-	body := `{"target_id":"t1","asset_id":"a1","protocol":"modbus_tcp","operations":[{"operation_id":"op-1","protocol":"modbus_tcp","function":"fc6","address":"40001","current_value":"4.0","new_value":"3.5"}],"reason":"maintenance","window_start":"` + windowStart + `","window_end":"` + windowEnd + `"}`
+	body := `{"target_id":"t1","asset_id":"a1","protocol":"modbus_tcp","operations":[{"operation_id":"op-1","protocol":"modbus_tcp","function":"fc6","address":"40001","current_value":"4.0","new_value":"3.5","value_scale":0.1}],"reason":"maintenance","window_start":"` + windowStart + `","window_end":"` + windowEnd + `"}`
 	headers := map[string]string{"Idempotency-Key": "idem-plan-0001"}
 	created := f.do(t, http.MethodPost, "/api/v1/gate/plans", body, vendorToken, headers)
 	if created.Code != http.StatusCreated {

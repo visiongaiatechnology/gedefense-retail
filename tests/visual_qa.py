@@ -140,6 +140,13 @@ def main() -> int:
     ("mobile-setup-language", f"http://127.0.0.1:{PORT}/mock/?state=normal&lang=de#/setup", 500, 900),
     ("mobile-setup-whitelist", f"http://127.0.0.1:{PORT}/mock/?state=normal&lang=de#/setup?step=2", 500, 1000),
     ("notfound-sirdu", f"http://127.0.0.1:{PORT}/mock/?state=normal&lang=de#/does-not-exist", 1440, 900),
+    # Manufacturer knowledge panel in the asset inspector
+    # Empty CTAs for the two split views
+    ("state-empty-access", f"http://127.0.0.1:{PORT}/mock/?state=normal&empty=access&lang=de#/access", 1440, 900),
+    ("state-empty-coldchain", f"http://127.0.0.1:{PORT}/mock/?state=normal&empty=coldchain&lang=de#/coldchain", 1440, 900),
+    ("desktop-vendor-panel", f"{base}#/assets?asset=asset-danfoss-aksm800", 1440, 1200),
+    ("desktop-vendor-panel-disabled", f"http://127.0.0.1:{PORT}/mock/?state=normal&vendors=disabled&lang=de#/assets?asset=asset-danfoss-aksm800", 1440, 1000),
+    ("mobile-vendor-panel", f"{base}#/assets?asset=asset-danfoss-aksm800", 500, 1000),
     ]
 
     ok = 0

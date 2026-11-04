@@ -41,6 +41,7 @@ import (
 	"github.com/visiongaiatechnology/gedefense/retail/internal/ports"
 	"github.com/visiongaiatechnology/gedefense/retail/internal/state"
 	"github.com/visiongaiatechnology/gedefense/retail/internal/store"
+	"github.com/visiongaiatechnology/gedefense/retail/internal/vendorcatalog"
 	"github.com/visiongaiatechnology/gedefense/retail/internal/version"
 	"github.com/visiongaiatechnology/gedefense/retail/internal/webui"
 )
@@ -298,10 +299,18 @@ func newGateway(cfg config.Config, log *slog.Logger, clock ports.Clock, configPa
 	det := detect.NewEngine(dw, clock)
 	corr := correlate.NewEngine(reg, clock)
 
+	// The vendor catalog is loaded exactly once, is immutable afterwards and is
+	// shared by discovery (asset enrichment) and the monitoring API. A missing or
+	// incomplete catalog only disables vendor knowledge; it never blocks startup.
+	otCatalog := vendorcatalog.Load(otCatalogPath())
+	for _, warning := range otCatalog.Warnings() {
+		log.Warn("ot vendor catalog", "warning", warning)
+	}
+
 	disc := discovery.New(discovery.Options{
-		Clock:       clock,
-		VendorsPath: otCatalogPath(),
-		ZoneID:      "",
+		Clock:   clock,
+		Catalog: otCatalog,
+		ZoneID:  "",
 	})
 
 	pipe := newPipeline(pipelineDeps{
@@ -363,6 +372,7 @@ func newGateway(cfg config.Config, log *slog.Logger, clock ports.Clock, configPa
 		},
 		Setup:           setupManager,
 		DefaultLanguage: cfg.SetupLanguage(),
+		VendorCatalog:   otCatalog,
 	})
 	if err != nil {
 		_ = alertStore.Close()
@@ -441,22 +451,9 @@ type detectionWorld struct {
 func (w detectionWorld) Policy() domain.Policy { return w.policy.Current() }
 
 // otCatalogPath resolves the optional OT vendor catalog. It is optional: the
-// discovery works without it and simply reports lower confidence.
+// discovery and the monitoring API work without it and warn instead of failing.
 func otCatalogPath() string {
-	if p := os.Getenv("GEDEFENSE_OT_CATALOG"); p != "" {
-		return p
-	}
-	candidates := []string{
-		filepath.Join("data", "ot-catalog", "vendors.json"),
-		filepath.Join("..", "..", "data", "ot-catalog", "vendors.json"),
-		filepath.Join("..", "..", "..", "data", "ot-catalog", "vendors.json"),
-	}
-	for _, c := range candidates {
-		if _, err := os.Stat(c); err == nil {
-			return c
-		}
-	}
-	return ""
+	return vendorcatalog.ResolvePath()
 }
 
 // demoSeedSite is used in demo mode to replace the configured site with the

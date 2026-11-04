@@ -33,6 +33,7 @@ import (
 	"github.com/visiongaiatechnology/gedefense/retail/internal/policy"
 	"github.com/visiongaiatechnology/gedefense/retail/internal/ports"
 	"github.com/visiongaiatechnology/gedefense/retail/internal/state"
+	"github.com/visiongaiatechnology/gedefense/retail/internal/vendorcatalog"
 	"github.com/visiongaiatechnology/gedefense/retail/internal/version"
 )
 
@@ -83,6 +84,9 @@ type Deps struct {
 	Security WhitelistConfig
 	// Setup is the first-run wizard manager (nil disables the setup API).
 	Setup *SetupManager
+	// VendorCatalog is the optional OT vendor catalog. Nil (or a disabled
+	// catalog) serves the vendor endpoints with enabled:false and an empty list.
+	VendorCatalog *vendorcatalog.Catalog
 	// DefaultLanguage is the operator-configured server language
 	// (setup.language). Empty, invalid or unsupported values fall back to
 	// English; the request header can always override it per request.

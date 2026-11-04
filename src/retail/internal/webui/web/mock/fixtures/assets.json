@@ -523,9 +523,42 @@
       "last_seen_at": "2026-11-03T17:09:00Z",
       "retired": false,
       "operator_notes": ""
+    },
+    {
+      "asset_id": "asset-danfoss-aksm800",
+      "site_id": "filiale-001",
+      "zone_id": "zone-cold-01",
+      "name": "Store-Supervisor Kühlung",
+      "asset_type": "store_supervisor",
+      "vendor": "Danfoss",
+      "model": "AK-SM 800",
+      "firmware_version": "5.3.1",
+      "firmware_source": "http:read_fc3",
+      "firmware_confidence": 0.6,
+      "network_identifiers": [
+        {
+          "kind": "ip",
+          "value": "10.20.30.40",
+          "source": "collector.pnf.flow",
+          "confidence": 0.95,
+          "first_seen": "2026-09-14T07:42:00Z",
+          "last_seen": "2026-11-03T17:09:00Z"
+        }
+      ],
+      "protocols": [
+        "http_https_management"
+      ],
+      "criticality": "critical",
+      "confidence": 0.9,
+      "classification_source": "auto",
+      "source": "discovery.passive",
+      "first_seen_at": "2026-09-14T07:42:00Z",
+      "last_seen_at": "2026-11-03T17:09:00Z",
+      "retired": false,
+      "operator_notes": ""
     }
   ],
-  "total": 15,
+  "total": 16,
   "limit": 200,
   "offset": 0
 }

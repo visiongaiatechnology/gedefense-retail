@@ -66,6 +66,9 @@ func (s *Service) CreatePlan(ctx context.Context, actor domain.GateUser, req Cre
 		if strings.TrimSpace(op.CurrentValue) == "" {
 			return domain.WritePlan{}, fmt.Errorf("%w: operation %d: current_value is required", ErrInvalidPlan, i)
 		}
+		if op.HasDecimalValues() && op.ValueScale <= 0 {
+			return domain.WritePlan{}, fmt.Errorf("%w: operation %d: decimal values require an explicit value_scale (for example 0.1)", ErrInvalidPlan, i)
+		}
 		if op.Protocol != req.Protocol {
 			return domain.WritePlan{}, fmt.Errorf("%w: operation %d protocol mismatch", ErrInvalidPlan, i)
 		}

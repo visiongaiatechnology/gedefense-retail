@@ -1,0 +1,65 @@
+# Public documentation allowlist for release bundles (F-A8-03).
+#
+# The packaging scripts copy only the entries listed here into bundle/docs/.
+# They fail closed if this manifest is missing, if a listed file is missing, or
+# if a copied file matches a denied internal-document pattern (security-*,
+# *audit*, *review*, release-report*, audit_matrix*, architecture-gap*,
+# reuse-matrix*, public-release-hygiene*, *alpha-report*). Unknown files are
+# never shipped. This manifest is the public repository's curated set.
+
+docs/README.md
+docs/API.md
+docs/ARCHITECTURE.md
+docs/BUILD-AND-RELEASE.md
+docs/DEPLOYMENT.md
+docs/INCIDENT-RESPONSE.md
+docs/SECURITY-MODEL.md
+docs/assets/gedefense-logo.png
+docs/assets/sirdu-512.png
+docs/screenshots/01-overview-desktop.png
+docs/screenshots/02-anlagen-desktop.png
+docs/screenshots/03-kaeltekkette-desktop.png
+docs/screenshots/04-bedrohungen-desktop.png
+docs/screenshots/05-zugriff-desktop.png
+docs/screenshots/06-integritaet-desktop.png
+docs/screenshots/07-vorfaelle-desktop.png
+docs/screenshots/08-empty-state-desktop.png
+docs/screenshots/09-overview-mobile-500px.png
+docs/screenshots/10-overview-tablet.png
+docs/screenshots/11-gate-approval-inbox.png
+docs/screenshots/12-gate-plan-detail.png
+docs/screenshots/14-gate-sessions.png
+docs/screenshots/15-gate-deny-timeline.png
+docs/screenshots/16-gate-status.png
+docs/screenshots/17-gate-login.png
+docs/screenshots/18-gate-mobile-500px.png
+docs/screenshots/mobile-setup-language.png
+docs/screenshots/mobile-setup-whitelist.png
+docs/screenshots/notfound-sirdu.png
+docs/screenshots/README.md
+docs/screenshots/setup-complete.png
+docs/screenshots/setup-lang-de.png
+docs/screenshots/setup-lang-en.png
+docs/screenshots/setup-lang-es.png
+docs/screenshots/setup-lang-fr.png
+docs/screenshots/setup-lang-it.png
+docs/screenshots/setup-lang-ja.png
+docs/screenshots/setup-lang-ru.png
+docs/screenshots/setup-lang-zh.png
+docs/screenshots/setup-step-admin.png
+docs/screenshots/setup-step-collectors.png
+docs/screenshots/setup-step-site.png
+docs/screenshots/setup-step-summary.png
+docs/screenshots/setup-step-whitelist.png
+docs/retail/access-gate-api-contract.md
+docs/retail/access-gate-vendor-onboarding.md
+docs/retail/access-gate-vendor-workflows.md
+docs/retail/deployment-guide.md
+docs/retail/market-research.md
+docs/retail/operations-runbook.md
+docs/retail/pilot-acceptance.md
+docs/retail/protocol-support-matrix.md
+docs/retail/retail-policy-reference.md
+docs/retail/safety-boundaries.md
+docs/retail/threat-model.md
+docs/retail/vendor-landscape.md

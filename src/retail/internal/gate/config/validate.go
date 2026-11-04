@@ -181,6 +181,15 @@ func validateModbusTarget(target Target) error {
 	if spec.Start < 0 || spec.Start > 65535 || spec.Count < 1 || spec.Count > 125 {
 		return fmt.Errorf("%w: target %q read_registers window is invalid", ErrInvalidConfig, target.TargetID)
 	}
+	if target.ReadCoils != nil {
+		coils := *target.ReadCoils
+		if coils.FC != 1 {
+			return fmt.Errorf("%w: target %q read_coils.fc must be 1 (FC1 read coils)", ErrInvalidConfig, target.TargetID)
+		}
+		if coils.Start < 0 || coils.Start > 65535 || coils.Count < 1 || coils.Count > 2000 {
+			return fmt.Errorf("%w: target %q read_coils window is invalid", ErrInvalidConfig, target.TargetID)
+		}
+	}
 	if len(target.URLAllowlist) != 0 {
 		return fmt.Errorf("%w: target %q is modbus_tcp but has a url_allowlist", ErrInvalidConfig, target.TargetID)
 	}
@@ -211,6 +220,9 @@ func validateHTTPTarget(target Target) error {
 	}
 	if target.ReadRegisters != nil {
 		return fmt.Errorf("%w: target %q is http but has read_registers", ErrInvalidConfig, target.TargetID)
+	}
+	if target.ReadCoils != nil {
+		return fmt.Errorf("%w: target %q is http but has read_coils", ErrInvalidConfig, target.TargetID)
 	}
 	return nil
 }

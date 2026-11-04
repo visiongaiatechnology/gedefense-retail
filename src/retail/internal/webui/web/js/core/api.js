@@ -238,6 +238,9 @@ export const api = {
   getAssets: ({ site_id, type, q, limit, offset } = {}, options = {}) =>
     request('/assets', { ...options, params: listParams({ site_id, type, q, limit, offset }) }),
   getAsset: (assetId, options) => request(`/assets/${encodeSegment(assetId)}`, options),
+  getVendors: (options) => request('/vendors', options),
+  getVendorFamily: (familyId, options) => request(`/vendors/${encodeSegment(familyId)}`, options),
+  getRegulatoryContext: (options) => request('/regulatory-context', options),
 
   // ---- alerts & workflow ----
   getAlerts: ({ site_id, status, severity, category, limit, offset } = {}, options = {}) =>

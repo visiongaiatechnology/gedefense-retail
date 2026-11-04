@@ -75,17 +75,20 @@ type RegisterSpec struct {
 
 // Target is one protected OT device reachable only through the gate.
 type Target struct {
-	TargetID           domain.TargetID `json:"target_id"`
-	AssetID            domain.AssetID  `json:"asset_id"`
-	Protocol           string          `json:"protocol"`
-	Listen             string          `json:"listen"`
-	Upstream           string          `json:"upstream"`
-	UnitID             int             `json:"unit_id,omitempty"`
-	TimeoutS           int             `json:"timeout_s,omitempty"`
-	ReadRegisters      *RegisterSpec   `json:"read_registers,omitempty"`
-	CAFile             string          `json:"ca_file,omitempty"`
-	InsecureSkipVerify bool            `json:"insecure_skip_verify,omitempty"`
-	URLAllowlist       []string        `json:"url_allowlist,omitempty"`
+	TargetID      domain.TargetID `json:"target_id"`
+	AssetID       domain.AssetID  `json:"asset_id"`
+	Protocol      string          `json:"protocol"`
+	Listen        string          `json:"listen"`
+	Upstream      string          `json:"upstream"`
+	UnitID        int             `json:"unit_id,omitempty"`
+	TimeoutS      int             `json:"timeout_s,omitempty"`
+	ReadRegisters *RegisterSpec   `json:"read_registers,omitempty"`
+	// ReadCoils is the optional FC1 coil window used for read-before-write
+	// verification of FC5/FC15 writes (F-A8-02).
+	ReadCoils          *RegisterSpec `json:"read_coils,omitempty"`
+	CAFile             string        `json:"ca_file,omitempty"`
+	InsecureSkipVerify bool          `json:"insecure_skip_verify,omitempty"`
+	URLAllowlist       []string      `json:"url_allowlist,omitempty"`
 }
 
 // EscalationStep is one rung of the notify escalation chain.

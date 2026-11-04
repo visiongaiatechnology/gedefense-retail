@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/visiongaiatechnology/gedefense/retail/internal/domain"
+	"github.com/visiongaiatechnology/gedefense/retail/internal/vendorcatalog"
 )
 
 // evidence is the passive evidence extracted from one event.
@@ -184,7 +185,7 @@ func containsAny(haystack string, needles ...string) bool {
 }
 
 // buildAsset turns evidence into a validated hypothesis.
-func buildAsset(e evidence, cat *catalog, zoneID domain.ZoneID, now time.Time) (domain.Asset, bool) {
+func buildAsset(e evidence, cat *vendorcatalog.Catalog, zoneID domain.ZoneID, now time.Time) (domain.Asset, bool) {
 	if err := e.siteID.Validate(); err != nil {
 		return domain.Asset{}, false
 	}
@@ -220,9 +221,9 @@ func buildAsset(e evidence, cat *catalog, zoneID domain.ZoneID, now time.Time) (
 	asset.Protocols = mergeProtocols(nil, e.protocols)
 
 	if e.mac != "" && cat != nil {
-		if vendor, confidence, ok := cat.vendorForMAC(e.mac); ok {
+		if vendor, ok := cat.VendorForMAC(e.mac); ok {
 			asset.Vendor = vendor
-			asset.Confidence = clampConfidence(asset.Confidence + confidence)
+			asset.Confidence = clampConfidence(asset.Confidence + 0.05)
 		}
 	}
 	if asset.Vendor == "" && e.vendorHint != "" {
@@ -232,12 +233,8 @@ func buildAsset(e evidence, cat *catalog, zoneID domain.ZoneID, now time.Time) (
 		asset.Model = e.modelHint
 	}
 	if cat != nil {
-		if lifecycle, source, model := cat.lifecycleFor(asset.Vendor, asset.Model, e.hostname); lifecycle != domain.LifecycleUnknown {
-			asset.Lifecycle = lifecycle
-			asset.LifecycleSource = source
-			if asset.Model == "" && model != "" {
-				asset.Model = model
-			}
+		if family, ok := cat.MatchFamily(asset.Vendor, asset.Model, e.hostname); ok {
+			enrichFromFamily(&asset, family)
 		}
 	}
 	asset.Confidence = clampConfidence(asset.Confidence)

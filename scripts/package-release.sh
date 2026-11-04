@@ -31,7 +31,7 @@ rm -rf "$STAGE"
 mkdir -p "$STAGE"
 
 python3 - "$ROOT" "$DIST" "$STAGE" "$VERSION" "$PACKAGING" <<'PY'
-import os, sys, tarfile, zipfile, hashlib, shutil, gzip, time
+import os, sys, tarfile, zipfile, hashlib, shutil, gzip, time, re
 from pathlib import Path
 
 root, dist, stage, version, packaging = map(Path, sys.argv[1:6])
@@ -52,13 +52,72 @@ def sha256(path):
             h.update(chunk)
     return h.hexdigest()
 
+# F-A8-03: only explicitly public docs may enter a release bundle.
+DENY_DOC_PATTERN = re.compile(
+    r"(security-(audit|review|assumptions|scan)|audit_matrix|"
+    r"public-release-hygiene|release-report|architecture-gap|reuse-matrix|"
+    r"access-gate-review|access-gate-threat-model|review-findings|alpha-report)",
+    re.IGNORECASE,
+)
+manifest_path = root / "docs" / "PUBLIC-DOCS.manifest"
+if not manifest_path.is_file():
+    print("package-release: docs/PUBLIC-DOCS.manifest is missing (fail-closed)", file=sys.stderr)
+    sys.exit(1)
+public_docs = []
+for raw_line in manifest_path.read_text(encoding="utf-8").splitlines():
+    entry = raw_line.split("#", 1)[0].strip()
+    if not entry:
+        continue
+    rel = Path(entry)
+    if rel.is_absolute() or ".." in rel.parts:
+        print(f"package-release: manifest entry {entry!r} is unsafe", file=sys.stderr)
+        sys.exit(1)
+    if DENY_DOC_PATTERN.search(rel.as_posix()):
+        print(f"package-release: manifest entry {entry!r} matches a denied internal pattern", file=sys.stderr)
+        sys.exit(1)
+    if not (root / rel).is_file():
+        print(f"package-release: manifest entry {entry!r} does not exist", file=sys.stderr)
+        sys.exit(1)
+    public_docs.append(rel)
+if not public_docs:
+    print("package-release: public docs manifest is empty (fail-closed)", file=sys.stderr)
+    sys.exit(1)
+
+def copy_public_docs(bundle):
+    for rel in public_docs:
+        dest = bundle / "docs" / rel.relative_to("docs")
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(root / rel, dest)
+
+def scan_archive(archive):
+    if archive.name.endswith(".tar.gz"):
+        with tarfile.open(archive) as tf:
+            names = tf.getnames()
+    else:
+        with zipfile.ZipFile(archive) as zf:
+            names = zf.namelist()
+    for name in names:
+        if DENY_DOC_PATTERN.search(name):
+            print(f"package-release: {archive.name} contains denied internal document {name}", file=sys.stderr)
+            sys.exit(1)
+    joined = "\n".join(names)
+    for required in ("data/ot-catalog/vendors.json", "data/ot-catalog/write-surface.json",
+                     "data/ot-catalog/regulatory-context.json", "docs/retail/"):
+        if required not in joined:
+            print(f"package-release: {archive.name} is missing {required}", file=sys.stderr)
+            sys.exit(1)
+
 def copy_common(bundle):
     for name in common:
         shutil.copy2(root / name, bundle / name)
     (bundle / "config").mkdir(parents=True, exist_ok=True)
     for name in configs:
         shutil.copy2(root / "config" / name, bundle / "config" / name)
-    shutil.copytree(root / "docs", bundle / "docs", dirs_exist_ok=True)
+    copy_public_docs(bundle)
+    # OT catalog ships with every bundle (write-surface/current-value evidence).
+    catalog = root / "data" / "ot-catalog"
+    if catalog.is_dir():
+        shutil.copytree(catalog, bundle / "data" / "ot-catalog", dirs_exist_ok=True)
 
 def write_tar_gz(archive, bundle):
     with open(archive, "wb") as raw:
@@ -134,7 +193,22 @@ for target_dir in sorted(dist.iterdir()):
     else:
         continue
 
+for archive in archives:
+    scan_archive(archive)
+
 lines = []
+# Fail the packaging run if a required bundle asset is missing.
+required_files = ["data/ot-catalog/vendors.json", "data/ot-catalog/write-surface.json",
+                  "data/ot-catalog/regulatory-context.json"]
+for bundle in [p for p in stage.iterdir() if p.is_dir()]:
+    for rel in required_files:
+        if not (bundle / rel).is_file():
+            print(f"package-release: bundle {bundle.name} is missing {rel}", file=sys.stderr)
+            sys.exit(1)
+    if not (bundle / "docs" / "retail").is_dir():
+        print(f"package-release: bundle {bundle.name} is missing docs/retail", file=sys.stderr)
+        sys.exit(1)
+
 for archive in archives:
     lines.append(f"{sha256(archive)}  {archive.name}")
 (dist / "SHA256SUMS").write_text("\n".join(lines) + "\n", encoding="utf-8")

@@ -55,6 +55,13 @@ func specForTarget(t gateconfig.Target) (targets.Spec, error) {
 				Count: uint16(t.ReadRegisters.Count),
 			}
 		}
+		if t.ReadCoils != nil {
+			spec.ReadCoils = &modbusproxy.RegisterRange{
+				FC:    uint8(t.ReadCoils.FC),
+				Start: uint16(t.ReadCoils.Start),
+				Count: uint16(t.ReadCoils.Count),
+			}
+		}
 	case "http", "https":
 		spec.Protocol = "http"
 		spec.URLAllowlist = t.URLAllowlist

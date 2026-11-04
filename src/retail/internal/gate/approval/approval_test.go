@@ -83,7 +83,7 @@ func (f *fixture) createPlan(t *testing.T, target domain.TargetID, asset domain.
 		TargetID: target, AssetID: asset, Protocol: "modbus_tcp",
 		Operations: []domain.WriteOperation{{
 			OperationID: "op-1", Protocol: "modbus_tcp", Function: "fc6",
-			Address: itoa(register), CurrentValue: "4.0", NewValue: "3.5",
+			Address: itoa(register), CurrentValue: "4.0", NewValue: "3.5", ValueScale: 0.1,
 		}},
 		Reason: "maintenance", WindowStart: start, WindowEnd: start.Add(time.Hour),
 	})
@@ -249,7 +249,7 @@ func TestWriteUnknownRevokesSession(t *testing.T) {
 	if err != nil {
 		t.Fatalf("redeem: %v", err)
 	}
-	op := domain.WriteOperation{Protocol: "modbus_tcp", Function: "fc6", Address: "40001", NewValue: "3.5"}
+	op := domain.WriteOperation{Protocol: "modbus_tcp", Function: "fc6", Address: "40001", NewValue: "3.5", ValueScale: 0.1}
 	if err := f.service.ReportWriteUnknown(ctx, session.SessionID, op, WriteUnknownTimeout); err != nil {
 		t.Fatalf("report unknown: %v", err)
 	}
